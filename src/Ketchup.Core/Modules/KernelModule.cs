@@ -10,6 +10,9 @@ namespace Ketchup.Core.Modules
     {
         public ContainerBuilderWrapper Builder { get; set; }
 
+        public virtual void Initialize(KetchupPlatformContainer builder)
+        {
+        }
 
         protected override void Load(ContainerBuilder builder)
         {
