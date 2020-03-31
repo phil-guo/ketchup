@@ -35,7 +35,7 @@ namespace Ketchup.Consul.Test
 
             var result = await moq.IsHealth(ipModel);
 
-            Assert.True(result);
+            Assert.False(result);
         }
     }
 }
