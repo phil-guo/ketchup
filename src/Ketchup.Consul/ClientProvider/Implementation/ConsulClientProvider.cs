@@ -16,11 +16,9 @@ namespace Ketchup.Consul.ClientProvider.Implementation
 {
     public class ConsulClientProvider : IConsulClientProvider
     {
+        private readonly ConcurrentDictionary<IpAddressModel, ConsulClient> _consulClients = new ConcurrentDictionary<IpAddressModel, ConsulClient>();
+
         private readonly IConsulAddressSelector _consulAddressSelector;
-
-        private readonly ConcurrentDictionary<IpAddressModel, ConsulClient> _consulClients = new
-            ConcurrentDictionary<IpAddressModel, ConsulClient>();
-
         private readonly IHealthCheckService _healthCheck;
         private readonly ILogger<ConsulClientProvider> _logger;
 
@@ -42,8 +40,9 @@ namespace Ketchup.Consul.ClientProvider.Implementation
             foreach (var addressModel in AppConfig.Addresses)
             {
                 _healthCheck.Monitor(addressModel);
-                var task = _healthCheck.IsHealth(addressModel);
-                if (!(task.IsCompletedSuccessfully ? task.Result : await task)) continue;
+                var task = await _healthCheck.IsHealth(addressModel);
+                if (!task)
+                    continue;
                 addresses.Add(addressModel);
             }
 
@@ -56,7 +55,7 @@ namespace Ketchup.Consul.ClientProvider.Implementation
 
             var vt = _consulAddressSelector.SelectAsync(new AddressSelectContext
             {
-                Descriptor = new ServiceDescriptor {Id = nameof(ConsulClientProvider)},
+                Descriptor = new ServiceDescriptor { Id = nameof(ConsulClientProvider) },
                 Address = addresses
             });
             var address = vt.IsCompletedSuccessfully ? vt.Result : await vt;

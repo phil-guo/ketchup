@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Consul" Version="0.7.2.6" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ketchup.Core\Ketchup.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Route\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Consul" Version="0.7.2.6" />
   </ItemGroup>
 
 </Project>

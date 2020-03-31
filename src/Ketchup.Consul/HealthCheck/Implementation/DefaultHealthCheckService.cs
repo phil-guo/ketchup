@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Ketchup.Core.Address;
 
@@ -10,19 +11,24 @@ namespace Ketchup.Consul.HealthCheck.Implementation
 {
     public class DefaultHealthCheckService : IHealthCheckService, IDisposable
     {
-        public readonly ConcurrentDictionary<ValueTuple<string, int>, MonitorEntry> _dictionary =
-            new ConcurrentDictionary<ValueTuple<string, int>, MonitorEntry>();
+        public readonly ConcurrentDictionary<ValueTuple<string, int>, MonitorEntry> _dictionary = new ConcurrentDictionary<ValueTuple<string, int>, MonitorEntry>();
 
         private readonly int _timeout = 30000;
+        private readonly Timer _timer;
 
         public DefaultHealthCheckService()
         {
-            HealthCheck(_dictionary.ToArray().Select(i => i.Value), _timeout).Wait();
+            var timeSpan = TimeSpan.FromSeconds(60);
+
+            _timer = new Timer(async item =>
+                {
+                    await HealthCheck(_dictionary.ToArray().Select(i => i.Value), _timeout);
+                }, null, timeSpan, timeSpan);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _timer.Dispose();
         }
 
         public void Monitor(IpAddressModel address)
