@@ -80,7 +80,7 @@ namespace Ketchup.Consul.Route
             Action<string[]> action = null;
             var client = await GetConsulClient();
 
-            if ((await client.KV.Keys(_appConfig.Consul.ServicePath)).Response?.Count() > 0)
+            if ((await client.KV.Keys(_appConfig.Consul.ServicePath)).Response?.Length > 0)
             {
                 var result = await client.GetChildrenAsync(_appConfig.Consul.ServicePath);
                 var keys = await client.KV.Keys(_appConfig.Consul.ServicePath);
