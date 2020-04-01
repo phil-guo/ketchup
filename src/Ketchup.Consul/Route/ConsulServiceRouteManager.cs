@@ -21,8 +21,6 @@ namespace Ketchup.Consul.Route
     public class ConsulServiceRouteManager : ServiceRouteManagerBase, IDisposable
     {
         private readonly ISerializer<byte[]> _serializer;
-        //private readonly IServiceHeartbeatManager _serviceHeartbeatManager;
-
         private readonly AppConfig _appConfig;
         private readonly IConsulClientProvider _consulClientProvider;
         private readonly ISerializer<string> _stringSerializer;
@@ -53,24 +51,48 @@ namespace Ketchup.Consul.Route
         {
         }
 
-        public override Task<IEnumerable<ServiceRoute>> GetRoutesAsync()
+        public override async Task<IEnumerable<ServiceRoute>> GetRoutesAsync()
         {
-            throw new NotImplementedException();
+            await EnterRoutes();
+            return _routes;
         }
 
-        public override Task RemveAddressAsync(IEnumerable<AddressModel> Address)
+        public override async Task RemveAddressAsync(IEnumerable<AddressModel> address)
         {
-            throw new NotImplementedException();
+            var routes = await GetRoutesAsync();
+            try
+            {
+                foreach (var route in routes)
+                    route.Address = route.Address.Except(address);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            await base.SetRoutesAsync(routes);
         }
 
-        public override Task ClearAsync()
+        public override async Task ClearAsync()
         {
-            throw new NotImplementedException();
+            var client = await _consulClientProvider.GetClient();
+            var queryResult = await client.KV.List(_appConfig.Consul.ServicePath);
+            var response = queryResult.Response;
+            if (response != null)
+                foreach (var result in response)
+                    await client.KV.DeleteCAS(result);
         }
 
-        protected override Task SetRoutesAsync(IEnumerable<ServiceRouteDescriptor> routes)
+        protected override async Task SetRoutesAsync(IEnumerable<ServiceRouteDescriptor> routes)
         {
-            throw new NotImplementedException();
+            var client = await _consulClientProvider.GetClient();
+            foreach (var serviceRoute in routes)
+            {
+                var nodeData = _serializer.Serialize(serviceRoute);
+                var keyValuePair = new KVPair($"{_appConfig.Consul.ServicePath}{serviceRoute.ServiceDescriptor.Id}")
+                { Value = nodeData };
+                await client.KV.Put(keyValuePair);
+            }
         }
 
         public async Task EnterRoutes()
