@@ -30,10 +30,10 @@ namespace Ketchup.Consul.Test
                 }));
 
 
-            var clietnProvider = new ConsulClientProvider(healthCheckMoq.Object,
+            var clientProvider = new ConsulClientProvider(healthCheckMoq.Object,
                 addressSelectorMoq.Object, new Mock<ILogger<ConsulClientProvider>>().Object);
 
-            clietnProvider.AppConfig = new AppConfig()
+            clientProvider.AppConfig = new AppConfig()
             {
                 Addresses = new List<IpAddressModel>()
                 {
@@ -50,7 +50,7 @@ namespace Ketchup.Consul.Test
                 }
             };
 
-            var result = await clietnProvider.GetClient();
+            var result = await clientProvider.GetClient();
 
             Assert.NotNull(result);
         }
