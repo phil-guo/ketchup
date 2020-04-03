@@ -2,6 +2,10 @@
 {
     public class ConsulOption
     {
+        public string Ip { get; set; }
+
+        public int Port { get; set; }
+
         /// <summary>
         /// consul 链接字符串
         /// </summary>

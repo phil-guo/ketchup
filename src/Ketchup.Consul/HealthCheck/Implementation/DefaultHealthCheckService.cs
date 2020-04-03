@@ -5,6 +5,9 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Consul;
+using Ketchup.Consul.ClientProvider;
+using Ketchup.Consul.Configurations;
 using Ketchup.Core.Address;
 
 namespace Ketchup.Consul.HealthCheck.Implementation
@@ -16,15 +19,25 @@ namespace Ketchup.Consul.HealthCheck.Implementation
         private readonly int _timeout = 30000;
         private readonly Timer _timer;
 
-        public DefaultHealthCheckService()
-        {
-            var timeSpan = TimeSpan.FromSeconds(60);
+        private readonly IConsulClientProvider _consulClientProvider;
 
-            _timer = new Timer(async item =>
-                {
-                    await HealthCheck(_dictionary.ToArray().Select(i => i.Value), _timeout);
-                }, null, timeSpan, timeSpan);
+
+        public DefaultHealthCheckService(IConsulClientProvider consulClientProvider)
+        {
+            _consulClientProvider = consulClientProvider;
+            //var timeSpan = TimeSpan.FromSeconds(60);
+
+            //_timer = new Timer(async item =>
+            //    {
+            //        await HealthCheck(_dictionary.ToArray().Select(i => i.Value), _timeout);
+            //    }, null, timeSpan, timeSpan);
         }
+
+        public void RegisterConsul()
+        {
+            var client = _consulClientProvider.GetConsulClient();
+        }
+
 
         public void Dispose()
         {
