@@ -15,7 +15,7 @@ namespace Ketchup.Sample.Server
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseHttpSys().UseStartup<Startup>();
                 });
     }
 }
