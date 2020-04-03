@@ -9,14 +9,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Consul" Version="0.7.2.6" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
     <PackageReference Include="Grpc.Core.Api" Version="2.27.0" />
+    <PackageReference Include="NConsul.AspNetCore" Version="0.7.4" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Protobuf Include="Protos\*.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Route\" />
   </ItemGroup>
 
 </Project>

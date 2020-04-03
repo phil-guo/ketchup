@@ -2,8 +2,10 @@
 using Autofac;
 using Ketchup.Consul.ClientProvider;
 using Ketchup.Consul.ClientProvider.Implementation;
+using Ketchup.Consul.Configurations;
 using Ketchup.Consul.HealthCheck;
-using Ketchup.Consul.HealthCheck.Implementation;
+using Ketchup.Consul.Internal;
+using Ketchup.Consul.Internal.Implementation;
 using Ketchup.Consul.Selector;
 using Ketchup.Consul.Selector.Implementation;
 using Ketchup.Core;
@@ -22,9 +24,18 @@ namespace Ketchup.Consul
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)
         {
-            var appConfig = new Ketchup.Consul.Configurations.AppConfig();
+            var appConfig = new AppConfig();
 
-            UseConsulAddressSelector(builder).UseHealthCheck(builder).UseCounlClientProvider(builder, appConfig);
+            UseConsulAddressSelector(builder)
+                .UseCounlClientProvider(builder, appConfig)
+                .UseConsul(builder, appConfig);
+        }
+
+        public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
+        {
+            UseConul(builder, provider =>
+                new DefaultConsulProivder(appConfig, provider.GetRequiredService<IConsulClientProvider>()));
+            return this;
         }
 
         public ConsulModule UseConsulAddressSelector(ContainerBuilderWrapper builder)
@@ -33,19 +44,11 @@ namespace Ketchup.Consul
             return this;
         }
 
-        public ConsulModule UseHealthCheck(ContainerBuilderWrapper builder)
-        {
-            builder.ContainerBuilder.RegisterType<DefaultHealthCheckService>().As<IHealthCheckService>().SingleInstance();
-            return this;
-        }
-
         public ConsulModule UseCounlClientProvider(ContainerBuilderWrapper builder, Ketchup.Consul.Configurations.AppConfig appConfig)
         {
             UseCounlClientProvider(builder, provider =>
                 new ConsulClientProvider(
-                    provider.GetRequiredService<IHealthCheckService>(),
-                    provider.GetRequiredService<IConsulAddressSelector>(),
-                    provider.GetRequiredService<ILogger<ConsulClientProvider>>())
+                    provider.GetRequiredService<IConsulAddressSelector>())
                 {
                     AppConfig = appConfig
                 }
@@ -55,6 +58,13 @@ namespace Ketchup.Consul
 
         public ContainerBuilderWrapper UseCounlClientProvider(ContainerBuilderWrapper builder,
             Func<IServiceProvider, IConsulClientProvider> factory)
+        {
+            builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
+            return builder;
+        }
+
+        public ContainerBuilderWrapper UseConul(ContainerBuilderWrapper builder,
+            Func<IServiceProvider, IConsulProvider> factory)
         {
             builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
             return builder;

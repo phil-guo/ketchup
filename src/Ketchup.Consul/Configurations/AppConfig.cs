@@ -7,14 +7,9 @@ namespace Ketchup.Consul.Configurations
     public class AppConfig
     {
         /// <summary>
-        /// consul 上下文配置
+        /// ip地址模型
         /// </summary>
-        public static IConfigurationRoot AppConfigRoot { get; set; }
-
-        /// <summary>
-        /// ip地址模型集合
-        /// </summary>
-        public IEnumerable<IpAddressModel> Addresses { get; set; }
+        public IpAddressModel Addresse { get; set; }
 
         /// <summary>
         /// consul配置模型
@@ -28,18 +23,15 @@ namespace Ketchup.Consul.Configurations
             if (string.IsNullOrEmpty(Consul.ConnectionString))
                 return;
 
-            Addresses = new[]
-            {
-                ConvertToIpAddressModel(Consul.ConnectionString)
-            };
+            Addresse = ConvertToIpAddressModel(Consul.ConnectionString);
         }
 
         protected ConsulOption GetConsulAppConfig()
         {
-            if (AppConfigRoot == null)
-                return Consul;
+            var section = Core.Configurations.AppConfig.GetSection("Consul");
 
-            Consul = AppConfigRoot.Get<ConsulOption>();
+            if (section.Exists())
+                Consul = section.Get<ConsulOption>();
             return Consul;
         }
 
@@ -56,5 +48,6 @@ namespace Ketchup.Consul.Configurations
                 Port = port
             };
         }
+
     }
 }
