@@ -21,6 +21,14 @@ namespace Ketchup.Consul.Utilities
             {
                 return null;
             }
+
+            AgentServiceRegistration a=new AgentServiceRegistration()
+            {
+                Check = new AgentServiceCheck()
+                {
+                    HTTP = 
+                }
+            };
         }
 
         public static async Task<byte[]> GetDataAsync(this ConsulClient client, string path)

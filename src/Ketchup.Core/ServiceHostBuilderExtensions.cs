@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using Ketchup.Core.Configurations;
+using Ketchup.Core.Modules;
 using Ketchup.Core.Route;
 using Microsoft.Extensions.Hosting;
 
@@ -13,10 +14,12 @@ namespace Ketchup.Core
     {
         public static IContainer UseServer(this IContainer container)
         {
-            var ip = AppConfig.ServerOptions.Ip;
-            var port = AppConfig.ServerOptions.Port;
+            //var ip = AppConfig.ServerOptions.Ip;
+            //var port = AppConfig.ServerOptions.Port;
 
             ConfigureRoute(container).GetAwaiter();
+
+            container.Resolve<IKernelModuleProvider>().Initialize();
 
             return container;
         }

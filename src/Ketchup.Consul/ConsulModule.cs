@@ -15,6 +15,11 @@ namespace Ketchup.Consul
 {
     public class ConsulModule : KernelModule
     {
+        public override void Initialize(KetchupPlatformContainer builder)
+        {
+            base.Initialize(builder);
+        }
+
         protected override void RegisterModule(ContainerBuilderWrapper builder)
         {
             var appConfig = new Ketchup.Consul.Configurations.AppConfig();
