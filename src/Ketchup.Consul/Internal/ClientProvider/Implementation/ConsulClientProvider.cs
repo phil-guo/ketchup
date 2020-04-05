@@ -1,8 +1,8 @@
 ﻿using System;
-using Ketchup.Consul.Selector;
+using Ketchup.Consul.Internal.Selector;
 using NConsul;
 
-namespace Ketchup.Consul.ClientProvider.Implementation
+namespace Ketchup.Consul.Internal.ClientProvider.Implementation
 {
     public class ConsulClientProvider : IConsulClientProvider
     {

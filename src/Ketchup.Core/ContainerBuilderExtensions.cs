@@ -8,7 +8,9 @@ using Autofac;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Services;
+using Ketchup.Core.Utilities;
 using Microsoft.Extensions.DependencyModel;
+using Microsoft.Extensions.Logging;
 
 namespace Ketchup.Core
 {
@@ -16,6 +18,13 @@ namespace Ketchup.Core
     {
         private static readonly List<Assembly> _referenceAssembly = new List<Assembly>();
         private static List<KernelModule> _modules = new List<KernelModule>();
+
+        public static ContainerBuilder AddCoreService(this ContainerBuilder builder)
+        {
+            builder.Register(p => new KetchupPlatformContainer(p));
+            builder.Register(p => new KetchupPlatformContainer(ServiceLocator.Current));
+            return builder;
+        }
 
         public static void RegisterModules(this ContainerBuilder builder)
         {
@@ -28,6 +37,11 @@ namespace Ketchup.Core
                     _modules.Add(module);
                 });
             }
+
+            builder.Register(provider => new KernelModuleProvider(_modules,
+                    provider.Resolve<KetchupPlatformContainer>(),
+                    provider.Resolve<ILogger<KernelModuleProvider>>()))
+                .As<IKernelModuleProvider>();
         }
         private static List<Assembly> GetAssemblies()
         {
@@ -71,6 +85,7 @@ namespace Ketchup.Core
 
             return modules;
         }
+
         //public static void RegisterServices(this IServiceBuilder builder)
         //{
         //    try

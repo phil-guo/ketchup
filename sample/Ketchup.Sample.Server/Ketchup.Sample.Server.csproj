@@ -6,8 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+    <None Remove="config\server.json" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="config\server.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!--<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+  </ItemGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ketchup.Consul\Ketchup.Consul.csproj" />

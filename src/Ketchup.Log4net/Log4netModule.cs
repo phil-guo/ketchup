@@ -1,4 +1,5 @@
 ﻿using System;
+using Autofac;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;

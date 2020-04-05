@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Ketchup.Consul.Selector.Implementation;
+using Ketchup.Consul.Internal.Selector.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Address;
 using Ketchup.Core.Address.Selectors.Implementation;

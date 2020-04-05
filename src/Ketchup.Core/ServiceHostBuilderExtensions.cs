@@ -6,22 +6,21 @@ using Autofac;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Route;
+using Ketchup.Core.Utilities;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
 namespace Ketchup.Core
 {
     public static class ServiceHostBuilderExtensions
     {
-        public static IContainer UseServer(this IContainer container)
+        public static IApplicationBuilder UseServer(this IApplicationBuilder app)
         {
-            //var ip = AppConfig.ServerOptions.Ip;
-            //var port = AppConfig.ServerOptions.Port;
+            ServiceLocator.Current.Resolve<IKernelModuleProvider>().Initialize();
+            //app.UseRouting();
 
-            ConfigureRoute(container).GetAwaiter();
-
-            container.Resolve<IKernelModuleProvider>().Initialize();
-
-            return container;
+            
+            return app;
         }
 
         public static async Task ConfigureRoute(IContainer container)

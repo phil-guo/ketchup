@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Ketchup.Consul.ClientProvider.Implementation;
 using Ketchup.Consul.Configurations;
 using Ketchup.Consul.HealthCheck;
 using Ketchup.Consul.Selector;

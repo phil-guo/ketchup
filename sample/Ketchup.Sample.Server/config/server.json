@@ -1,0 +1,9 @@
+{
+  "ServerName": "sample",
+  "Ip": "192.168.31.107",
+  "Port": "5000",
+  "Consul": {
+    "ConnectionString": "127.0.0.1:8500",
+    "IsHealthCheck": true
+  }
+}

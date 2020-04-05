@@ -1,13 +1,15 @@
 ﻿using System;
 using Autofac;
-using Ketchup.Consul.ClientProvider;
-using Ketchup.Consul.ClientProvider.Implementation;
 using Ketchup.Consul.Configurations;
 using Ketchup.Consul.HealthCheck;
 using Ketchup.Consul.Internal;
-using Ketchup.Consul.Internal.Implementation;
+using Ketchup.Consul.Internal.ClientProvider;
+using Ketchup.Consul.Internal.ClientProvider.Implementation;
+using Ketchup.Consul.Internal.ConsulProvider;
+using Ketchup.Consul.Internal.ConsulProvider.Implementation;
+using Ketchup.Consul.Internal.Selector;
+using Ketchup.Consul.Internal.Selector.Implementation;
 using Ketchup.Consul.Selector;
-using Ketchup.Consul.Selector.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +21,7 @@ namespace Ketchup.Consul
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
-            base.Initialize(builder);
+            builder.GetInstances<IConsulProvider>().RegiserGrpcConsul();
         }
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)
@@ -34,7 +36,12 @@ namespace Ketchup.Consul
         public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
         {
             UseConul(builder, provider =>
-                new DefaultConsulProivder(appConfig, provider.GetRequiredService<IConsulClientProvider>()));
+                new DefaultConsulProivder(
+                    provider.GetRequiredService<IConsulClientProvider>())
+                {
+                    AppConfig = appConfig
+                });
+            //builder.ContainerBuilder.RegisterType<DefaultConsulProivder>().As<IConsulProvider>().SingleInstance();
             return this;
         }
 

@@ -8,7 +8,7 @@ namespace Ketchup.Core.Configurations
     {
         public string Ip { get; set; }
 
-        public string RootPath { get; set; }
+        public string ServerName { get; set; }
 
         public int Port { get; set; }
     }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Ketchup.Core.Address;
 using Ketchup.Core.Address.Selectors.Implementation;
 
-namespace Ketchup.Consul.Selector.Implementation
+namespace Ketchup.Consul.Internal.Selector.Implementation
 {
     public class ConsulRandomAddressSelector : AddressSelectorBase,IConsulAddressSelector
     {

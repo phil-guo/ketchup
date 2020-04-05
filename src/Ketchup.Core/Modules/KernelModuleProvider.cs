@@ -11,6 +11,7 @@ namespace Ketchup.Core.Modules
         private readonly KetchupPlatformContainer _container;
         private readonly ILogger<KernelModuleProvider> _logger;
 
+
         public KernelModuleProvider(List<KernelModule> modules, KetchupPlatformContainer container, ILogger<KernelModuleProvider> logger)
         {
             _modules = modules;
