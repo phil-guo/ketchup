@@ -2,7 +2,7 @@
 using Grpc.Core;
 using Grpc.Health.V1;
 
-namespace Ketchup.Consul.HealthCheck.Implementation
+namespace Ketchup.Consul.Internal.HealthCheck.Implementation
 {
     public class DefaultHealthCheckService : Health.HealthBase
     {

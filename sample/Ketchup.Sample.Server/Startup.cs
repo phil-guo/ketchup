@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Ketchup.Consul.HealthCheck.Implementation;
+using Ketchup.Consul.Internal.HealthCheck.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Utilities;

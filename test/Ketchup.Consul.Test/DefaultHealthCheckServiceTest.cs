@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Ketchup.Consul.HealthCheck.Implementation;
 using Ketchup.Core.Address;
 using Xunit;
 

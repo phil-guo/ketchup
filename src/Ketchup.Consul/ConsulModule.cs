@@ -1,19 +1,15 @@
 ﻿using System;
 using Autofac;
 using Ketchup.Consul.Configurations;
-using Ketchup.Consul.HealthCheck;
-using Ketchup.Consul.Internal;
 using Ketchup.Consul.Internal.ClientProvider;
 using Ketchup.Consul.Internal.ClientProvider.Implementation;
 using Ketchup.Consul.Internal.ConsulProvider;
 using Ketchup.Consul.Internal.ConsulProvider.Implementation;
 using Ketchup.Consul.Internal.Selector;
 using Ketchup.Consul.Internal.Selector.Implementation;
-using Ketchup.Consul.Selector;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Ketchup.Consul
 {
