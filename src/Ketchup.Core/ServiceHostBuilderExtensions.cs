@@ -17,9 +17,8 @@ namespace Ketchup.Core
         public static IApplicationBuilder UseServer(this IApplicationBuilder app)
         {
             ServiceLocator.Current.Resolve<IKernelModuleProvider>().Initialize();
-            //app.UseRouting();
+            app.UseRouting();
 
-            
             return app;
         }
 

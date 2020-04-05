@@ -37,7 +37,6 @@ namespace Ketchup.Consul
                 {
                     AppConfig = appConfig
                 });
-            //builder.ContainerBuilder.RegisterType<DefaultConsulProivder>().As<IConsulProvider>().SingleInstance();
             return this;
         }
 

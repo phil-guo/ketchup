@@ -62,7 +62,7 @@ namespace Ketchup.Sample.Server
 
             app.UseServer();
 
-            app.UseRouting();
+            //app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapGrpcService<DefaultHealthCheckService>(); });
         }
 
