@@ -15,17 +15,9 @@ namespace Ketchup.Sample.Server
 {
     public class Startup
     {
-        public Startup(IHostEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath);
-
-            if (env.IsDevelopment())
-                builder.AddJsonFile("config/server.json", optional: true, reloadOnChange: true);
-            if (env.IsProduction())
-                builder.AddJsonFile($"config/server.{env.EnvironmentName}.json", optional: true);
-
-            AppConfig.Configuration = builder.AddEnvironmentVariables().Build();
+            AppConfig.Configuration = (IConfigurationRoot)configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -37,7 +29,6 @@ namespace Ketchup.Sample.Server
         {
             // Add things to the service collection that are only for the
             // development environment.
-            services.AddOptions();
             services.AddGrpc();
         }
 
@@ -45,8 +36,6 @@ namespace Ketchup.Sample.Server
         {
             // Add things to the Autofac ContainerBuilder.
             builder.AddCoreService().RegisterModules();
-            
-
         }
 
         public void ConfigureProductionContainer(ContainerBuilder builder)
@@ -58,11 +47,9 @@ namespace Ketchup.Sample.Server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
-
             app.UseServer();
 
-            //app.UseRouting();
+            app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapGrpcService<DefaultHealthCheckService>(); });
         }
 

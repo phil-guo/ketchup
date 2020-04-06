@@ -12,8 +12,8 @@ namespace Ketchup.Core.Address.Selectors.Implementation
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
-            if (context.Descriptor == null)
-                throw new ArgumentNullException(nameof(context.Descriptor));
+            //if (context.Descriptor == null)
+            //    throw new ArgumentNullException(nameof(context.Descriptor));
             if (context.Address == null)
                 throw new ArgumentNullException(nameof(context.Address));
 

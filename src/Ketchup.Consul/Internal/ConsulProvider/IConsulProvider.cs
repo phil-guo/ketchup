@@ -4,6 +4,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider
 {
     public interface IConsulProvider
     {
-        Task RegiserGrpcConsul();
+        Task RegiserConsulAgent();
     }
 }

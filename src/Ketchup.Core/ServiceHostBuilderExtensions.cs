@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Route;
@@ -16,8 +17,9 @@ namespace Ketchup.Core
     {
         public static IApplicationBuilder UseServer(this IApplicationBuilder app)
         {
+            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
             ServiceLocator.Current.Resolve<IKernelModuleProvider>().Initialize();
-            app.UseRouting();
+            
 
             return app;
         }

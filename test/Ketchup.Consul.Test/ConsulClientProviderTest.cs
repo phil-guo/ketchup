@@ -1,12 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Ketchup.Consul.Configurations;
-using Ketchup.Consul.HealthCheck;
-using Ketchup.Consul.Selector;
-using Ketchup.Core.Address;
-using Ketchup.Core.Address.Selectors.Implementation;
-using Microsoft.Extensions.Logging;
-using Moq;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Ketchup.Consul.Test

@@ -17,7 +17,7 @@ namespace Ketchup.Consul
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
-            builder.GetInstances<IConsulProvider>().RegiserGrpcConsul();
+            builder.GetInstances<IConsulProvider>().RegiserConsulAgent();
         }
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)

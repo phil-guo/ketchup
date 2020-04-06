@@ -6,16 +6,18 @@ namespace Ketchup.Core.Configurations
     {
         public static IConfigurationRoot Configuration { get; set; }
 
-        public AppConfig()
-        {
-            //ServerOptions = Configuration.Get<ServerOptions>();
-        }
-
         public static IConfigurationSection GetSection(string name)
         {
             return Configuration?.GetSection(name);
         }
 
-        public static ServerOptions ServerOptions => Configuration.Get<ServerOptions>();
+        public static ServerOptions ServerOptions
+        {
+            get
+            {
+                var section = GetSection("Server");
+                return section.Exists() ? section.Get<ServerOptions>() : new ServerOptions();
+            }
+        }
     }
 }

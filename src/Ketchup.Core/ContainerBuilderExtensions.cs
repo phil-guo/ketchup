@@ -43,6 +43,7 @@ namespace Ketchup.Core
                     provider.Resolve<ILogger<KernelModuleProvider>>()))
                 .As<IKernelModuleProvider>();
         }
+
         private static List<Assembly> GetAssemblies()
         {
             var referenceAssemblies = new List<Assembly>();
@@ -85,32 +86,6 @@ namespace Ketchup.Core
 
             return modules;
         }
-
-        //public static void RegisterServices(this IServiceBuilder builder)
-        //{
-        //    try
-        //    {
-        //        var services = builder.Services;
-        //        var referenceAssemblies = GetAssemblies();
-
-        //        foreach (var assembly in referenceAssemblies)
-        //            services.RegisterAssemblyTypes(assembly)
-        //                .Where(t => typeof(IServiceKey).GetTypeInfo().IsAssignableFrom(t) && t.IsInterface)
-        //                .AsImplementedInterfaces();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        if (exception is ReflectionTypeLoadException)
-        //        {
-        //            var typeLoadException = exception as ReflectionTypeLoadException;
-        //            var loaderExceptions = typeLoadException.LoaderExceptions;
-        //            throw loaderExceptions[0];
-        //        }
-
-        //        throw exception;
-        //    }
-        //}
-
     }
 
     ///// <summary>
