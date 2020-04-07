@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+package grpc.domain;
+
+service RpcTest{
+	rpc SayHello(HelloRequest) returns (HelloReponse);
+}
+
+message HelloReponse{
+	string Result = 1;
+	int32 Code = 2;
+	string Msg = 3;
+}
+
+message HelloRequest {
+	string name = 1;
+	int32 Age = 2;
+}

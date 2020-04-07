@@ -4,6 +4,7 @@ using Ketchup.Consul.Internal.HealthCheck.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Utilities;
+using Ketchup.Sample.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +52,11 @@ namespace Ketchup.Sample.Server
             app.UseServer();
 
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapGrpcService<DefaultHealthCheckService>(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<DefaultHealthCheckService>();
+                endpoints.MapGrpcService<HelloService>();
+            });
         }
 
         public void ConfigureStaging(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -60,7 +65,11 @@ namespace Ketchup.Sample.Server
             app.UseServer();
 
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapGrpcService<DefaultHealthCheckService>(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<DefaultHealthCheckService>();
+                endpoints.MapGrpcService<HelloService>();
+            });
         }
     }
 }
