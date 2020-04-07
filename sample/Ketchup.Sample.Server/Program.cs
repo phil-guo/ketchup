@@ -18,6 +18,7 @@ namespace Ketchup.Sample.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+
             return Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
@@ -34,7 +35,8 @@ namespace Ketchup.Sample.Server
                     webBuilder
                         .ConfigureKestrel(options =>
                         {
-                            options.Listen(IPAddress.Any, 5000,
+                            var config = AppConfig.ServerOptions;
+                            options.Listen(new IPEndPoint(IPAddress.Parse(config.Ip), config.Port),
                                 listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
                         })
                         .UseStartup<Startup>();

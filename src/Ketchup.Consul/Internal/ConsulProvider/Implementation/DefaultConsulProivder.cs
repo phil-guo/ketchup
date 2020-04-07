@@ -67,26 +67,31 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             }
         }
 
-        public async ValueTask<IpAddressModel> FindAgent(string serverName)
+        public async ValueTask<IpAddressModel> FindServiceEntry(string serverName)
         {
 
             using (var client = _consulClientProvider.GetConsulClient())
             {
-                var agents =
-                    (await client.Agent.Services()).Response.Values.Where(item =>
-                        item.Service.Equals(serverName, StringComparison.OrdinalIgnoreCase));
+                //var agents =
+                //    (await client.Agent.Services()).Response.Values.Where(item =>
+                //        item.Service.Equals(serverName, StringComparison.OrdinalIgnoreCase));
+
+                ServiceEntry[] healths = (await client.Health.Service(serverName, "", true)).Response;
 
                 var ipAddressModels = new List<AddressModel>();
-                ipAddressModels.ForEach(item =>
+
+                healths.ToList().ForEach(service =>
                 {
-                    foreach (var service in agents)
+                    var agent = service.Checks.FirstOrDefault(item => item.ServiceID == service.Service.ID);
+
+                    if (agent == null && !agent.Status.Equals(HealthStatus.Passing))
+                        return;
+
+                    ipAddressModels.Add(new IpAddressModel()
                     {
-                        ipAddressModels.Add(new IpAddressModel()
-                        {
-                            Ip = service.Address,
-                            Port = service.Port
-                        });
-                    }
+                        Ip = service.Service.Address,
+                        Port = service.Service.Port
+                    });
                 });
 
                 var ipAddressModel = await _consulAddressSelector.SelectAsync(new AddressSelectContext()
