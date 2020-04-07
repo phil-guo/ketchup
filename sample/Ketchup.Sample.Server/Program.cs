@@ -18,17 +18,16 @@ namespace Ketchup.Sample.Server
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-
             return Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory());
-                    if (hostingContext.HostingEnvironment.IsDevelopment())
-                        config.AddJsonFile("config/server.json", true, true);
-                    if (hostingContext.HostingEnvironment.IsProduction())
-                        config.AddJsonFile($"config/server.{hostingContext.HostingEnvironment.EnvironmentName}.json",
-                            true);
+                    //if (hostingContext.HostingEnvironment.IsDevelopment())
+                    config.AddJsonFile("config/server.json", true, true);
+                    //if (hostingContext.HostingEnvironment.IsProduction())
+                    //    config.AddJsonFile($"config/server.{hostingContext.HostingEnvironment.EnvironmentName}.json",
+                    //        true);
 
                 }).ConfigureWebHostDefaults(webBuilder =>
                 {

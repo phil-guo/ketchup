@@ -23,6 +23,7 @@ namespace Ketchup.Sample.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add things to the service collection.
+            services.AddGrpc();
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -42,7 +43,7 @@ namespace Ketchup.Sample.Server
         {
             // Add things to the ContainerBuilder that are only for the
             // production environment.
-
+            builder.AddCoreService().RegisterModules();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,6 +57,10 @@ namespace Ketchup.Sample.Server
         public void ConfigureStaging(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             // Set up the application for staging.
+            app.UseServer();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGrpcService<DefaultHealthCheckService>(); });
         }
     }
 }
