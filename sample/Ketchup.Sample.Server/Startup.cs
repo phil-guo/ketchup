@@ -66,6 +66,7 @@ namespace Ketchup.Sample.Server
             app.UseRouting();
 
             app.UseKetchupServer();
+
         }
     }
 }
