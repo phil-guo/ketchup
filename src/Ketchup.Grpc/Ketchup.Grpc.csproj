@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <!--<ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.11.2" />
+    <PackageReference Include="Grpc.Core.Api" Version="2.27.0" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ketchup.Consul\Ketchup.Consul.csproj" />
+    <ProjectReference Include="..\Ketchup.Core\Ketchup.Core.csproj" />
+  </ItemGroup>
+</Project>

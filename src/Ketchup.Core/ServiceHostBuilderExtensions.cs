@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Ketchup.Core.Configurations;
+﻿using Autofac;
 using Ketchup.Core.Modules;
-using Ketchup.Core.Route;
 using Ketchup.Core.Utilities;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 
 namespace Ketchup.Core
 {
@@ -23,6 +15,11 @@ namespace Ketchup.Core
 
             kernelModule.Initialize();
 
+            return app;
+        }
+
+        public static IApplicationBuilder UseKetchupClient(this IApplicationBuilder app)
+        {
             return app;
         }
 

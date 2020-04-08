@@ -12,7 +12,7 @@ namespace Ketchup.Sample.Domain.Services
             return Task.FromResult(new HelloReponse()
             {
                 Code = 1,
-                Msg = "ok",
+                Msg = "hello simple",
                 Result = JsonConvert.SerializeObject(request)
             });
         }

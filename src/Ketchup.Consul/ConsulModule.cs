@@ -38,12 +38,13 @@ namespace Ketchup.Consul
             endpointRoute.MapGrpcService<DefaultHealthCheckService>();
         }
 
-    
+
         public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
         {
             UseConul(builder, provider =>
                 new DefaultConsulProivder(
-                    provider.GetRequiredService<IConsulClientProvider>())
+                    provider.GetRequiredService<IConsulClientProvider>(),
+                    provider.GetRequiredService<IConsulAddressSelector>())
                 {
                     AppConfig = appConfig
                 });

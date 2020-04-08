@@ -21,9 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{358502
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Sample.Server", "sample\Ketchup.Sample.Server\Ketchup.Sample.Server.csproj", "{2FDE3A27-3150-435F-BFF9-D9D90E93DE47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Sample.Client", "sample\Ketchup.Sample.Client\Ketchup.Sample.Client.csproj", "{71BBC2A0-7554-4051-8B7D-31DCC1A91886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Sample.Client", "sample\Ketchup.Sample.Client\Ketchup.Sample.Client.csproj", "{71BBC2A0-7554-4051-8B7D-31DCC1A91886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Sample.Domain", "sample\Ketchup.Sample.Domain\Ketchup.Sample.Domain.csproj", "{C1171747-8A70-4278-9BCE-DBD0AB094140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Sample.Domain", "sample\Ketchup.Sample.Domain\Ketchup.Sample.Domain.csproj", "{C1171747-8A70-4278-9BCE-DBD0AB094140}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Grpc", "src\Ketchup.Grpc\Ketchup.Grpc.csproj", "{236E0E5A-85B2-469D-829B-92A45A8EB804}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{C1171747-8A70-4278-9BCE-DBD0AB094140}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1171747-8A70-4278-9BCE-DBD0AB094140}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1171747-8A70-4278-9BCE-DBD0AB094140}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{2FDE3A27-3150-435F-BFF9-D9D90E93DE47} = {3585020B-E24E-4936-9DA6-126E737A6572}
 		{71BBC2A0-7554-4051-8B7D-31DCC1A91886} = {3585020B-E24E-4936-9DA6-126E737A6572}
 		{C1171747-8A70-4278-9BCE-DBD0AB094140} = {3585020B-E24E-4936-9DA6-126E737A6572}
+		{236E0E5A-85B2-469D-829B-92A45A8EB804} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D69DA7EE-D2A0-4387-B287-356AF9B3BC18}

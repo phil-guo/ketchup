@@ -7,8 +7,6 @@ namespace Ketchup.Core.Modules
 {
     public abstract class KernelModule : Module
     {
-
-
         public ContainerBuilderWrapper Builder { get; set; }
 
         public virtual void Initialize(KetchupPlatformContainer builder)

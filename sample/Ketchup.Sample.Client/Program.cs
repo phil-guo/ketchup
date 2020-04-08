@@ -1,7 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Grpc.Domain;
 using Grpc.Net.Client;
+using Ketchup.Core;
+using Ketchup.Core.Configurations;
+using Ketchup.Grpc.Internal.Client;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ketchup.Sample.Client
 {
@@ -9,44 +17,51 @@ namespace Ketchup.Sample.Client
     {
         static async Task Main(string[] args)
         {
-            AppContext.SetSwitch(
-                "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("config/client.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+            AppConfig.Configuration = builder.Build();
 
-            var channel = GrpcChannel.ForAddress("http://127.0.0.1:5003");
-            var client = new RpcTest.RpcTestClient(channel);
+            var serviceCollection = new ServiceCollection();
+            var containerBuilder = new ContainerBuilder();
 
-            var reply = await client.SayHelloAsync(new HelloRequest() { Name = "2213", Age = 44 });
+            containerBuilder.Populate(serviceCollection);
 
-            //var test = new ChannelFactory().FindGrpcClient<RpcTest.RpcTestClient>();
+            containerBuilder.AddCoreService().RegisterModules();
 
-            Console.WriteLine($"{reply.Msg}-----{reply.Code} --------{reply.Result}");
-            Console.ReadKey();
+            var container = containerBuilder.Build();
+
+            var serviceProvider = new AutofacServiceProvider(container);
+
+            Test.Testing(container.Resolve<IGrpcClientProvider>());
         }
     }
 
-    public class ChannelFactory
+    public class Test
     {
-        public ChannelFactory() { }
-        //ClientBase<RpcTestClient>
-        //public ClientBase FindGrpcClient<TClient>()
-        //    where TClient : ClientBase<TClient>, new()
-        //{
-        //    AppContext.SetSwitch(
-        //        "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+        public static void Testing(IGrpcClientProvider provider)
+        {
+            Stopwatch sw = new Stopwatch();
 
-        //    //TypeNameHelper.GetTypeDisplayName(typeof(TClient), false, false, true, '+');
+            Task.Run(async () =>
+            {
+                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
-        //    var channel = GrpcChannel.ForAddress("http://127.0.0.1:5003", new GrpcChannelOptions() { });
+                sw.Start();
+                Console.WriteLine("开始执行1000次测试");
+                for (int i = 0; i < 1000; i++)
+                {
+                    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+                    //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
+                }
 
-        //    var a = new TClient();
 
-        //    //var a = new RpcTest.RpcTestClient(channel);
+                sw.Stop();
+                TimeSpan ts2 = sw.Elapsed;
+                Console.WriteLine("执行总共花费{0}ms.", ts2.TotalMilliseconds);
 
-        //    //return cliet;
-
-        //    var type = typeof(TClient);
-
-        //    type.Assembly.CreateInstance(nameof(TClient));
-        //}
+                Console.ReadKey();
+            }).Wait();
+        }
     }
 }

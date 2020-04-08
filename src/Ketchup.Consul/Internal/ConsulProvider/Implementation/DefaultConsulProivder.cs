@@ -18,9 +18,10 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
         public AppConfig AppConfig { get; set; }
 
-        public DefaultConsulProivder(IConsulClientProvider consulClientProvider)
+        public DefaultConsulProivder(IConsulClientProvider consulClientProvider, IConsulAddressSelector consulAddressSelector)
         {
             _consulClientProvider = consulClientProvider;
+            _consulAddressSelector = consulAddressSelector;
         }
 
         public async Task RegiserConsulAgent()
@@ -72,21 +73,12 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
             using (var client = _consulClientProvider.GetConsulClient())
             {
-                //var agents =
-                //    (await client.Agent.Services()).Response.Values.Where(item =>
-                //        item.Service.Equals(serverName, StringComparison.OrdinalIgnoreCase));
-
                 ServiceEntry[] healths = (await client.Health.Service(serverName, "", true)).Response;
 
                 var ipAddressModels = new List<AddressModel>();
 
                 healths.ToList().ForEach(service =>
                 {
-                    var agent = service.Checks.FirstOrDefault(item => item.ServiceID == service.Service.ID);
-
-                    if (agent == null && !agent.Status.Equals(HealthStatus.Passing))
-                        return;
-
                     ipAddressModels.Add(new IpAddressModel()
                     {
                         Ip = service.Service.Address,

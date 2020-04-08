@@ -10,6 +10,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="config\client.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="config\client.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <!--<PackageReference Include="Google.Protobuf" Version="3.10.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.23.2" />-->
     <PackageReference Include="Grpc.Tools" Version="2.27.0">
@@ -21,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ketchup.Consul\Ketchup.Consul.csproj" />
     <ProjectReference Include="..\..\src\Ketchup.Core\Ketchup.Core.csproj" />
+    <ProjectReference Include="..\..\src\Ketchup.Grpc\Ketchup.Grpc.csproj" />
   </ItemGroup>
 
   <ItemGroup>
