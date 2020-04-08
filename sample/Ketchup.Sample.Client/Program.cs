@@ -47,9 +47,11 @@ namespace Ketchup.Sample.Client
             {
                 var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
+                var count = 10000;
+
                 sw.Start();
-                Console.WriteLine("开始执行1000次测试");
-                for (int i = 0; i < 1000; i++)
+                Console.WriteLine($"开始执行{count}次测试");
+                for (int i = 0; i < count; i++)
                 {
                     var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
                     //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
