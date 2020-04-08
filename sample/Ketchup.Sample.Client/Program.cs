@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Grpc.Core;
 using Grpc.Domain;
-using Grpc.Core;
 using Grpc.Net.Client;
-using Grpc.Net.ClientFactory;
-using Grpc.Net.ClientFactory.Internal;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace Ketchup.Sample.Client
 {
@@ -15,18 +9,18 @@ namespace Ketchup.Sample.Client
     {
         static async Task Main(string[] args)
         {
-            //AppContext.SetSwitch(
-            //    "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            AppContext.SetSwitch(
+                "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
             var channel = GrpcChannel.ForAddress("http://127.0.0.1:5003");
             var client = new RpcTest.RpcTestClient(channel);
 
-            //var reply = await client.SayHelloAsync(new HelloRequest() { Name = "2213", Age = 44 });
+            var reply = await client.SayHelloAsync(new HelloRequest() { Name = "2213", Age = 44 });
 
             //var test = new ChannelFactory().FindGrpcClient<RpcTest.RpcTestClient>();
 
-            //Console.WriteLine($"{reply.Msg}-----{reply.Code} --------{reply.Result}");
-            //Console.ReadKey();
+            Console.WriteLine($"{reply.Msg}-----{reply.Code} --------{reply.Result}");
+            Console.ReadKey();
         }
     }
 

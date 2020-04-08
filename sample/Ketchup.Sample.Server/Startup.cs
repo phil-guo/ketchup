@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Ketchup.Consul;
 using Ketchup.Consul.Internal.HealthCheck.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
@@ -37,6 +38,7 @@ namespace Ketchup.Sample.Server
         public void ConfigureContainer(ContainerBuilder builder)
         {
             // Add things to the Autofac ContainerBuilder.
+            //builder.Populate(Services);
             builder.AddCoreService().RegisterModules();
         }
 
@@ -47,29 +49,23 @@ namespace Ketchup.Sample.Server
             builder.AddCoreService().RegisterModules();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            app.UseServer();
+            // Set up the application for development.
+
+            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
 
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGrpcService<DefaultHealthCheckService>();
-                endpoints.MapGrpcService<HelloService>();
-            });
+            app.UseKetchupServer();
         }
 
         public void ConfigureStaging(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             // Set up the application for staging.
-            app.UseServer();
-
+            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGrpcService<DefaultHealthCheckService>();
-                endpoints.MapGrpcService<HelloService>();
-            });
+
+            app.UseKetchupServer();
         }
     }
 }

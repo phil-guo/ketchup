@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 
 namespace Ketchup.Core.Modules
@@ -11,6 +13,7 @@ namespace Ketchup.Core.Modules
         private readonly KetchupPlatformContainer _container;
         private readonly ILogger<KernelModuleProvider> _logger;
 
+        public IApplicationBuilder ApplicationBuilder { get; set; }
 
         public KernelModuleProvider(List<KernelModule> modules, KetchupPlatformContainer container, ILogger<KernelModuleProvider> logger)
         {
@@ -28,6 +31,7 @@ namespace Ketchup.Core.Modules
                 try
                 {
                     item.Initialize(_container);
+                    ApplicationBuilder.UseEndpoints(item.MapGrpcService);
                 }
                 catch (Exception e)
                 {

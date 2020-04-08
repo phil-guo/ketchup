@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\src\Ketchup.Core\Ketchup.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Update="Protos\hello.proto" GrpcServices="Both" />
+  </ItemGroup>
+
 </Project>

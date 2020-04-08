@@ -5,10 +5,14 @@ using Ketchup.Consul.Internal.ClientProvider;
 using Ketchup.Consul.Internal.ClientProvider.Implementation;
 using Ketchup.Consul.Internal.ConsulProvider;
 using Ketchup.Consul.Internal.ConsulProvider.Implementation;
+using Ketchup.Consul.Internal.HealthCheck.Implementation;
 using Ketchup.Consul.Internal.Selector;
 using Ketchup.Consul.Internal.Selector.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
+using Ketchup.Core.Utilities;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ketchup.Consul
@@ -29,6 +33,12 @@ namespace Ketchup.Consul
                 .UseConsul(builder, appConfig);
         }
 
+        public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
+        {
+            endpointRoute.MapGrpcService<DefaultHealthCheckService>();
+        }
+
+    
         public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
         {
             UseConul(builder, provider =>

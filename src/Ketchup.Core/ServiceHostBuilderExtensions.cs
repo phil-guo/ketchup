@@ -15,19 +15,21 @@ namespace Ketchup.Core
 {
     public static class ServiceHostBuilderExtensions
     {
-        public static IApplicationBuilder UseServer(this IApplicationBuilder app)
+        public static IApplicationBuilder UseKetchupServer(this IApplicationBuilder app)
         {
-            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
-            ServiceLocator.Current.Resolve<IKernelModuleProvider>().Initialize();
-            
+            var kernelModule = ServiceLocator.Current.Resolve<IKernelModuleProvider>();
+
+            kernelModule.ApplicationBuilder = app;
+
+            kernelModule.Initialize();
 
             return app;
         }
 
-        public static async Task ConfigureRoute(IContainer container)
-        {
-            var routeProvider = container.Resolve<IServiceRouteProvider>();
-            await routeProvider.RegisterRoutes();
-        }
+        //public static async Task ConfigureRoute(IContainer container)
+        //{
+        //    var routeProvider = container.Resolve<IServiceRouteProvider>();
+        //    await routeProvider.RegisterRoutes();
+        //}
     }
 }

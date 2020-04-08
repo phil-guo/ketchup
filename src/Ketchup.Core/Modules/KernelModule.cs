@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Autofac;
 using Ketchup.Core.Exceptions;
+using Microsoft.AspNetCore.Routing;
 
 namespace Ketchup.Core.Modules
 {
     public abstract class KernelModule : Module
     {
+
+
         public ContainerBuilderWrapper Builder { get; set; }
 
         public virtual void Initialize(KetchupPlatformContainer builder)
@@ -28,8 +29,9 @@ namespace Ketchup.Core.Modules
             }
         }
 
-        protected virtual void RegisterModule(ContainerBuilderWrapper builder)
-        {
-        }
+        protected virtual void RegisterModule(ContainerBuilderWrapper builder) { }
+
+
+        public virtual void MapGrpcService(IEndpointRouteBuilder endpointRoute) { }
     }
 }

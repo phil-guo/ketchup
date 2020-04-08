@@ -3,6 +3,7 @@ using Autofac;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 
 namespace Ketchup.Log4net
@@ -16,5 +17,9 @@ namespace Ketchup.Log4net
             log4NetConfigFile = EnvironmentHelper.GetEnvironmentVariable(log4NetConfigFile);
             builder.GetInstances<ILoggerFactory>().AddProvider(new Log4NetProvider(log4NetConfigFile));
         }
+
+        //public Log4netModule(IApplicationBuilder applicationBuilder) : base(applicationBuilder)
+        //{
+        //}
     }
 }
