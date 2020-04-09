@@ -14,8 +14,7 @@
   "Server": {
     "Name": "sample",
     "Ip": "127.0.0.1",
-    "Port": "5003",
-    "Polly": "random"
+    "Port": "5003"
   },
 
   "Consul": {
