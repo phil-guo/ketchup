@@ -13,12 +13,11 @@ using AppConfig = Ketchup.Consul.Configurations.AppConfig;
 
 namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 {
-    public class DefaultConsulProivder : IConsulProvider
+    public class DefaultConsulProivder : IConsulProvider, IDisposable
     {
         private readonly IConsulClientProvider _consulClientProvider;
         private readonly IConsulAddressSelector _consulAddressSelector;
         private readonly ConcurrentDictionary<string, ServiceEntry[]> _dictionary = new ConcurrentDictionary<string, ServiceEntry[]>();
-        private readonly int _timeout = 30000;
         private readonly Timer _timer;
 
         public AppConfig AppConfig { get; set; }
@@ -119,6 +118,11 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
                 _dictionary[key] = healths;
             }
+        }
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
         }
     }
 }
