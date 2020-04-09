@@ -6,7 +6,7 @@
     },
     "Console": { //针对日志提供程序Console的配置
       "LogLevel": { //日志筛选器
-        "Default": "Error", //默认日志类别//Error
+        "Default": "Information", //默认日志类别//Error
         "LoggingSample.Program": "Debug" //日志类别为LoggingSample.Program的筛选器
       }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Ketchup.Consul.Internal.ClientProvider;
 using Ketchup.Consul.Internal.Selector;
@@ -15,6 +17,9 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
     {
         private readonly IConsulClientProvider _consulClientProvider;
         private readonly IConsulAddressSelector _consulAddressSelector;
+        private readonly ConcurrentDictionary<string, ServiceEntry[]> _dictionary = new ConcurrentDictionary<string, ServiceEntry[]>();
+        private readonly int _timeout = 30000;
+        private readonly Timer _timer;
 
         public AppConfig AppConfig { get; set; }
 
@@ -22,77 +27,76 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         {
             _consulClientProvider = consulClientProvider;
             _consulAddressSelector = consulAddressSelector;
+
+            var timeSpan = TimeSpan.FromSeconds(10);
+
+            _timer = new Timer(async item => { await Check(); }, null, timeSpan, timeSpan);
         }
 
         public async Task RegiserConsulAgent()
         {
-            using (var consulClient = _consulClientProvider.GetConsulClient())
+            var consulClient = _consulClientProvider.GetConsulClient();
+            var config = Core.Configurations.AppConfig.ServerOptions;
+
+            if (!await IsExistAgent(consulClient, config.Name, config.Ip, config.Port))
+                return;
+
+            var agent = new AgentServiceRegistration()
             {
-                var config = Core.Configurations.AppConfig.ServerOptions;
+                ID = Guid.NewGuid().ToString("N"),
+                Name = config.Name,
+                Address = config.Ip,
+                Port = config.Port,
+                Tags = new[] { $"urlprefix-/{config.Ip}:{config.Port}" }
+            };
 
-                if (!await IsExistAgent(consulClient, config.Name, config.Ip, config.Port))
-                    return;
 
-                var agent = new AgentServiceRegistration()
+            if (AppConfig.Consul.IsHealthCheck)
+            {
+                var check = new AgentServiceCheck
                 {
-                    ID = Guid.NewGuid().ToString("N"),
-                    Name = config.Name,
-                    Address = config.Ip,
-                    Port = config.Port,
-                    Tags = new[] { $"urlprefix-/{config.Ip}:{config.Port}" }
+                    //consul服务注册之后几秒开始检查
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                    //10秒检查一次
+                    Interval = TimeSpan.FromSeconds(10),
+                    GRPC = $"{config.Ip}:{config.Port}",
+                    GRPCUseTLS = false,
+                    Timeout = TimeSpan.FromSeconds(10)
                 };
 
-
-                if (AppConfig.Consul.IsHealthCheck)
-                {
-                    var check = new AgentServiceCheck
-                    {
-                        //consul服务注册之后几秒开始检查
-                        DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
-                        //10秒检查一次
-                        Interval = TimeSpan.FromSeconds(10),
-                        GRPC = $"{config.Ip}:{config.Port}",
-                        GRPCUseTLS = false,
-                        Timeout = TimeSpan.FromSeconds(10)
-                    };
-
-                    agent.Check = check;
-                }
-
-                await consulClient.Agent.ServiceRegister(agent);
-
-                AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
-                {
-                    consulClient.Agent.ServiceDeregister(agent.ID).Wait();
-                };
+                agent.Check = check;
             }
+
+            await consulClient.Agent.ServiceRegister(agent);
+
+            AppDomain.CurrentDomain.ProcessExit += (sender, e) =>
+            {
+                consulClient.Agent.ServiceDeregister(agent.ID).Wait();
+            };
         }
 
         public async ValueTask<IpAddressModel> FindServiceEntry(string serverName)
         {
+            var client = _consulClientProvider.GetConsulClient();
+            ServiceEntry[] healths = _dictionary.GetOrAdd(serverName, (await client.Health.Service(serverName, "", true)).Response);
 
-            using (var client = _consulClientProvider.GetConsulClient())
+            var ipAddressModels = new List<AddressModel>();
+
+            healths.ToList().ForEach(service =>
             {
-                ServiceEntry[] healths = (await client.Health.Service(serverName, "", true)).Response;
-
-                var ipAddressModels = new List<AddressModel>();
-
-                healths.ToList().ForEach(service =>
+                ipAddressModels.Add(new IpAddressModel()
                 {
-                    ipAddressModels.Add(new IpAddressModel()
-                    {
-                        Ip = service.Service.Address,
-                        Port = service.Service.Port
-                    });
+                    Ip = service.Service.Address,
+                    Port = service.Service.Port
                 });
+            });
 
-                var ipAddressModel = await _consulAddressSelector.SelectAsync(new AddressSelectContext()
-                {
-                    Address = ipAddressModels,
-                });
+            var ipAddressModel = await _consulAddressSelector.SelectAsync(new AddressSelectContext()
+            {
+                Address = ipAddressModels,
+            });
 
-                return ipAddressModel as IpAddressModel;
-            }
+            return ipAddressModel as IpAddressModel;
         }
 
         private async Task<bool> IsExistAgent(ConsulClient consulClient, string serverName, string ip, int port)
@@ -103,6 +107,18 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                 item.Service == serverName && item.Address == ip && item.Port == port);
 
             return service == null;
+        }
+
+        private async Task Check()
+        {
+            var client = _consulClientProvider.GetConsulClient();
+
+            foreach (var key in _dictionary.Keys)
+            {
+                var healths = (await client.Health.Service(key, "", true)).Response;
+
+                _dictionary[key] = healths;
+            }
         }
     }
 }

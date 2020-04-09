@@ -10,7 +10,6 @@ using Ketchup.Consul.Internal.Selector;
 using Ketchup.Consul.Internal.Selector.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
-using Ketchup.Core.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,12 +59,10 @@ namespace Ketchup.Consul
         public ConsulModule UseCounlClientProvider(ContainerBuilderWrapper builder, Ketchup.Consul.Configurations.AppConfig appConfig)
         {
             UseCounlClientProvider(builder, provider =>
-                new ConsulClientProvider(
-                    provider.GetRequiredService<IConsulAddressSelector>())
+                new ConsulClientProvider
                 {
                     AppConfig = appConfig
-                }
-                );
+                });
             return this;
         }
 

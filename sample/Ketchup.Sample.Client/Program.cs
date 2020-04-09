@@ -41,26 +41,58 @@ namespace Ketchup.Sample.Client
     {
         public static void Testing(IGrpcClientProvider provider)
         {
-            Stopwatch sw = new Stopwatch();
+
 
             Task.Run(async () =>
             {
-                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
-
                 var count = 10000;
 
+
+                //Stopwatch sw1 = new Stopwatch();
+                //sw1.Start();
+                //Console.WriteLine($"开始执行获取客户端{count}次测试");
+
+                //for (int i = 0; i < count; i++)
+                //{
+                //    await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                //}
+
+
+                //sw1.Stop();
+                //TimeSpan ts1 = sw1.Elapsed;
+                //Console.WriteLine("执行获取客户端总共花费{0}ms.", ts1.TotalMilliseconds);
+
+
+                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                Stopwatch sw = new Stopwatch();
                 sw.Start();
                 Console.WriteLine($"开始执行{count}次测试");
                 for (int i = 0; i < count; i++)
                 {
+
                     var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
                     //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
                 }
-
-
                 sw.Stop();
-                TimeSpan ts2 = sw.Elapsed;
-                Console.WriteLine("执行总共花费{0}ms.", ts2.TotalMilliseconds);
+                TimeSpan ts = sw.Elapsed;
+                Console.WriteLine("执行总共花费{0}ms.", ts.TotalMilliseconds);
+
+                ////todo 3
+
+                //Stopwatch sw3 = new Stopwatch();
+                //sw3.Start();
+                //Console.WriteLine($"开始执行{count}次测试");
+
+                //for (int i = 0; i < count; i++)
+                //{
+                //    var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                //    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+                //}
+
+
+                //sw3.Stop();
+                //TimeSpan ts3 = sw3.Elapsed;
+                //Console.WriteLine("执行获取客户端跟消息通讯总共花费{0}ms.", ts3.TotalMilliseconds);
 
                 Console.ReadKey();
             }).Wait();
