@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="7.2.0" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.11.2" />
     <PackageReference Include="Grpc.Core.Api" Version="2.27.0" />

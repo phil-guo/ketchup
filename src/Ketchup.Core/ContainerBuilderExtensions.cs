@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Autofac;
-using Ketchup.Core.Configurations;
 using Ketchup.Core.Modules;
-using Ketchup.Core.Services;
 using Ketchup.Core.Utilities;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;

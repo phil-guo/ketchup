@@ -3,13 +3,17 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Grpc.Core.Interceptors;
 using Grpc.Domain;
 using Grpc.Net.Client;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
+using Ketchup.Grpc;
 using Ketchup.Grpc.Internal.Client;
+using Ketchup.Grpc.Internal.Intercept;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace Ketchup.Sample.Client
 {
@@ -45,8 +49,13 @@ namespace Ketchup.Sample.Client
 
             Task.Run(async () =>
             {
-                var count = 10000;
+                var count = 10;
+                
+                //拦截器测试
+                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
+                var request = new HelloRequest() { Age = 28, Name = "simple" };
+                var result = await client.AddPollyExecuteAsync(request, async () => await client.SayHelloAsync(request));
 
                 //Stopwatch sw1 = new Stopwatch();
                 //sw1.Start();
@@ -63,19 +72,19 @@ namespace Ketchup.Sample.Client
                 //Console.WriteLine("执行获取客户端总共花费{0}ms.", ts1.TotalMilliseconds);
 
 
-                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-                Console.WriteLine($"开始执行{count}次测试");
-                for (int i = 0; i < count; i++)
-                {
+                //var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
+                //Console.WriteLine($"开始执行{count}次测试");
+                //for (int i = 0; i < count; i++)
+                //{
 
-                    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
-                    //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
-                }
-                sw.Stop();
-                TimeSpan ts = sw.Elapsed;
-                Console.WriteLine("执行总共花费{0}ms.", ts.TotalMilliseconds);
+                //    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+                //    //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
+                //}
+                //sw.Stop();
+                //TimeSpan ts = sw.Elapsed;
+                //Console.WriteLine("执行总共花费{0}ms.", ts.TotalMilliseconds);
 
                 ////todo 3
 
