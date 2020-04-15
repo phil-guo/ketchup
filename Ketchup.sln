@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Sample.Client", "sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Sample.Domain", "sample\Ketchup.Sample.Domain\Ketchup.Sample.Domain.csproj", "{C1171747-8A70-4278-9BCE-DBD0AB094140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Grpc", "src\Ketchup.Grpc\Ketchup.Grpc.csproj", "{236E0E5A-85B2-469D-829B-92A45A8EB804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Grpc", "src\Ketchup.Grpc\Ketchup.Grpc.csproj", "{236E0E5A-85B2-469D-829B-92A45A8EB804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Gateway", "src\Ketchup.Gateway\Ketchup.Gateway.csproj", "{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{236E0E5A-85B2-469D-829B-92A45A8EB804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{71BBC2A0-7554-4051-8B7D-31DCC1A91886} = {3585020B-E24E-4936-9DA6-126E737A6572}
 		{C1171747-8A70-4278-9BCE-DBD0AB094140} = {3585020B-E24E-4936-9DA6-126E737A6572}
 		{236E0E5A-85B2-469D-829B-92A45A8EB804} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
+		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D69DA7EE-D2A0-4387-B287-356AF9B3BC18}

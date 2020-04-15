@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+package grpc.gateway.v1;
+
+//import "";
+
+
+message StringMessage {
+	string value = 1;
+}
+
+service EchoService {
+	//rpc Echo(StringMessage) returns (StringMessage) {
+	//	option (google.api.http) = {
+	//		post: "api/v1/{value}"
+	//		body: "*"
+	//	};
+	//}
+}
