@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ketchup.Consul\Ketchup.Consul.csproj" />
     <ProjectReference Include="..\..\src\Ketchup.Core\Ketchup.Core.csproj" />
+    <ProjectReference Include="..\..\src\Ketchup.RabbitMQ\Ketchup.RabbitMQ.csproj" />
   </ItemGroup>
 
   <ItemGroup>

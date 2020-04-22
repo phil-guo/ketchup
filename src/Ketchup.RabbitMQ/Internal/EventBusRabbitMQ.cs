@@ -8,6 +8,7 @@ using Ketchup.Core.EventBus;
 using Ketchup.Core.EventBus.Events;
 using Ketchup.Core.Utilities;
 using Ketchup.RabbitMQ.Attributes;
+using Ketchup.RabbitMQ.Configurations;
 using Ketchup.RabbitMQ.Internal.Client;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -28,6 +29,11 @@ namespace Ketchup.RabbitMQ.Internal
 
         public EventBusRabbitMQ(IRabbitMqClientProvider rabbitMqClient, IEventBusSubscriptionsManager subscriptionsManager)
         {
+            var appConfig = new AppConfig();
+
+            _retryCount = appConfig.RabbitMq.RetryCount;
+            _rollbackCount = appConfig.RabbitMq.FailCount;
+
             _rabbitMqClient = rabbitMqClient;
             _subscriptionsManager = subscriptionsManager;
             _consumerChannels = new Dictionary<Tuple<string, QueueConsumerMode>, IModel>();
@@ -91,6 +97,9 @@ namespace Ketchup.RabbitMQ.Internal
                     channel.QueueBind(queue: queueName, exchange: "", routingKey: eventName);
                 }
             }
+
+            if (!_subscriptionsManager.HasSubscriptionsForEvent<T>())
+                _subscriptionsManager.AddSubscription<T, TH>(handler, attribute.Name);
         }
 
         public void Unsubscribe<T, TH>() where TH : IEventHandler<T>
@@ -102,7 +111,14 @@ namespace Ketchup.RabbitMQ.Internal
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            foreach (var key in _consumerChannels.Keys)
+            {
+                if (_consumerChannels[key] != null)
+                {
+                    _consumerChannels[key].Dispose();
+                }
+            }
+            _subscriptionsManager.Clear();
         }
 
         private IModel CreateConsumerChannel(QueueConsumer queueConsumer, string routeKey,
@@ -114,8 +130,10 @@ namespace Ketchup.RabbitMQ.Internal
             {
                 case QueueConsumerMode.Retry:
                     break;
+                case QueueConsumerMode.Fail:
+                    break;
                 default:
-
+                    result = CreateConsumerChannel(queueConsumer.Name, type);
                     break;
             }
 
