@@ -25,6 +25,7 @@ namespace Ketchup.RabbitMQ.Internal
         private readonly ConcurrentDictionary<ValueTuple<Type, string>, object> _initializers;
         private readonly int _retryCount;
         private readonly int _rollbackCount;
+        private readonly int _messageTTL;
         string BROKER_NAME = "ketchup";
 
         public EventBusRabbitMQ(IRabbitMqClientProvider rabbitMqClient, IEventBusSubscriptionsManager subscriptionsManager)
@@ -33,6 +34,7 @@ namespace Ketchup.RabbitMQ.Internal
 
             _retryCount = appConfig.RabbitMq.RetryCount;
             _rollbackCount = appConfig.RabbitMq.FailCount;
+            _messageTTL = appConfig.RabbitMq.MessageTTL;
 
             _rabbitMqClient = rabbitMqClient;
             _subscriptionsManager = subscriptionsManager;
@@ -74,6 +76,9 @@ namespace Ketchup.RabbitMQ.Internal
 
             var types = Enum.GetNames(typeof(QueueConsumerMode));
 
+            if (!_rabbitMqClient.IsConnected)
+                _rabbitMqClient.TryConnect();
+
             using (var channel = _rabbitMqClient.CreateModel())
             {
                 foreach (var item in types)
@@ -84,6 +89,7 @@ namespace Ketchup.RabbitMQ.Internal
                         ? attribute.Name
                         : $"{attribute.Name}@{type.ToString()}";
 
+                    var exchange = type == QueueConsumerMode.Normal ? BROKER_NAME : $"{BROKER_NAME}@{type.ToString()}";
 
                     var key = new Tuple<string, QueueConsumerMode>(queueName, type);
                     if (_consumerChannels.ContainsKey(key))
@@ -93,8 +99,7 @@ namespace Ketchup.RabbitMQ.Internal
                     }
 
                     _consumerChannels.Add(key, CreateConsumerChannel(attribute, eventName, type));
-
-                    channel.QueueBind(queue: queueName, exchange: "", routingKey: eventName);
+                    channel.QueueBind(queue: queueName, exchange: exchange, routingKey: eventName);
                 }
             }
 
@@ -104,7 +109,6 @@ namespace Ketchup.RabbitMQ.Internal
 
         public void Unsubscribe<T, TH>() where TH : IEventHandler<T>
         {
-            throw new NotImplementedException();
         }
 
         public event System.EventHandler OnShutdown;
@@ -129,8 +133,10 @@ namespace Ketchup.RabbitMQ.Internal
             switch (type)
             {
                 case QueueConsumerMode.Retry:
+                    result = CreateRetryConsumerChannel(queueConsumer.Name, routeKey, type);
                     break;
                 case QueueConsumerMode.Fail:
+                    result = CreateFailConsumerChannel(queueConsumer.Name, type);
                     break;
                 default:
                     result = CreateConsumerChannel(queueConsumer.Name, type);
@@ -159,6 +165,55 @@ namespace Ketchup.RabbitMQ.Internal
 
             channel.Close();
 
+            return channel;
+        }
+
+        private IModel CreateRetryConsumerChannel(string queueName, string routeKey, QueueConsumerMode type)
+        {
+            if (!_rabbitMqClient.IsConnected)
+                _rabbitMqClient.TryConnect();
+
+            IDictionary<String, Object> arguments = new Dictionary<String, Object>();
+            arguments.Add("x-dead-letter-exchange", $"{BROKER_NAME}@{QueueConsumerMode.Fail.ToString()}");
+            arguments.Add("x-message-ttl", _messageTTL);
+            arguments.Add("x-dead-letter-routing-key", routeKey);
+            var channel = _rabbitMqClient.CreateModel();
+            var retryQueueName = $"{queueName}@{type.ToString()}";
+            channel.ExchangeDeclare(exchange: $"{BROKER_NAME}@{type.ToString()}",
+                type: ExchangeType.Direct);
+            channel.QueueDeclare(retryQueueName, true, false, false, arguments);
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += async (model, ea) =>
+            {
+                var eventName = ea.RoutingKey;
+                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties);
+                channel.BasicAck(ea.DeliveryTag, false);
+            };
+
+            channel.Close();
+
+            return channel;
+        }
+
+        private IModel CreateFailConsumerChannel(string queueName, QueueConsumerMode type)
+        {
+            if (!_rabbitMqClient.IsConnected)
+                _rabbitMqClient.TryConnect();
+
+            var channel = _rabbitMqClient.CreateModel();
+            channel.ExchangeDeclare(exchange: $"{BROKER_NAME}@{type.ToString()}",
+                type: ExchangeType.Direct);
+            var failQueueName = $"{queueName}@{type.ToString()}";
+            channel.QueueDeclare(failQueueName, true, false, false, null);
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += async (model, ea) =>
+            {
+                var eventName = ea.RoutingKey;
+                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties);
+                channel.BasicAck(ea.DeliveryTag, false);
+            };
+
+            channel.Close();
             return channel;
         }
 

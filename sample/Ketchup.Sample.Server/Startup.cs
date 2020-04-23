@@ -38,8 +38,7 @@ namespace Ketchup.Sample.Server
         public void ConfigureContainer(ContainerBuilder builder)
         {
             // Add things to the Autofac ContainerBuilder.
-            //builder.Populate(Services);
-            builder.AddCoreService().RegisterModules();
+            builder.AddCoreService().AddEventBusService().RegisterModules();
         }
 
         public void ConfigureProductionContainer(ContainerBuilder builder)

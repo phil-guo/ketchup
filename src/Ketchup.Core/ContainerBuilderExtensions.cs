@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Autofac;
+using Ketchup.Core.EventBus;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
 using Microsoft.Extensions.DependencyModel;
@@ -39,6 +40,17 @@ namespace Ketchup.Core
                     provider.Resolve<KetchupPlatformContainer>(),
                     provider.Resolve<ILogger<KernelModuleProvider>>()))
                 .As<IKernelModuleProvider>();
+        }
+
+        public static ContainerBuilder AddEventBusService(this ContainerBuilder builder)
+        {
+            var referenceAssemblies = GetAssemblies();
+            foreach (var assembly in referenceAssemblies)
+            {
+                builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IEventHandler).GetTypeInfo().IsAssignableFrom(t)).AsImplementedInterfaces().SingleInstance();
+                builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IEventHandler).IsAssignableFrom(t)).SingleInstance();
+            }
+            return builder;
         }
 
         private static List<Assembly> GetAssemblies()
@@ -84,15 +96,4 @@ namespace Ketchup.Core
             return modules;
         }
     }
-
-    ///// <summary>
-    /////     服务构建者。
-    ///// </summary>
-    //public interface IServiceBuilder
-    //{
-    //    /// <summary>
-    //    ///     服务集合。
-    //    /// </summary>
-    //    ContainerBuilder Services { get; set; }
-    //}
 }

@@ -61,8 +61,8 @@ namespace Ketchup.RabbitMQ
         {
             UseRabbitMQEventAdapt(builder, provider =>
                 new RabbitMqSubscriptionAdapt(
-                    provider.GetRequiredService<IEnumerable<IEventHandler>>(),
-                    provider.GetRequiredService<IConsumeConfigurator>()
+                    provider.GetService<IEnumerable<IEventHandler>>(),
+                    provider.GetService<IConsumeConfigurator>()
                 )
             );
         }

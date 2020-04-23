@@ -12,5 +12,6 @@ namespace Ketchup.RabbitMQ.Configurations
         public int Port { get; set; } = 5672;
         public int RetryCount { get; set; }
         public int FailCount { get; set; }
+        public int MessageTTL { get; set; } = 30000;
     }
 }
