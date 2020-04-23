@@ -10,7 +10,7 @@ namespace Ketchup.Sample.Domain.Services.Events
     {
         public override Task Handle(UserEvent @event)
         {
-            Console.WriteLine($"消费1。");
+            Console.WriteLine($"消费1。{@event.Name}---{@event.Job}");
 
             //Console.WriteLine($"消费1失败。");
             //throw new Exception();

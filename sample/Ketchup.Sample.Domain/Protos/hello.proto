@@ -4,6 +4,8 @@ package grpc.domain;
 
 service RpcTest{
 	rpc SayHello(HelloRequest) returns (HelloReponse);
+
+	rpc SayHelloEvent(HelloRequest) returns(HelloReponse);
 }
 
 message HelloReponse{

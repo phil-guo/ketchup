@@ -51,17 +51,17 @@ namespace Ketchup.Core.EventBus.Subscriptions
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _handlers.Clear();
         }
 
         public IEnumerable<Delegate> GetHandlersForEvent<T>() where T : EventHandler
         {
-            throw new NotImplementedException();
+            return GetHandlersForEvent(typeof(T).Name);
         }
 
         public IEnumerable<Delegate> GetHandlersForEvent(string eventName)
         {
-            throw new NotImplementedException();
+            return _handlers[eventName];
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,9 +53,9 @@ namespace Ketchup.RabbitMQ.Internal
             {
                 var eventName = @event.GetType().Name;
 
+                //这是交换器类型
                 channel.ExchangeDeclare(exchange: BROKER_NAME,
                     type: ExchangeType.Direct);
-
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
                 var message = JsonConvert.SerializeObject(@event);
@@ -133,27 +134,41 @@ namespace Ketchup.RabbitMQ.Internal
             switch (type)
             {
                 case QueueConsumerMode.Retry:
-                    result = CreateRetryConsumerChannel(queueConsumer.Name, routeKey, type);
+                    {
+                        var bindConsumer = queueConsumer.Types.Any(p => p == QueueConsumerMode.Retry);
+                        result = CreateRetryConsumerChannel(queueConsumer.Name, routeKey, type, bindConsumer);
+                    }
+
                     break;
                 case QueueConsumerMode.Fail:
-                    result = CreateFailConsumerChannel(queueConsumer.Name, type);
+                    {
+                        var bindConsumer = queueConsumer.Types.Any(p => p == QueueConsumerMode.Fail);
+                        result = CreateFailConsumerChannel(queueConsumer.Name, type, bindConsumer);
+                    }
                     break;
                 default:
-                    result = CreateConsumerChannel(queueConsumer.Name, type);
+                    {
+                        var bindConsumer = queueConsumer.Types.Any(p => p == QueueConsumerMode.Normal);
+                        result = CreateConsumerChannel(queueConsumer.Name, type, bindConsumer);
+                    }
                     break;
             }
 
             return result;
         }
 
-        private IModel CreateConsumerChannel(string queueName, QueueConsumerMode type)
+        private IModel CreateConsumerChannel(string queueName, QueueConsumerMode type, bool bindConsumer)
         {
             if (!_rabbitMqClient.IsConnected)
                 _rabbitMqClient.TryConnect();
 
             var channel = _rabbitMqClient.CreateModel();
+
+            //定义交换机类型
             channel.ExchangeDeclare(exchange: BROKER_NAME,
                 type: ExchangeType.Direct);
+
+            //定义队列
             channel.QueueDeclare(queueName, true, false, false, null);
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
@@ -163,12 +178,19 @@ namespace Ketchup.RabbitMQ.Internal
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            channel.Close();
-
+            if (bindConsumer)
+            {
+                channel.BasicQos(0, 1, false);
+                channel.BasicConsume(queue: queueName,
+                    autoAck: false,
+                    consumer: consumer);
+            }
+            else
+                channel.Close();
             return channel;
         }
 
-        private IModel CreateRetryConsumerChannel(string queueName, string routeKey, QueueConsumerMode type)
+        private IModel CreateRetryConsumerChannel(string queueName, string routeKey, QueueConsumerMode type, bool bindConsumer)
         {
             if (!_rabbitMqClient.IsConnected)
                 _rabbitMqClient.TryConnect();
@@ -190,12 +212,20 @@ namespace Ketchup.RabbitMQ.Internal
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            channel.Close();
+            if (bindConsumer)
+            {
+                channel.BasicQos(0, 1, false);
+                channel.BasicConsume(queue: queueName,
+                    autoAck: false,
+                    consumer: consumer);
+            }
+            else
+                channel.Close();
 
             return channel;
         }
 
-        private IModel CreateFailConsumerChannel(string queueName, QueueConsumerMode type)
+        private IModel CreateFailConsumerChannel(string queueName, QueueConsumerMode type, bool bindConsumer)
         {
             if (!_rabbitMqClient.IsConnected)
                 _rabbitMqClient.TryConnect();
@@ -213,7 +243,15 @@ namespace Ketchup.RabbitMQ.Internal
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            channel.Close();
+            if (bindConsumer)
+            {
+                channel.BasicQos(0, 1, false);
+                channel.BasicConsume(queue: queueName,
+                    autoAck: false,
+                    consumer: consumer);
+            }
+            else
+                channel.Close();
             return channel;
         }
 

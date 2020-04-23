@@ -57,7 +57,9 @@ namespace Ketchup.Sample.Client
                 //var request = new HelloRequest() { Age = 28, Name = "simple" };
                 //var result = await client.AddPollyExecuteAsync(request, async () => await client.SayHelloAsync(request));
 
-                var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+                //var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+
+                await client.SayHelloEventAsync(new HelloRequest() { Age = 28, Name = "simple" });
 
                 //Stopwatch sw1 = new Stopwatch();
                 //sw1.Start();
