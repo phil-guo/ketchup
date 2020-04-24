@@ -1,16 +1,11 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Ketchup.Consul;
-using Ketchup.Consul.Internal.HealthCheck.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Utilities;
-using Ketchup.Sample.Domain.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Ketchup.Sample.Server

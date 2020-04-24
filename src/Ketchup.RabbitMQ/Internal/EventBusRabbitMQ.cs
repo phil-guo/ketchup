@@ -90,7 +90,9 @@ namespace Ketchup.RabbitMQ.Internal
                         ? attribute.Name
                         : $"{attribute.Name}@{type.ToString()}";
 
-                    var exchange = type == QueueConsumerMode.Normal ? BROKER_NAME : $"{BROKER_NAME}@{type.ToString()}";
+                    var exchange = type == QueueConsumerMode.Normal
+                        ? BROKER_NAME
+                        : $"{BROKER_NAME}@{type.ToString()}";
 
                     var key = new Tuple<string, QueueConsumerMode>(queueName, type);
                     if (_consumerChannels.ContainsKey(key))
@@ -146,7 +148,7 @@ namespace Ketchup.RabbitMQ.Internal
                         result = CreateFailConsumerChannel(queueConsumer.Name, type, bindConsumer);
                     }
                     break;
-                default:
+                case QueueConsumerMode.Normal:
                     {
                         var bindConsumer = queueConsumer.Types.Any(p => p == QueueConsumerMode.Normal);
                         result = CreateConsumerChannel(queueConsumer.Name, type, bindConsumer);
@@ -201,9 +203,14 @@ namespace Ketchup.RabbitMQ.Internal
             arguments.Add("x-dead-letter-routing-key", routeKey);
             var channel = _rabbitMqClient.CreateModel();
             var retryQueueName = $"{queueName}@{type.ToString()}";
+
+            //定义交换机
             channel.ExchangeDeclare(exchange: $"{BROKER_NAME}@{type.ToString()}",
                 type: ExchangeType.Direct);
+
+            //定义队列
             channel.QueueDeclare(retryQueueName, true, false, false, arguments);
+
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
             {
@@ -215,7 +222,7 @@ namespace Ketchup.RabbitMQ.Internal
             if (bindConsumer)
             {
                 channel.BasicQos(0, 1, false);
-                channel.BasicConsume(queue: queueName,
+                channel.BasicConsume(queue: retryQueueName,
                     autoAck: false,
                     consumer: consumer);
             }
@@ -246,7 +253,7 @@ namespace Ketchup.RabbitMQ.Internal
             if (bindConsumer)
             {
                 channel.BasicQos(0, 1, false);
-                channel.BasicConsume(queue: queueName,
+                channel.BasicConsume(queue: failQueueName,
                     autoAck: false,
                     consumer: consumer);
             }
@@ -372,20 +379,19 @@ namespace Ketchup.RabbitMQ.Internal
             {
                 if (properties != null)
                 {
+                    if (properties.Headers == null)
+                        properties.Headers = new Dictionary<string, object>();
 
                     IDictionary<String, Object> headers = properties.Headers;
-                    if (headers != null)
+                    if (headers.ContainsKey("x-death"))
                     {
-                        if (headers.ContainsKey("x-death"))
-                        {
-                            retryCount = GetRetryCount(properties, headers);
-                        }
-                        else
-                        {
-                            var death = new Dictionary<string, object>();
-                            death.Add("count", retryCount);
-                            headers.Add("x-death", death);
-                        }
+                        retryCount = GetRetryCount(properties, headers);
+                    }
+                    else
+                    {
+                        var death = new Dictionary<string, object>();
+                        death.Add("count", retryCount);
+                        headers.Add("x-death", death);
                     }
                 }
             }

@@ -26,6 +26,6 @@
     "UserName": "admin",
     "Password": "qwe123QWE",
     "RetryCount": 3,
-    "FailCount": 3
+    "FailCount": 1
   }
 }

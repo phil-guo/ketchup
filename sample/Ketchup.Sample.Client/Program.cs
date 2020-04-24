@@ -52,7 +52,7 @@ namespace Ketchup.Sample.Client
                 var count = 10;
 
                 //拦截器测试
-                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample", new Interceptor[] { new PollyInterceptor(), });
+                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
                 //var request = new HelloRequest() { Age = 28, Name = "simple" };
                 //var result = await client.AddPollyExecuteAsync(request, async () => await client.SayHelloAsync(request));
