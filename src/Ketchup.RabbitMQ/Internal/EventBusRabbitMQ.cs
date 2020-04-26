@@ -275,7 +275,7 @@ namespace Ketchup.RabbitMQ.Internal
             foreach (var item in handlers)
             {
                 var handler = item.DynamicInvoke();
-                long retryCount = 1;
+                long count = 1;
                 try
                 {
                     var fastInvoker = GetHandler($"{concreteType.FullName}.Handle", concreteType.GetMethod("Handle"));
@@ -285,21 +285,19 @@ namespace Ketchup.RabbitMQ.Internal
                 {
                     if (!_rabbitMqClient.IsConnected)
                         _rabbitMqClient.TryConnect();
-
-
-                    retryCount = GetRetryCount(properties);
+                    
+                    count = GetRetryCount(properties);
                     using (var channel = _rabbitMqClient.CreateModel())
                     {
-                        if (retryCount > _retryCount)
+                        if (count > _retryCount)
                         {
                             // 重试次数大于设置次数，则自动加入到死信队列
-                            var rollbackCount = retryCount - _retryCount;
-                            if (rollbackCount < _rollbackCount)
+                            var rollbackCount = count - _retryCount;
+                            if (rollbackCount <= _rollbackCount)
                             {
                                 IDictionary<String, Object> headers = new Dictionary<String, Object>();
                                 if (!headers.ContainsKey("x-orig-routing-key"))
                                     headers.Add("x-orig-routing-key", GetOrigRoutingKey(properties, eventName));
-                                retryCount = rollbackCount;
                                 channel.BasicPublish($"{BROKER_NAME}@{QueueConsumerMode.Fail.ToString()}", eventName,
                                     CreateOverrideProperties(properties, headers), body);
                             }
@@ -327,7 +325,7 @@ namespace Ketchup.RabbitMQ.Internal
                         var context = new EventContext()
                         {
                             Content = integrationEvent,
-                            Count = retryCount,
+                            Count = count,
                             Type = mode.ToString()
                         };
                         var fastInvoker = GetHandler($"{baseConcreteType.FullName}.Handled", baseConcreteType.GetMethod("Handled"));
