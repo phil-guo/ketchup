@@ -176,7 +176,7 @@ namespace Ketchup.RabbitMQ.Internal
             consumer.Received += async (model, ea) =>
             {
                 var eventName = ea.RoutingKey;
-                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties);
+                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties, bindConsumer);
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
@@ -215,7 +215,7 @@ namespace Ketchup.RabbitMQ.Internal
             consumer.Received += async (model, ea) =>
             {
                 var eventName = ea.RoutingKey;
-                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties);
+                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties, bindConsumer);
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
@@ -246,7 +246,7 @@ namespace Ketchup.RabbitMQ.Internal
             consumer.Received += async (model, ea) =>
             {
                 var eventName = ea.RoutingKey;
-                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties);
+                await ProcessEvent(eventName, ea.Body, type, ea.BasicProperties, bindConsumer);
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
@@ -262,7 +262,7 @@ namespace Ketchup.RabbitMQ.Internal
             return channel;
         }
 
-        private async Task ProcessEvent(string eventName, ReadOnlyMemory<byte> body, QueueConsumerMode mode, IBasicProperties properties)
+        private async Task ProcessEvent(string eventName, ReadOnlyMemory<byte> body, QueueConsumerMode type, IBasicProperties properties, bool bindConsumer)
         {
             var message = Encoding.UTF8.GetString(body.ToArray());
 
@@ -278,14 +278,17 @@ namespace Ketchup.RabbitMQ.Internal
                 long count = 1;
                 try
                 {
-                    var fastInvoker = GetHandler($"{concreteType.FullName}.Handle", concreteType.GetMethod("Handle"));
-                    await (Task)fastInvoker(handler, new object[] { integrationEvent });
+                    if (type == QueueConsumerMode.Normal || type == QueueConsumerMode.Retry)
+                    {
+                        var fastInvoker = GetHandler($"{concreteType.FullName}.Handle", concreteType.GetMethod("Handle"));
+                        await (Task)fastInvoker(handler, new object[] { integrationEvent });
+                    }
                 }
                 catch
                 {
                     if (!_rabbitMqClient.IsConnected)
                         _rabbitMqClient.TryConnect();
-                    
+
                     count = GetRetryCount(properties);
                     using (var channel = _rabbitMqClient.CreateModel())
                     {
@@ -296,6 +299,8 @@ namespace Ketchup.RabbitMQ.Internal
                             if (rollbackCount <= _rollbackCount)
                             {
                                 IDictionary<String, Object> headers = new Dictionary<String, Object>();
+                                if (!bindConsumer)
+                                    return;
                                 if (!headers.ContainsKey("x-orig-routing-key"))
                                     headers.Add("x-orig-routing-key", GetOrigRoutingKey(properties, eventName));
                                 channel.BasicPublish($"{BROKER_NAME}@{QueueConsumerMode.Fail.ToString()}", eventName,
@@ -304,11 +309,10 @@ namespace Ketchup.RabbitMQ.Internal
                         }
                         else
                         {
-                            IDictionary<String, Object> headers = properties.Headers;
-                            if (headers == null)
-                            {
-                                headers = new Dictionary<String, Object>();
-                            }
+                            if (!bindConsumer)
+                                return;
+
+                            IDictionary<String, Object> headers = properties.Headers ?? new Dictionary<String, Object>();
 
                             if (!headers.ContainsKey("x-orig-routing-key"))
                                 headers.Add("x-orig-routing-key", GetOrigRoutingKey(properties, eventName));
@@ -326,10 +330,25 @@ namespace Ketchup.RabbitMQ.Internal
                         {
                             Content = integrationEvent,
                             Count = count,
-                            Type = mode.ToString()
+                            Type = type.ToString()
                         };
-                        var fastInvoker = GetHandler($"{baseConcreteType.FullName}.Handled", baseConcreteType.GetMethod("Handled"));
-                        await (Task)fastInvoker(handler, new object[] { context });
+
+                        switch (type)
+                        {
+                            case QueueConsumerMode.Normal:
+                            case QueueConsumerMode.Retry:
+                                {
+                                    var fastInvoker = GetHandler($"{baseConcreteType.FullName}.Handled", baseConcreteType.GetMethod("Handled"));
+                                    await (Task)fastInvoker(handler, new object[] { context });
+                                    break;
+                                }
+                            case QueueConsumerMode.Fail:
+                                {
+                                    var fastInvoker = GetHandler($"{baseConcreteType.FullName}.FailHandler", baseConcreteType.GetMethod("FailHandler"));
+                                    await (Task)fastInvoker(handler, new object[] { context });
+                                    break;
+                                }
+                        }
                     }
                 }
             }

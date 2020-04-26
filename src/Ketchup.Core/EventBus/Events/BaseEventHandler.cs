@@ -13,5 +13,10 @@ namespace Ketchup.Core.EventBus.Events
         {
             await Task.CompletedTask;
         }
+
+        public virtual async Task FailHandler(EventContext context)
+        {
+            await Task.CompletedTask;
+        }
     }
 }

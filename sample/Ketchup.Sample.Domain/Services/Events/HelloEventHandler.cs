@@ -22,6 +22,13 @@ namespace Ketchup.Sample.Domain.Services.Events
             var model = context.Content as UserEvent;
             return Task.CompletedTask;
         }
+
+
+        public override Task FailHandler(EventContext context)
+        {
+            Console.WriteLine($"调用{context.Count}次。私信队列方法 ，方法,类型:{context.Type}");
+            return base.FailHandler(context);
+        }
     }
 }
 
