@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Grpc", "src\Ketchup
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Gateway", "src\Ketchup.Gateway\Ketchup.Gateway.csproj", "{A2045DB7-82AC-4215-92F3-D7BFDA8217A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.RabbitMQ", "src\Ketchup.RabbitMQ\Ketchup.RabbitMQ.csproj", "{E5254741-0606-4643-B694-95C88F7B74D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.RabbitMQ", "src\Ketchup.RabbitMQ\Ketchup.RabbitMQ.csproj", "{E5254741-0606-4643-B694-95C88F7B74D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Caching", "src\Ketchup.Caching\Ketchup.Caching.csproj", "{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{E5254741-0606-4643-B694-95C88F7B74D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5254741-0606-4643-B694-95C88F7B74D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5254741-0606-4643-B694-95C88F7B74D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{236E0E5A-85B2-469D-829B-92A45A8EB804} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 		{A2045DB7-82AC-4215-92F3-D7BFDA8217A6} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 		{E5254741-0606-4643-B694-95C88F7B74D9} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
+		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D69DA7EE-D2A0-4387-B287-356AF9B3BC18}
