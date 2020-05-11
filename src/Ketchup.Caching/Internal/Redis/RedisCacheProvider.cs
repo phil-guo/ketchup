@@ -18,7 +18,7 @@ namespace Ketchup.Caching.Internal.Redis
 
         public async Task<T> GetOrAddAsync<T>(string key, T value)
         {
-            return await GetOrAddAsync<T>(key, value);
+            return await GetOrAddAsync<T>(key, value, null);
         }
 
         public async Task<T> GetOrAddAsync<T>(string key, T value, TimeSpan? slidingExpiration = null)
