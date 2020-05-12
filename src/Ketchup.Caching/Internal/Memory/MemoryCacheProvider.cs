@@ -14,6 +14,21 @@ namespace Ketchup.Caching.Internal.Memory
             Default = new MemoryCache(Options.Create(new MemoryCacheOptions()));
         }
 
+        public async Task<T> GetAsync<T>(string key)
+        {
+            return await Task.Run(() => Default.Get<T>(key));
+        }
+
+        public async Task AddAsync<T>(string key, T value)
+        {
+            await AddAsync(key, value, null);
+        }
+
+        public async Task AddAsync<T>(string key, T value, TimeSpan? expiration)
+        {
+            await Task.Run(() => Default.Set(key, value, (TimeSpan)expiration));
+        }
+
         public async Task<T> GetOrAddAsync<T>(string key, T value)
         {
             return await GetOrAddAsync<T>(key, value, TimeSpan.FromSeconds(30));
