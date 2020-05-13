@@ -93,6 +93,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             var ipAddressModel = await _consulAddressSelector.SelectAsync(new AddressSelectContext()
             {
                 Address = ipAddressModels,
+                Name = serverName
             });
 
             return ipAddressModel as IpAddressModel;
