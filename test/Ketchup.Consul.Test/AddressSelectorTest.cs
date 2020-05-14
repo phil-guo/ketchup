@@ -54,7 +54,7 @@ namespace Ketchup.Consul.Test
                     Address = new List<AddressModel>() { new IpAddressModel()
                         {
                             Ip = "127.0.0.1",
-                            Port = 8500
+                            Port = 8000
                         },
                         new IpAddressModel()
                         {
@@ -64,7 +64,20 @@ namespace Ketchup.Consul.Test
                     Name = "user"
                 });
 
-                Assert.NotNull(result);
+                var one = result as IpAddressModel;
+
+                switch (i)
+                {
+                    case 0:
+                        Assert.Equal("127.0.0.1:8000", $"{one.Ip}:{one.Port}");
+                        break;
+                    case 1:
+                        Assert.Equal("192.168.3.11:8500", $"{one.Ip}:{one.Port}");
+                        break;
+                    case 2:
+                        Assert.Equal("127.0.0.1:8000", $"{one.Ip}:{one.Port}");
+                        break;
+                }
             }
         }
     }
