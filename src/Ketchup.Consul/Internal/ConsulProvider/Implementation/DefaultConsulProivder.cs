@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ketchup.Consul.Internal.ClientProvider;
 using Ketchup.Consul.Internal.Selector;
+using Ketchup.Consul.Internal.Selector.Implementation;
+using Ketchup.Core;
 using Ketchup.Core.Address;
 using Ketchup.Core.Address.Selectors.Implementation;
 using NConsul;
@@ -20,6 +22,9 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         private readonly ConcurrentDictionary<string, ServiceEntry[]> _dictionary = new ConcurrentDictionary<string, ServiceEntry[]>();
         private readonly Timer _timer;
 
+        private readonly ConcurrentDictionary<string, IConsulAddressSelector> _addressSelectors =
+            new ConcurrentDictionary<string, IConsulAddressSelector>();
+
         public AppConfig AppConfig { get; set; }
 
         public DefaultConsulProivder(IConsulClientProvider consulClientProvider, IConsulAddressSelector consulAddressSelector)
@@ -30,6 +35,14 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             var timeSpan = TimeSpan.FromSeconds(10);
 
             _timer = new Timer(async item => { await Check(); }, null, timeSpan, timeSpan);
+        }
+
+        public void AddLoadAddressSelector(KetchupPlatformContainer build)
+        {
+            foreach (var selector in Enum.GetValues(typeof(SelectorType)))
+            {
+                _addressSelectors.TryAdd(selector.ToString(), build.GetInstances<IConsulAddressSelector>(selector.ToString()));
+            }
         }
 
         public async Task RegiserConsulAgent()

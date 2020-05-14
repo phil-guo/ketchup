@@ -52,7 +52,10 @@ namespace Ketchup.Consul
 
         public ConsulModule UseConsulAddressSelector(ContainerBuilderWrapper builder)
         {
-            builder.ContainerBuilder.RegisterType<ConsulRandomAddressSelector>().As<IConsulAddressSelector>().SingleInstance();
+            builder.ContainerBuilder.RegisterType<ConsulRandomAddressSelector>()
+                .Named<IConsulAddressSelector>(SelectorType.Random.ToString()).SingleInstance();
+            builder.ContainerBuilder.RegisterType<PollingAddressSelector>()
+                .Named<IConsulAddressSelector>(SelectorType.Polling.ToString()).SingleInstance();
             return this;
         }
 
