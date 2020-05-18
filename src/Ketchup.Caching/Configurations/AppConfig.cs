@@ -19,7 +19,7 @@ namespace Ketchup.Caching.Configurations
 
         protected CacheOption GetCacheAppConfig()
         {
-            var section = Core.Configurations.AppConfig.GetSection("Consul");
+            var section = Core.Configurations.AppConfig.GetSection("Redis");
 
             if (section.Exists())
                 Cache = section.Get<CacheOption>();
