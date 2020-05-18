@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Ketchup.Core.EventBus.Events;
-using Ketchup.RabbitMQ;
-using Ketchup.RabbitMQ.Attributes;
+//using Ketchup.RabbitMQ;
+//using Ketchup.RabbitMQ.Attributes;
 
 namespace Ketchup.Sample.Domain.Services.Events
 {
-    [QueueConsumer(nameof(HelloEventHandler), QueueConsumerMode.Normal, QueueConsumerMode.Retry, QueueConsumerMode.Fail)]
+    //[QueueConsumer(nameof(HelloEventHandler), QueueConsumerMode.Normal, QueueConsumerMode.Retry, QueueConsumerMode.Fail)]
     public partial class HelloEventHandler : BaseEventHandler<UserEvent>
     {
         public override Task Handle(UserEvent @event)
