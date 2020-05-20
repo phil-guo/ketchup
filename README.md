@@ -65,6 +65,6 @@
          "ConnectionString": "127.0.0.1:8500",
          "IsHealthCheck": true
      }
-更多说明请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
+更多文档请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
 
 喜欢请给个start给予一点支持，qq群：592407137，期待大家一起学习研究
