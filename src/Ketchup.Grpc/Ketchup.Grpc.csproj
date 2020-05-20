@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Polly" Version="7.2.0" />
+    <PackageReference Include="Grpc.Core" Version="2.27.0" />
+    <PackageReference Include="Polly" Version="7.2.1" />
   </ItemGroup>
 
   <!--<ItemGroup>

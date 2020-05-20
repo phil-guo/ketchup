@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Domain;
 using Ketchup.Caching.Internal;
@@ -20,6 +21,8 @@ namespace Ketchup.Sample.Domain.Services
 
         public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
+            throw new ArgumentNullException();
+
             var result =await _cache.GetAsync<string>("a");
 
             return new HelloReponse()

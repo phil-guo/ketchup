@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Utilities;
+using Ketchup.Grpc.Internal.Intercept;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

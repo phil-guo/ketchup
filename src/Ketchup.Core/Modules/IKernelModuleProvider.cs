@@ -9,6 +9,6 @@ namespace Ketchup.Core.Modules
 
         void Initialize();
 
-        public IApplicationBuilder ApplicationBuilder { get; set; }
+        IApplicationBuilder ApplicationBuilder { get; set; }
     }
 }

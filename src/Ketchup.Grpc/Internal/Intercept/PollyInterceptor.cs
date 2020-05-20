@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Polly;
@@ -29,6 +30,37 @@ namespace Ketchup.Grpc.Internal.Intercept
         ///     超时时间，单位：秒
         /// </summary>
         public int Timeout { get; set; }
+
+        public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
+            UnaryServerMethod<TRequest, TResponse> continuation)
+        {
+            //var pollyRetry = Policy<Task<TResponse>>.Handle<Exception>()
+            //    .Retry(RetryCount);
+
+
+            var pollyBulk = Policy.Bulkhead<Task<TResponse>>(MaxBulkhead);
+
+            var pollyFallback = Policy<Task<TResponse>>.Handle<Exception>()
+                .Fallback(item =>
+                {
+                    return !string.IsNullOrEmpty(FallbackMethod)
+                        ? UseTaskNewMethod<TResponse>(new object[] { request })
+                        : null;
+                });
+
+            var timeoutPolly = Policy.Timeout<Task<TResponse>>(30);
+
+            var policy = Policy.Wrap(pollyFallback, timeoutPolly, pollyBulk);
+
+            var response = policy.Execute(() =>
+            {
+                var responseCon = continuation(request, context);
+                //var call = base.UnaryServerHandler(request, context, continuation);
+                return responseCon;
+            });
+            return response;
+
+        }
 
 
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request,
@@ -76,6 +108,18 @@ namespace Ketchup.Grpc.Internal.Intercept
             var obj = assembly?.GetType().GetMethod(assemblyArrary.LastOrDefault()).Invoke(instance, parameters);
 
             return obj as AsyncUnaryCall<TResponse>;
+        }
+
+        private Task<TResponse> UseTaskNewMethod<TResponse>(object[] parameters = null)
+            where TResponse : class
+        {
+            var assemblyArrary = FallbackMethod.Split("|");
+            var assembly = Assembly.Load(assemblyArrary?.FirstOrDefault());
+
+            var instance = Activator.CreateInstance(assembly.GetType());
+            var obj = assembly?.GetType().GetMethod(assemblyArrary.LastOrDefault()).Invoke(instance, parameters);
+
+            return obj as Task<TResponse>;
         }
     }
 }
