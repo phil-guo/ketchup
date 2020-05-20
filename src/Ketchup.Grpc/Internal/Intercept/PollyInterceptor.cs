@@ -31,34 +31,46 @@ namespace Ketchup.Grpc.Internal.Intercept
         /// </summary>
         public int Timeout { get; set; }
 
-        public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
+
+        public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context,
             UnaryServerMethod<TRequest, TResponse> continuation)
         {
+            if (context.Method == "/grpc.health.v1.Health/Check")
+                return await continuation(request, context);
+
+            try
+            {
+                return await continuation(request, context);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
             //var pollyRetry = Policy<Task<TResponse>>.Handle<Exception>()
             //    .Retry(RetryCount);
 
 
-            var pollyBulk = Policy.Bulkhead<Task<TResponse>>(MaxBulkhead);
+            //var pollyBulk = Policy.Bulkhead<Task<TResponse>>(MaxBulkhead);
 
-            var pollyFallback = Policy<Task<TResponse>>.Handle<Exception>()
-                .Fallback(item =>
-                {
-                    return !string.IsNullOrEmpty(FallbackMethod)
-                        ? UseTaskNewMethod<TResponse>(new object[] { request })
-                        : null;
-                });
+            //var pollyFallback = Policy<Task<TResponse>>.Handle<Exception>()
+            //    .Fallback(item =>
+            //    {
+            //        return !string.IsNullOrEmpty(FallbackMethod)
+            //            ? UseTaskNewMethod<TResponse>(new object[] { request })
+            //            : null;
+            //    });
 
-            var timeoutPolly = Policy.Timeout<Task<TResponse>>(30);
+            //var timeoutPolly = Policy.Timeout<Task<TResponse>>(30);
 
-            var policy = Policy.Wrap(pollyFallback, timeoutPolly, pollyBulk);
+            //var policy = Policy.Wrap(pollyFallback, timeoutPolly, pollyBulk);
 
-            var response = policy.Execute(() =>
-            {
-                var responseCon = continuation(request, context);
-                //var call = base.UnaryServerHandler(request, context, continuation);
-                return responseCon;
-            });
-            return response;
+            //var response = policy.Execute(() =>
+            //{
+            //    var responseCon = continuation(request, context);
+            //    //var call = base.UnaryServerHandler(request, context, continuation);
+            //    return responseCon;
+            //});
+            //return response;
 
         }
 

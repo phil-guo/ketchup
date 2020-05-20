@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using CSRedis;
 using Ketchup.Caching.Configurations;
 using Ketchup.Caching.Internal;
 using Ketchup.Caching.Internal.Memory;
@@ -23,7 +24,7 @@ namespace Ketchup.Caching
                 .Named<ICacheProvider>(CacheModel.Memory.ToString());
             builder.ContainerBuilder.RegisterType<RedisCacheProvider>()
                 .Named<ICacheProvider>(CacheModel.Redis.ToString())
-                .WithParameter(new TypedParameter(typeof(CacheOption), appConfig.Cache));
+                .WithParameter(new TypedParameter(typeof(CacheOption), appConfig.Cache)).SingleInstance();
         }
     }
 }

@@ -29,6 +29,10 @@ namespace Ketchup.Sample.Client
             var serviceCollection = new ServiceCollection();
             var containerBuilder = new ContainerBuilder();
 
+            //IServiceCollection service;
+
+            //serviceCollection.AddGrpcClient<RpcTest.RpcTestClient>(o => o.Address = new Uri("")).addPoly;
+
             containerBuilder.Populate(serviceCollection);
 
             containerBuilder.AddCoreService().RegisterModules();
@@ -46,18 +50,18 @@ namespace Ketchup.Sample.Client
         public static void Testing(IGrpcClientProvider provider)
         {
 
-
+            //services.AddGrpcClient<RpcTest.RpcTestBase>(o => o.Address = new Uri("")).AddPolicyHandler;
             Task.Run(async () =>
             {
                 var count = 10000;
 
-                //拦截器测试
-                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                ////拦截器测试
+                //var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
-                var request = new HelloRequest() { Age = 28, Name = "simple" };
+                //var request = new HelloRequest() { Age = 28, Name = "simple" };
 
-                var result = await client.SayHelloAsync(request);
-
+                //var result = await client.SayHelloAsync(request);
+                //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
                 //var result = await client.AddPollyExecuteAsync(request, async () => await client.SayHelloAsync(request));
 
                 //var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
@@ -79,19 +83,19 @@ namespace Ketchup.Sample.Client
                 //Console.WriteLine("执行获取客户端总共花费{0}ms.", ts1.TotalMilliseconds);
 
 
-                //var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-                //Console.WriteLine($"开始执行{count}次测试");
-                //for (int i = 0; i < count; i++)
-                //{
+                var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                Console.WriteLine($"开始执行{count}次测试");
+                for (int i = 0; i < count; i++)
+                {
 
-                //    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
-                //    //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
-                //}
-                //sw.Stop();
-                //TimeSpan ts = sw.Elapsed;
-                //Console.WriteLine("执行总共花费{0}ms.", ts.TotalMilliseconds);
+                    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+                    Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}==={i}");
+                }
+                sw.Stop();
+                TimeSpan ts = sw.Elapsed;
+                Console.WriteLine("执行总共花费{0}ms.", ts.TotalMilliseconds);
 
                 ////todo 3
 

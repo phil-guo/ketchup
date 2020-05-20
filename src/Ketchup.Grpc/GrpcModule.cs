@@ -6,6 +6,7 @@ using Ketchup.Grpc.Internal.Channel;
 using Ketchup.Grpc.Internal.Channel.Implementation;
 using Ketchup.Grpc.Internal.Client;
 using Ketchup.Grpc.Internal.Client.Implementation;
+using Ketchup.Grpc.Internal.Intercept;
 
 namespace Ketchup.Grpc
 {
@@ -20,6 +21,8 @@ namespace Ketchup.Grpc
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             builder.ContainerBuilder.RegisterType<DefaultGrpcClientProvider>().As<IGrpcClientProvider>().SingleInstance();
             builder.ContainerBuilder.RegisterType<DefaultChannelPool>().As<IChannelPool>().SingleInstance();
+            //builder.ContainerBuilder.Register(item => new PolicyInterceptor());
+           
         }
     }
 }

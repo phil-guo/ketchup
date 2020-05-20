@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace Ketchup.Sample.Domain.Services
 {
+    //[Intercept(typeof(PolicyInterceptor))]
     public class HelloService : RpcTest.RpcTestBase
     {
         private readonly ICacheProvider _cache;
@@ -21,17 +22,17 @@ namespace Ketchup.Sample.Domain.Services
 
         public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
-            throw new ArgumentNullException();
-
-            var result =await _cache.GetAsync<string>("a");
+            //throw new Exception("报错了");
+            var result = await _cache.GetAsync<string>("a");
 
             return new HelloReponse()
             {
                 Code = 1,
                 Msg = "hello simple",
-                Result = JsonConvert.SerializeObject(request)
+                Result = JsonConvert.SerializeObject(result)
             };
         }
+
 
         public override Task<HelloReponse> SayHelloEvent(HelloRequest request, ServerCallContext context)
         {
