@@ -16,6 +16,12 @@
     "Ip": "192.168.3.11",
     "Port": "5003"
   },
+  "Command": {
+    "Timeout": 1000,
+    "MaxBulkhead": 5,
+    "Whitelist": "*",
+    "BlackList": ""
+  },
   "Consul": {
     "ConnectionString": "192.168.180.55:8500",
     "IsHealthCheck": true

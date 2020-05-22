@@ -21,14 +21,16 @@ namespace Ketchup.Sample.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add things to the service collection.
-            services.AddGrpc();
+            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommand>());
+
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             // Add things to the service collection that are only for the
             // development environment.
-            services.AddGrpc(o=>o.Interceptors.Add<PollyInterceptor>());
+            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommand>());
+            //services.AddGrpc();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

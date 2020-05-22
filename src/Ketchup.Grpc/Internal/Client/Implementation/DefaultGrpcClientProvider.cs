@@ -41,8 +41,6 @@ namespace Ketchup.Grpc.Internal.Client.Implementation
 
             var channel = _channelPool.GetOrAddChannelPool(address, options);
 
-            //CallInvoker callInvoker = new DefaultCallInvoker();
-
             if (interceptor == null)
                 return Activator.CreateInstance(typeof(TClient), channel) as TClient;
 
