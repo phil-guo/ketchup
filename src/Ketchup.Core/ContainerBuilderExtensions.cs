@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Autofac;
+using Ketchup.Core.Command;
+using Ketchup.Core.Command.Implementation;
 using Ketchup.Core.EventBus;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
@@ -19,8 +21,13 @@ namespace Ketchup.Core
 
         public static ContainerBuilder AddCoreService(this ContainerBuilder builder)
         {
+            GetAssemblies();
             builder.Register(p => new KetchupPlatformContainer(p));
             builder.Register(p => new KetchupPlatformContainer(ServiceLocator.Current));
+            builder.RegisterType<CommandProvider>().As<ICommandProvider>()
+                .WithParameter(new TypedParameter(typeof(Type[]), _referenceAssembly.SelectMany(i => i.ExportedTypes).ToArray()))
+                .SingleInstance();
+
             return builder;
         }
 

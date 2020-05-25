@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ketchup.Grpc.Configurations
+namespace Ketchup.Core.Command.Attributes
 {
-    public class CommandOption
+    public class HystrixCommandAttribute : Attribute
     {
+        public string MethodName { get; set; }
+
         /// <summary>
         /// 超时时间
         /// </summary>
-        public int TimeOut { get; set; } = 10000;
+        public int Timeout { get; set; } = 10000;
 
         /// <summary>
         /// 白名单
@@ -22,8 +24,14 @@ namespace Ketchup.Grpc.Configurations
         public string BlackList { get; set; }
 
         /// <summary>
-        /// 限流数
+        /// 最大信号量
         /// </summary>
-        public int MaxBulkhead { get; set; }
+        public int MaxRequests { get; set; } = 0;
+
+        /// <summary>
+        /// 最大信号量的限定时间
+        /// 默认1s
+        /// </summary>
+        public int MaxRequestsTime { get; set; } = 1000;
     }
 }

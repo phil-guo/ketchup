@@ -10,6 +10,7 @@ namespace Ketchup.Sample.Domain
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
         {
             endpointRoute.MapGrpcService<HelloService>();
+            endpointRoute.MapGrpcService<TestService>();
         }
     }
 }

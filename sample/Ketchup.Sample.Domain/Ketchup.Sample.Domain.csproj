@@ -22,4 +22,8 @@
   <ItemGroup>
     <Protobuf Include="Protos\*.proto" GrpcServices="Server" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\test.proto" />
+  </ItemGroup>
 </Project>

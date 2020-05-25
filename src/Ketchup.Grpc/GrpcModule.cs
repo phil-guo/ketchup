@@ -21,7 +21,6 @@ namespace Ketchup.Grpc
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             builder.ContainerBuilder.RegisterType<DefaultGrpcClientProvider>().As<IGrpcClientProvider>().SingleInstance();
             builder.ContainerBuilder.RegisterType<DefaultChannelPool>().As<IChannelPool>().SingleInstance();
-            builder.ContainerBuilder.RegisterType<CommandProvider>().As<ICommandProvider>().SingleInstance();
         }
     }
 }

@@ -4,20 +4,20 @@ namespace Ketchup.Grpc.Configurations
 {
     internal class AppConfig
     {
-        public CommandOption Command { get; set; } = new CommandOption();
+        public SecurityOption Security { get; set; } = new SecurityOption();
 
         public AppConfig()
         {
             GetCommandAppConfig();
         }
 
-        protected CommandOption GetCommandAppConfig()
+        protected SecurityOption GetCommandAppConfig()
         {
-            var section = Core.Configurations.AppConfig.GetSection("Command");
+            var section = Core.Configurations.AppConfig.GetSection("Server:Security");
 
             if (section.Exists())
-                Command = section.Get<CommandOption>();
-            return Command;
+                Security = section.Get<SecurityOption>();
+            return Security;
         }
     }
 }

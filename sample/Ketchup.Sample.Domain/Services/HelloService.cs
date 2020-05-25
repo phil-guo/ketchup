@@ -1,18 +1,16 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Domain;
 using Ketchup.Caching.Internal;
+using Ketchup.Core.Command.Attributes;
 using Ketchup.Core.EventBus;
 using Ketchup.Core.Utilities;
-using Ketchup.Grpc.Internal.Intercept;
 using Ketchup.Sample.Domain.Services.Events;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Ketchup.Sample.Domain.Services
 {
+    [Service(Name = "grpc.domain.RpcTest")]
     public class HelloService : RpcTest.RpcTestBase
     {
         private readonly ICacheProvider _cache;
@@ -22,6 +20,7 @@ namespace Ketchup.Sample.Domain.Services
             _cache = ServiceLocator.GetService<ICacheProvider>(CacheModel.Redis.ToString());
         }
 
+        [HystrixCommand(MethodName = nameof(SayHello), Timeout = 3000)]
         public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
 
@@ -37,7 +36,7 @@ namespace Ketchup.Sample.Domain.Services
             };
         }
 
-
+        //[HystrixCommand(MethodName = nameof(SayHelloEvent), Timeout = 2000)]
         public override Task<HelloReponse> SayHelloEvent(HelloRequest request, ServerCallContext context)
         {
             ServiceLocator.GetService<IEventBus>().Publish(new UserEvent()

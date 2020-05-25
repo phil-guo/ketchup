@@ -21,7 +21,7 @@ namespace Ketchup.Sample.Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Add things to the service collection.
-            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommand>());
+            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommandIntercept>());
 
         }
 
@@ -29,7 +29,7 @@ namespace Ketchup.Sample.Server
         {
             // Add things to the service collection that are only for the
             // development environment.
-            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommand>());
+            services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommandIntercept>());
             //services.AddGrpc();
         }
 

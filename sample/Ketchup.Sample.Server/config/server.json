@@ -14,13 +14,11 @@
   "Server": {
     "Name": "sample",
     "Ip": "192.168.3.11",
-    "Port": "5003"
-  },
-  "Command": {
-    "Timeout": 1000,
-    "MaxBulkhead": 5,
-    "Whitelist": "*",
-    "BlackList": ""
+    "Port": "5003",
+    "Security": {
+      "Whitelist": "*", //白名单
+      "BlackList": "" //黑名单
+    }
   },
   "Consul": {
     "ConnectionString": "192.168.180.55:8500",

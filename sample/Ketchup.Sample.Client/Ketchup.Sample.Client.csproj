@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="config\client.json" />
+    <None Remove="config\test.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Update="Protos\hello.proto" GrpcServices="Both" />
+    <Protobuf Update="Protos\*.proto" GrpcServices="Both" />
   </ItemGroup>
 
 </Project>

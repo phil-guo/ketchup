@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Grpc.Core;
-using Grpc.Core.Interceptors;
 using Grpc.Domain;
-using Grpc.Net.Client;
+using Grpc.Test;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
-using Ketchup.Grpc;
 using Ketchup.Grpc.Internal.Client;
-using Ketchup.Grpc.Internal.Intercept;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
+using HelloRequest = Grpc.Domain.HelloRequest;
 
 namespace Ketchup.Sample.Client
 {
@@ -53,14 +48,24 @@ namespace Ketchup.Sample.Client
 
             var count = 7;
 
+            var client1 = await provider.FindGrpcClient<simpleTest.simpleTestClient>("sample");
+
+            var one = await client1.TestAsync(new global::Grpc.Test.HelloRequest() { Age = 28, Name = "simple" });
 
             var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
-            for (int i = 0; i < count; i++)
-            {
-                var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
-                Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
-            }
+            //for (int i = 0; i < count; i++)
+            //{
+            //    var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+            //    Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
+            //}
+
+            var result1 = await client.SayHelloEventAsync(new HelloRequest() { Age = 28, Name = "simple" });
+
+            var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
+
+
+
 
             //var request = new HelloRequest() { Age = 28, Name = "simple" };
 
