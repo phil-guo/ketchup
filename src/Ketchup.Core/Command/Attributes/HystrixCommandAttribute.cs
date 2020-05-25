@@ -9,19 +9,9 @@ namespace Ketchup.Core.Command.Attributes
         public string MethodName { get; set; }
 
         /// <summary>
-        /// 超时时间
+        /// 执行超时时间
         /// </summary>
-        public int Timeout { get; set; } = 10000;
-
-        /// <summary>
-        /// 白名单
-        /// </summary>
-        public string Whitelist { get; set; } = "*";
-
-        /// <summary>
-        /// 黑名单
-        /// </summary>
-        public string BlackList { get; set; }
+        public int ExcuteTimeoutInMilliseconds { get; set; } = 10000;
 
         /// <summary>
         /// 最大信号量
@@ -33,5 +23,10 @@ namespace Ketchup.Core.Command.Attributes
         /// 默认1s
         /// </summary>
         public int MaxRequestsTime { get; set; } = 1000;
+
+        /// <summary>
+        /// 至少多少请求失败，熔断器才发挥起作用
+        /// </summary>
+        public int BreakerRequestCircuitBreaker { get; set; } = 10;
     }
 }

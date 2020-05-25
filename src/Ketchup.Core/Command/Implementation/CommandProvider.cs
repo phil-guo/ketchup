@@ -79,7 +79,7 @@ namespace Ketchup.Core.Command.Implementation
                 return invoke;
             });
 
-            manual.WaitOne(command.Timeout);
+            manual.WaitOne(command.ExcuteTimeoutInMilliseconds);
 
             return result
                 ? task.GetAwaiter().GetResult()
