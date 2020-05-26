@@ -42,8 +42,7 @@ namespace Ketchup.Consul
         {
             UseConul(builder, provider =>
                 new DefaultConsulProivder(
-                    provider.GetRequiredService<IConsulClientProvider>(),
-                    provider.GetRequiredService<IConsulAddressSelector>())
+                    provider.GetRequiredService<IConsulClientProvider>())
                 {
                     AppConfig = appConfig
                 });
@@ -53,9 +52,9 @@ namespace Ketchup.Consul
         public ConsulModule UseConsulAddressSelector(ContainerBuilderWrapper builder)
         {
             builder.ContainerBuilder.RegisterType<ConsulRandomAddressSelector>()
-                .As<IConsulAddressSelector>().SingleInstance();
-            //builder.ContainerBuilder.RegisterType<PollingAddressSelector>()
-            //    .Named<IConsulAddressSelector>(SelectorType.Polling.ToString()).SingleInstance();
+                .Named<IConsulAddressSelector>(SelectorType.Random.ToString()).SingleInstance();
+            builder.ContainerBuilder.RegisterType<PollingAddressSelector>()
+                .Named<IConsulAddressSelector>(SelectorType.Polling.ToString()).SingleInstance();
             return this;
         }
 

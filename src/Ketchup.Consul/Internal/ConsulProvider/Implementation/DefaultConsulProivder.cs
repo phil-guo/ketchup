@@ -10,6 +10,7 @@ using Ketchup.Consul.Internal.Selector.Implementation;
 using Ketchup.Core;
 using Ketchup.Core.Address;
 using Ketchup.Core.Address.Selectors.Implementation;
+using Ketchup.Core.Utilities;
 using NConsul;
 using AppConfig = Ketchup.Consul.Configurations.AppConfig;
 
@@ -18,7 +19,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
     public class DefaultConsulProivder : IConsulProvider, IDisposable
     {
         private readonly IConsulClientProvider _consulClientProvider;
-        private readonly IConsulAddressSelector _consulAddressSelector;
         private readonly ConcurrentDictionary<string, ServiceEntry[]> _dictionary = new ConcurrentDictionary<string, ServiceEntry[]>();
         private readonly Timer _timer;
 
@@ -27,10 +27,10 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
         public AppConfig AppConfig { get; set; }
 
-        public DefaultConsulProivder(IConsulClientProvider consulClientProvider, IConsulAddressSelector consulAddressSelector)
+        public DefaultConsulProivder(IConsulClientProvider consulClientProvider)
         {
             _consulClientProvider = consulClientProvider;
-            _consulAddressSelector = consulAddressSelector;
+
 
             var timeSpan = TimeSpan.FromSeconds(10);
 
@@ -89,6 +89,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
         public async ValueTask<IpAddressModel> FindServiceEntry(string serverName)
         {
+            var consulAddressSelector = ServiceLocator.GetService<IConsulAddressSelector>(AppConfig.Consul.Strategy);
             var client = _consulClientProvider.GetConsulClient();
             ServiceEntry[] healths = _dictionary.GetOrAdd(serverName, (await client.Health.Service(serverName, "", true)).Response);
 
@@ -103,7 +104,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                 });
             });
 
-            var ipAddressModel = await _consulAddressSelector.SelectAsync(new AddressSelectContext()
+            var ipAddressModel = await consulAddressSelector.SelectAsync(new AddressSelectContext()
             {
                 Address = ipAddressModels,
                 Name = serverName

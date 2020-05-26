@@ -6,6 +6,7 @@ using Grpc.Domain;
 using Grpc.Test;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
+using Ketchup.Core.Utilities;
 using Ketchup.Grpc.Internal.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,8 @@ namespace Ketchup.Sample.Client
             containerBuilder.AddCoreService().RegisterModules();
 
             var container = containerBuilder.Build();
+
+            ServiceLocator.Current = container;
 
             var serviceProvider = new AutofacServiceProvider(container);
 
@@ -71,7 +74,7 @@ namespace Ketchup.Sample.Client
 
             //var result = await client.SayHelloAsync(request);
             ////var result = client.SayHello(request);
-            //Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
+            Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
             //var result = await client.AddPollyExecuteAsync(request, async () => await client.SayHelloAsync(request));
 
             //var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });

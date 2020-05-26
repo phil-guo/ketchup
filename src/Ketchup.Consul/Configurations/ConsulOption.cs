@@ -11,9 +11,9 @@ namespace Ketchup.Consul.Configurations
         /// </summary>
         public string ConnectionString { get; set; }
 
-        ///// <summary>
-        ///// 服务地址
-        ///// </summary>
-        //public string ServicePath { get; set; } = "services/serviceRoutes/";
+        /// <summary>
+        /// 负载分流策略
+        /// </summary>
+        public string Strategy { get; set; } = "Random";
     }
 }
