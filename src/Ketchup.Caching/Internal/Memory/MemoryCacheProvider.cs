@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Ketchup.Core.Cache;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 

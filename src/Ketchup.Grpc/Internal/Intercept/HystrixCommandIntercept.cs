@@ -29,9 +29,9 @@ namespace Ketchup.Grpc.Internal.Intercept
             ValidateWhitelist(context).ValidateBlacklist(context);
 
             if (!provider.LimitMaxRequest(context))
-                return Activator.CreateInstance<TResponse>();
+                throw new RpcException(new Status(StatusCode.Aborted, "has reached the maximum current limit"));
 
-            var result = provider.ExecuteTimeout(context, async () => await continuation(request, context));
+            var result = await provider.BreakerRequestCircuitBreaker(context, async () => await continuation(request, context));
             return result;
         }
 

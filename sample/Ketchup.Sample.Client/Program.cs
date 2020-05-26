@@ -48,9 +48,9 @@ namespace Ketchup.Sample.Client
 
             var count = 7;
 
-            var client1 = await provider.FindGrpcClient<simpleTest.simpleTestClient>("sample");
+            //var client1 = await provider.FindGrpcClient<simpleTest.simpleTestClient>("sample");
 
-            var one = await client1.TestAsync(new global::Grpc.Test.HelloRequest() { Age = 28, Name = "simple" });
+            //var one = await client1.TestAsync(new global::Grpc.Test.HelloRequest() { Age = 28, Name = "simple" });
 
             var client = await provider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
 
@@ -60,7 +60,7 @@ namespace Ketchup.Sample.Client
             //    Console.WriteLine($"{result.Msg}========{result.Code}==========={result.Result}");
             //}
 
-            var result1 = await client.SayHelloEventAsync(new HelloRequest() { Age = 28, Name = "simple" });
+            //var result1 = await client.SayHelloEventAsync(new HelloRequest() { Age = 28, Name = "simple" });
 
             var result = await client.SayHelloAsync(new HelloRequest() { Age = 28, Name = "simple" });
 

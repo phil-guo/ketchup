@@ -5,7 +5,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Ketchup.Core.Cache;
 using Ketchup.Core.Command.Attributes;
+using Ketchup.Core.Utilities;
 
 namespace Ketchup.Core.Command.Implementation
 {
@@ -13,6 +15,7 @@ namespace Ketchup.Core.Command.Implementation
     {
         private readonly Type[] _types;
         private readonly ConcurrentDictionary<string, int> _maxRequestsDictionary;
+        private readonly ConcurrentDictionary<string, int> _dictionary;
         private TimeSpan time;
         public CommandProvider(Type[] types)
         {
@@ -23,6 +26,7 @@ namespace Ketchup.Core.Command.Implementation
               }).Distinct().ToArray();
 
             _maxRequestsDictionary = new ConcurrentDictionary<string, int>();
+            _dictionary = new ConcurrentDictionary<string, int>();
             time = new TimeSpan(DateTime.Now.Ticks);
         }
 
@@ -84,6 +88,39 @@ namespace Ketchup.Core.Command.Implementation
             return result
                 ? task.GetAwaiter().GetResult()
                 : throw new RpcException(new Status(StatusCode.DeadlineExceeded, "execute timeout"));
+        }
+
+        public async Task<T> BreakerRequestCircuitBreaker<T>(ServerCallContext context, Func<Task<T>> func)
+        {
+            var command = GetServiceEntryHystrixCommand(context.Method);
+            var cache = ServiceLocator.GetService<ICacheProvider>(command.Cache.ToString());
+            try
+            {
+
+                var response = ExecuteTimeout(context, func);
+                if (command.EnableServiceDegradation)
+                    await cache.AddAsync(context.Method, response, TimeSpan.FromSeconds(command.ServiceDegradationTimeSpan));
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                if (command.EnableServiceDegradation)
+                {
+                    var result = await cache.GetAsync<T>(context.Method);
+                    return result ?? Activator.CreateInstance<T>();
+                }
+
+                if (!_dictionary.TryGetValue($"{context.Method}_break", out var value))
+                    _dictionary.TryAdd($"{context.Method}_break", 1);
+
+                if (value >= command.BreakerRequestCircuitBreaker)
+                    throw new RpcException(new Status(StatusCode.FailedPrecondition, e.Message));
+
+                _dictionary.TryUpdate($"{context.Method}_break", value + 1, value);
+
+                return await BreakerRequestCircuitBreaker(context, func);
+            }
         }
 
         private HystrixCommandAttribute GetServiceEntryHystrixCommand(string serviceName)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Ketchup.Caching.Internal
+namespace Ketchup.Core.Cache
 {
     public interface ICacheProvider
     {

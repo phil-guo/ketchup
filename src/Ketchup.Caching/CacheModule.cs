@@ -5,6 +5,7 @@ using Ketchup.Caching.Internal;
 using Ketchup.Caching.Internal.Memory;
 using Ketchup.Caching.Internal.Redis;
 using Ketchup.Core;
+using Ketchup.Core.Cache;
 using Ketchup.Core.Modules;
 
 namespace Ketchup.Caching

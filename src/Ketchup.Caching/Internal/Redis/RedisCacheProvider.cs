@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CSRedis;
 using Ketchup.Caching.Configurations;
+using Ketchup.Core.Cache;
 
 namespace Ketchup.Caching.Internal.Redis
 {

@@ -11,5 +11,7 @@ namespace Ketchup.Core.Command
         bool LimitMaxRequest(ServerCallContext context);
 
         T ExecuteTimeout<T>(ServerCallContext context, Func<Task<T>> func);
+
+        Task<T> BreakerRequestCircuitBreaker<T>(ServerCallContext context, Func<Task<T>> func);
     }
 }

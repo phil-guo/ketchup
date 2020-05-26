@@ -2,6 +2,7 @@
 using Grpc.Core;
 using Grpc.Domain;
 using Ketchup.Caching.Internal;
+using Ketchup.Core.Cache;
 using Ketchup.Core.Command.Attributes;
 using Ketchup.Core.EventBus;
 using Ketchup.Core.Utilities;
