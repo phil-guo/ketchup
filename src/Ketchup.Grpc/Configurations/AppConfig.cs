@@ -11,7 +11,7 @@ namespace Ketchup.Grpc.Configurations
             GetCommandAppConfig();
         }
 
-        protected SecurityOption GetCommandAppConfig()
+        private SecurityOption GetCommandAppConfig()
         {
             var section = Core.Configurations.AppConfig.GetSection("Server:Security");
 

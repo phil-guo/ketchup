@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ketchup.Core.Configurations
+﻿namespace Ketchup.Core.Configurations
 {
     public class ServerOptions
     {
@@ -11,5 +7,10 @@ namespace Ketchup.Core.Configurations
         public string Name { get; set; }
 
         public int Port { get; set; }
+
+        /// <summary>
+        ///     是否使用http
+        /// </summary>
+        public bool EnableHttp { get; set; } = true;
     }
 }

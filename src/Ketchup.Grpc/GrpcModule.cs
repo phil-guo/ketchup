@@ -1,12 +1,12 @@
 ﻿using System;
 using Autofac;
 using Ketchup.Core;
+using Ketchup.Core.Configurations;
 using Ketchup.Core.Modules;
 using Ketchup.Grpc.Internal.Channel;
 using Ketchup.Grpc.Internal.Channel.Implementation;
 using Ketchup.Grpc.Internal.Client;
 using Ketchup.Grpc.Internal.Client.Implementation;
-using Ketchup.Grpc.Internal.Intercept;
 
 namespace Ketchup.Grpc
 {
@@ -18,8 +18,10 @@ namespace Ketchup.Grpc
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)
         {
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-            builder.ContainerBuilder.RegisterType<DefaultGrpcClientProvider>().As<IGrpcClientProvider>().SingleInstance();
+            if (AppConfig.ServerOptions.EnableHttp)
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            builder.ContainerBuilder.RegisterType<DefaultGrpcClientProvider>().As<IGrpcClientProvider>()
+                .SingleInstance();
             builder.ContainerBuilder.RegisterType<DefaultChannelPool>().As<IChannelPool>().SingleInstance();
         }
     }

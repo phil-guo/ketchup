@@ -15,6 +15,7 @@
     "Name": "sample",
     "Ip": "192.168.3.11",
     "Port": "5003",
+    "EnableHttp": true,
     "Security": {
       "Whitelist": "*", //白名单
       "BlackList": "" //黑名单
