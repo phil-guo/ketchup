@@ -1,5 +1,10 @@
-# ketcup
-### ketchup 是一个微服务框架，grpc提供服务远程调用，采用consul作为注册中心，采用轮询，随机作为负载均衡算法。使用redis作为分布式缓存，rabbitmq 作为消息中间件
+# ketcup -- 番茄酱
+### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
+### rpc：grpc支持远程调用，
+### 注册中心：consul，
+### 负载均衡算法：轮询、随机。
+### 缓存：redis、memory，
+### 消息中间件：rabbitmq
 ![image](https://github.com/simple-gr/ketchup/blob/master/images/design.jpg)
 ## 如何运行起来
 ## Program中
@@ -67,4 +72,4 @@
      }
 更多文档请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
 
-喜欢请给个start给予一点支持，qq群：592407137，期待大家一起学习研究
+qq群：592407137
