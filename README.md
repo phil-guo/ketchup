@@ -2,7 +2,7 @@
 ### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
 ### rpc：grpc支持远程调用，
 ### 注册中心：consul，
-### 负载均衡算法：轮询、机。
+### 负载均衡算法：轮询、随机。
 ### 缓存：redis、memory，
 ### 消息中间件：rabbitmq
 ![image](https://github.com/simple-gr/ketchup/blob/master/images/design.jpg)
