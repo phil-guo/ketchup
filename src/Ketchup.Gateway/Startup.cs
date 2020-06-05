@@ -1,3 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Ketchup.Core;
+using Ketchup.Core.Configurations;
+using Ketchup.Core.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +15,9 @@ namespace Ketchup.Gateway
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            AppConfig.Configuration = (IConfigurationRoot)configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -21,9 +25,52 @@ namespace Ketchup.Gateway
             services.AddControllers();
         }
 
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            // Add things to the service collection that are only for the
+            // development environment.
+            services.AddControllers();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Add things to the Autofac ContainerBuilder.
+            builder.AddCoreService().RegisterModules();
+        }
+
+        public void ConfigureProductionContainer(ContainerBuilder builder)
+        {
+            // Add things to the ContainerBuilder that are only for the
+            // production environment.
+            builder.AddCoreService().RegisterModules();
+        }
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+        public void ConfigureStaging(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            // Set up the application for staging.
+            ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
