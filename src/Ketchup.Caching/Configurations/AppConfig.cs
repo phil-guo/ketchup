@@ -13,7 +13,7 @@ namespace Ketchup.Caching.Configurations
         {
             GetCacheAppConfig();
 
-            if (string.IsNullOrEmpty(Cache.IpAddress))
+            if (string.IsNullOrEmpty(Cache?.IpAddress))
                 return;
         }
 

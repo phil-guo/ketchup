@@ -27,7 +27,6 @@ namespace Ketchup.Core
             builder.RegisterType<CommandProvider>().As<ICommandProvider>()
                 .WithParameter(new TypedParameter(typeof(Type[]), _referenceAssembly.SelectMany(i => i.ExportedTypes).ToArray()))
                 .SingleInstance();
-
             return builder;
         }
 

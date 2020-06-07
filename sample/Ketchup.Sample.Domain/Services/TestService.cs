@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Test;
+using Ketchup.Core.Attributes;
 using Ketchup.Core.Command.Attributes;
 using Newtonsoft.Json;
 

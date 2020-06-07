@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Ketchup.Core.Attributes;
 using Ketchup.Core.Cache;
 using Ketchup.Core.Command.Attributes;
 using Ketchup.Core.Utilities;
@@ -93,19 +94,25 @@ namespace Ketchup.Core.Command.Implementation
         public async Task<T> BreakerRequestCircuitBreaker<T>(ServerCallContext context, Func<Task<T>> func)
         {
             var command = GetServiceEntryHystrixCommand(context.Method);
-            var cache = ServiceLocator.GetService<ICacheProvider>(command.Cache.ToString());
+            if (command == null)
+                return await func.Invoke();
+
+            ICacheProvider cache = null;
+
+            if (!string.IsNullOrEmpty(command?.Cache.ToString()))
+                cache = ServiceLocator.GetService<ICacheProvider>(command?.Cache.ToString());
             try
             {
 
                 var response = ExecuteTimeout(context, func);
-                if (command.EnableServiceDegradation)
+                if (Convert.ToBoolean(command?.EnableServiceDegradation) && cache != null)
                     await cache.AddAsync(context.Method, response, TimeSpan.FromSeconds(command.ServiceDegradationTimeSpan));
 
                 return response;
             }
             catch (Exception e)
             {
-                if (command.EnableServiceDegradation)
+                if (Convert.ToBoolean(command?.EnableServiceDegradation) && cache != null)
                 {
                     var result = await cache.GetAsync<T>(context.Method);
                     return result ?? Activator.CreateInstance<T>();
@@ -114,7 +121,7 @@ namespace Ketchup.Core.Command.Implementation
                 if (!_dictionary.TryGetValue($"{context.Method}_break", out var value))
                     _dictionary.TryAdd($"{context.Method}_break", 1);
 
-                if (value >= command.BreakerRequestCircuitBreaker)
+                if (value >= command?.BreakerRequestCircuitBreaker)
                     throw new RpcException(new Status(StatusCode.FailedPrecondition, e.Message));
 
                 _dictionary.TryUpdate($"{context.Method}_break", value + 1, value);

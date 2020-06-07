@@ -48,6 +48,15 @@ namespace Ketchup.Grpc.Internal.Client.Implementation
             return Activator.CreateInstance(typeof(TClient), invoker) as TClient;
         }
 
+        public async Task<object> GetClientAsync(string serverName, Type clientType)
+        {
+            var address = await GetChannelAddress(serverName);
+
+            var channel = _channelPool.GetOrAddChannelPool(address, new GrpcChannelOptions());
+
+            return Activator.CreateInstance(clientType, channel);
+        }
+
         private async ValueTask<IpAddressModel> GetChannelAddress(string serverName)
         {
             var address = await _consulProvider.FindServiceEntry(serverName);

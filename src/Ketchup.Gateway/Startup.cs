@@ -23,6 +23,7 @@ namespace Ketchup.Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddGrpc();
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -30,6 +31,7 @@ namespace Ketchup.Gateway
             // Add things to the service collection that are only for the
             // development environment.
             services.AddControllers();
+            services.AddGrpc();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -58,12 +60,7 @@ namespace Ketchup.Gateway
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseKetchup();
         }
 
         public void ConfigureStaging(IApplicationBuilder app, IWebHostEnvironment env)
@@ -78,12 +75,7 @@ namespace Ketchup.Gateway
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseKetchup();
         }
     }
 }

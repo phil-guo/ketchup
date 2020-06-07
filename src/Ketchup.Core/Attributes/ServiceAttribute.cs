@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ketchup.Core.Command.Attributes
+namespace Ketchup.Core.Attributes
 {
     public class ServiceAttribute : Attribute
     {

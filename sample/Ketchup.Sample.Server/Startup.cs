@@ -53,7 +53,7 @@ namespace Ketchup.Sample.Server
             ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
 
             app.UseRouting();
-            app.UseKetchupServer();
+            app.UseKetchup();
         }
 
         public void ConfigureStaging(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -62,7 +62,7 @@ namespace Ketchup.Sample.Server
             ServiceLocator.Current = app.ApplicationServices.GetAutofacRoot();
             app.UseRouting();
 
-            app.UseKetchupServer();
+            app.UseKetchup();
 
         }
     }

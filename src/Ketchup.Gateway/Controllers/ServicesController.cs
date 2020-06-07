@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Google.Protobuf;
+using Google.Protobuf.Reflection;
+using Grpc.Core;
 using Grpc.Domain;
 using Ketchup.Core.Utilities;
+using Ketchup.Gateway.Internal;
+using Ketchup.Gateway.Internal.Implementation;
 using Ketchup.Grpc.Internal.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Ketchup.Gateway.Controllers
 {
@@ -15,38 +23,49 @@ namespace Ketchup.Gateway.Controllers
     public class ServicesController : ControllerBase
     {
         private readonly IGrpcClientProvider _clientProvider;
+        private readonly IGatewayProvider _gatewayProvider;
 
-        public ServicesController(IGrpcClientProvider clientProvider)
+        public ServicesController(IGrpcClientProvider clientProvider, IGatewayProvider gatewayProvider)
         {
             this._clientProvider = clientProvider;
+            _gatewayProvider = gatewayProvider;
         }
 
-        [HttpGet("getService")]
-        public async Task<object> GetService(string path)
+        [HttpPost("grpc/{serverName}/{service}")]
+        public async Task<object> ExecuteService(string serverName, string service, [FromBody] dynamic inputBody)
         {
-            var serverName = HttpContext.Request.Query;
 
-            var client = await _clientProvider.FindGrpcClient<RpcTest.RpcTestClient>("sample");
+            var body = Request.Body;
 
-            var request = new HelloRequest() { Age = 28, Name = "simple" };
+            _gatewayProvider.MapClients.TryGetValue(service, out var value);
 
-            //await client.SayHelloAsync(request);
+            var client = await _clientProvider.GetClientAsync(serverName, value);
 
-            var method = client.GetType().GetMethods().Where(item => item.Name == "SayHello")?.LastOrDefault();
+            var descriptor =
+                _gatewayProvider.MethodDescriptors.FirstOrDefault(item => item.Name == service);
 
-            //var invoke = FastInvoke.GetMethodInvoker(method);
+            var methodModel = new GrpcGatewayMethod()
+            {
+                Type = descriptor?.InputType.ClrType,
+                Request = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(inputBody), descriptor?.InputType.ClrType)
+            };
 
-            //await (Task)invoke(client.GetType(), new[] { request });
+            var method = _gatewayProvider.MapClients[service.ToLower()].GetMethod(service,
+                new Type[] { methodModel.Type,
+                    typeof(Metadata),
+                    typeof(global::System.DateTime),
+                    typeof(global::System.Threading.CancellationToken) });
 
-            var result = method?.Invoke(client.GetType(), new object[] { request });
+            var result = method?.Invoke(client,
+                new object[] { methodModel.Request, null, null, default(global::System.Threading.CancellationToken) });
 
-            return Task.FromResult("ok");
+            return result;
         }
 
-        [HttpPost("postService")]
-        public async Task<object> PostService(string path, [FromBody]Dictionary<string, object> inputBody)
-        {
-            return Task.FromResult("ok");
-        }
+        //[HttpPost("post/{serverName}/{service}")]
+        //public async Task<object> PostService([FromBody] Dictionary<string, object> inputBody)
+        //{
+        //    return Task.FromResult("ok");
+        //}
     }
 }

@@ -7,7 +7,7 @@ namespace Ketchup.Core
 {
     public static class ServiceHostBuilderExtensions
     {
-        public static IApplicationBuilder UseKetchupServer(this IApplicationBuilder app)
+        public static IApplicationBuilder UseKetchup(this IApplicationBuilder app)
         {
             var kernelModule = ServiceLocator.Current.Resolve<IKernelModuleProvider>();
 
@@ -17,16 +17,5 @@ namespace Ketchup.Core
 
             return app;
         }
-
-        public static IApplicationBuilder UseKetchupClient(this IApplicationBuilder app)
-        {
-            return app;
-        }
-
-        //public static async Task ConfigureRoute(IContainer container)
-        //{
-        //    var routeProvider = container.Resolve<IServiceRouteProvider>();
-        //    await routeProvider.RegisterRoutes();
-        //}
     }
 }
