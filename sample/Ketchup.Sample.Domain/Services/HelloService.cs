@@ -2,6 +2,7 @@
 using Grpc.Core;
 using Grpc.Domain;
 using Ketchup.Core.Attributes;
+using Ketchup.Core.Cache;
 using Ketchup.Core.EventBus;
 using Ketchup.Core.Utilities;
 using Ketchup.Sample.Domain.Services.Events;
@@ -12,11 +13,11 @@ namespace Ketchup.Sample.Domain.Services
     [Service(Name = "grpc.domain.RpcTest")]
     public class HelloService : RpcTest.RpcTestBase
     {
-        //private readonly ICacheProvider _cache;
+        private readonly ICacheProvider _cache;
 
         public HelloService()
         {
-            //_cache = ServiceLocator.GetService<ICacheProvider>(CacheModel.Redis.ToString());
+            _cache = ServiceLocator.GetService<ICacheProvider>(CacheModel.Redis.ToString());
         }
 
         //[HystrixCommand(MethodName = nameof(SayHello), ExcuteTimeoutInMilliseconds = 3000)]
@@ -26,13 +27,13 @@ namespace Ketchup.Sample.Domain.Services
 
             //throw new Exception("报错了");
             //Thread.Sleep(1500);
-            //var result = await _cache.GetAsync<string>("a");
+            var result = await _cache.GetAsync<string>("a");
 
             return new HelloReponse()
             {
                 Code = 1,
                 Msg = "hello simple",
-                Result = JsonConvert.SerializeObject("")
+                Result = result
             };
         }
 

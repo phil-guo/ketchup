@@ -22,7 +22,7 @@ namespace Ketchup.Gateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
         }
 
@@ -30,7 +30,7 @@ namespace Ketchup.Gateway
         {
             // Add things to the service collection that are only for the
             // development environment.
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
         }
 

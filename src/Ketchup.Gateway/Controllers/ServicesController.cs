@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -20,7 +21,7 @@ namespace Ketchup.Gateway.Controllers
 {
     [ApiController]
     [Route("api/")]
-    public class ServicesController : ControllerBase
+    public class ServicesController : Controller
     {
         private readonly IGrpcClientProvider _clientProvider;
         private readonly IGatewayProvider _gatewayProvider;
@@ -31,15 +32,12 @@ namespace Ketchup.Gateway.Controllers
             _gatewayProvider = gatewayProvider;
         }
 
-        [HttpPost("grpc/{serverName}/{service}")]
-        public async Task<object> ExecuteService(string serverName, string service, [FromBody] dynamic inputBody)
+        [HttpPost("{server}/{service}")]
+        public async Task<object> ExecuteService(string server, string service, [FromBody] Dictionary<string, object> inputBody)
         {
-
-            var body = Request.Body;
-
             _gatewayProvider.MapClients.TryGetValue(service, out var value);
 
-            var client = await _clientProvider.GetClientAsync(serverName, value);
+            var client = await _clientProvider.GetClientAsync(server, value);
 
             var descriptor =
                 _gatewayProvider.MethodDescriptors.FirstOrDefault(item => item.Name == service);
@@ -50,7 +48,7 @@ namespace Ketchup.Gateway.Controllers
                 Request = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(inputBody), descriptor?.InputType.ClrType)
             };
 
-            var method = _gatewayProvider.MapClients[service.ToLower()].GetMethod(service,
+            var method = _gatewayProvider.MapClients[service].GetMethod(service,
                 new Type[] { methodModel.Type,
                     typeof(Metadata),
                     typeof(global::System.DateTime),
@@ -61,11 +59,5 @@ namespace Ketchup.Gateway.Controllers
 
             return result;
         }
-
-        //[HttpPost("post/{serverName}/{service}")]
-        //public async Task<object> PostService([FromBody] Dictionary<string, object> inputBody)
-        //{
-        //    return Task.FromResult("ok");
-        //}
     }
 }

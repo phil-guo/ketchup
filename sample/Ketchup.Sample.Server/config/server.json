@@ -13,7 +13,7 @@
   },
   "Server": {
     "Name": "sample",
-    "Ip": "127.0.0.1",
+    "Ip": "192.168.3.11",
     "Port": "5003",
     "EnableHttp": true,
     "Security": {
@@ -22,7 +22,7 @@
     }
   },
   "Consul": {
-    "ConnectionString": "127.0.0.1:8500",
+    "ConnectionString": "192.168.180.55:8500",
     "IsHealthCheck": true
   },
   "RabbitMQ": {
@@ -31,9 +31,9 @@
     "Password": "qwe123QWE",
     "RetryCount": 3,
     "FailCount": 1
+  },
+  "Redis": {
+    "IpAddress": "192.168.180.55",
+    "Password": "qwe123QWE"
   }
-  //"Redis": {
-  //  "IpAddress": "192.168.180.55",
-  //  "Password": "qwe123QWE"
-  //}
 }
