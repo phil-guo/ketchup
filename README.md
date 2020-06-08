@@ -1,4 +1,4 @@
-# ketcup -- 番茄酱
+# ketchup -- 番茄酱
 ### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
 ### 网关：kong
 ### rpc：grpc支持远程调用，
