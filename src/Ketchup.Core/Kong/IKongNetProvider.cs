@@ -1,7 +1,7 @@
 ﻿namespace Ketchup.Core.Kong
 {
-    public interface IGatewayProvider
+    public interface IKongNetProvider
     {
-       
+        void AddKongSetting();
     }
 }

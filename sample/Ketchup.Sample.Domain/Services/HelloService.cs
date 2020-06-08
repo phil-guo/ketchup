@@ -4,6 +4,7 @@ using Grpc.Domain;
 using Ketchup.Core.Attributes;
 using Ketchup.Core.Cache;
 using Ketchup.Core.EventBus;
+using Ketchup.Core.Kong.Attribute;
 using Ketchup.Core.Utilities;
 using Ketchup.Sample.Domain.Services.Events;
 using Newtonsoft.Json;
@@ -21,7 +22,7 @@ namespace Ketchup.Sample.Domain.Services
         }
 
         //[HystrixCommand(MethodName = nameof(SayHello), ExcuteTimeoutInMilliseconds = 3000)]
-        //[Gateway(RequestName = nameof(HelloRequest))]
+        [KongRoute(Name = nameof(SayHello), Paths = new[] { "/sample/SayHello" })]
         public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
 

@@ -6,7 +6,6 @@
   "Gateway": {
     "Address": "192.168.3.11",
     "Port": 8090,
-    "Name": "gateway",
     "KongAddress": "192.168.190.114:8001",
     "Protocol": "http",
     "Path": "/api" 

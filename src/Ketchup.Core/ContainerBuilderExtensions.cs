@@ -7,6 +7,8 @@ using Autofac;
 using Ketchup.Core.Command;
 using Ketchup.Core.Command.Implementation;
 using Ketchup.Core.EventBus;
+using Ketchup.Core.Kong;
+using Ketchup.Core.Kong.Implementation;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
 using Microsoft.Extensions.DependencyModel;
@@ -27,6 +29,11 @@ namespace Ketchup.Core
             builder.RegisterType<CommandProvider>().As<ICommandProvider>()
                 .WithParameter(new TypedParameter(typeof(Type[]), _referenceAssembly.SelectMany(i => i.ExportedTypes).ToArray()))
                 .SingleInstance();
+
+            builder.RegisterType<KongNetProvider>().As<IKongNetProvider>()
+                .WithParameter(new TypedParameter(typeof(Type[]), _referenceAssembly.SelectMany(i => i.ExportedTypes).ToArray()))
+                .SingleInstance();
+
             return builder;
         }
 

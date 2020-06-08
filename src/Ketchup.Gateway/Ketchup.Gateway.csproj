@@ -26,4 +26,8 @@
   <ItemGroup>
     <Protobuf Include="Protos\*.proto" GrpcServices="Client" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Internal\Filter\" />
+  </ItemGroup>
 </Project>
