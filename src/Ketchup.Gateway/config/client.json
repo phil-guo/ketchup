@@ -1,6 +1,0 @@
-{
-  "Consul": {
-    "ConnectionString": "192.168.180.55:8500",
-    "IsHealthCheck": true
-  }
-}

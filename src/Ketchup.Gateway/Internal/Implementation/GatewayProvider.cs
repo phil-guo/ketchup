@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using Google.Protobuf.Reflection;
 using Grpc.Domain;
-using Ketchup.Gateway.Internal.Attribute;
-using Newtonsoft.Json;
+using Ketchup.Gateway.Configurations;
+using Kong;
+using Kong.Models;
 
 namespace Ketchup.Gateway.Internal.Implementation
 {
@@ -47,6 +48,35 @@ namespace Ketchup.Gateway.Internal.Implementation
                     }
                 }
             }
+
+            return this;
+        }
+
+        public GatewayProvider SettingKongService()
+        {
+            var appConfig = new AppConfig();
+
+            if (string.IsNullOrEmpty(appConfig.Gateway.KongAddress))
+                return this;
+
+            var options = new KongClientOptions(httpClient: new System.Net.Http.HttpClient(), host: $"http://{appConfig.Gateway.KongAddress}");
+            var client = new KongClient(options);
+
+            var service = new ServiceInfo
+            {
+                Name = appConfig.Gateway.Name,
+                Id = Guid.NewGuid(),
+                Port = appConfig.Gateway.Port,
+                Protocol = appConfig.Gateway.Protocol,
+                Path = appConfig.Gateway.Path,
+                Tags = new string[] { appConfig.Gateway.Name },
+                Host = appConfig.Gateway.Address,
+                Connect_timeout = 60000,
+                Read_timeout = 60000,
+                Write_timeout = 60000,
+            };
+
+            client.Service?.UpdateOrCreate(service);
 
             return this;
         }

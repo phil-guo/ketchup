@@ -12,5 +12,7 @@
         ///     是否使用http
         /// </summary>
         public bool EnableHttp { get; set; } = true;
+
+        public string KongAddress { get; set; }
     }
 }

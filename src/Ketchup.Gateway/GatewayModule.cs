@@ -13,7 +13,10 @@ namespace Ketchup.Gateway
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
-            ServiceLocator.GetService<IGatewayProvider>().InitGatewaySetting().MapServiceClient();
+            ServiceLocator.GetService<IGatewayProvider>()
+                .InitGatewaySetting()
+                .MapServiceClient()
+                .SettingKongService();
         }
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
