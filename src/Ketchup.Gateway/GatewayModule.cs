@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using Autofac;
+using Grpc.Domain;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
@@ -15,8 +18,8 @@ namespace Ketchup.Gateway
         {
             ServiceLocator.GetService<IGatewayProvider>()
                 .InitGatewaySetting()
-                .MapServiceClient()
-                .SettingKongService();
+                .SettingKongService()
+                .MapServiceClient(ClientMaps);
         }
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
@@ -27,6 +30,14 @@ namespace Ketchup.Gateway
         protected override void RegisterModule(ContainerBuilderWrapper builder)
         {
             builder.ContainerBuilder.RegisterType<GatewayProvider>().As<IGatewayProvider>().SingleInstance();
+        }
+
+        private Dictionary<string, Type> ClientMaps()
+        {
+            return new Dictionary<string, Type>()
+            {
+                {"SayHello", typeof(RpcTest.RpcTestClient)}
+            };
         }
     }
 }

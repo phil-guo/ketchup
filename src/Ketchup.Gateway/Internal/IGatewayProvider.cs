@@ -10,6 +10,6 @@ namespace Ketchup.Gateway.Internal
         List<MethodDescriptor> MethodDescriptors { get; set; }
         Dictionary<string, Type> MapClients { get; set; }
         GatewayProvider InitGatewaySetting();
-        GatewayProvider MapServiceClient();
+        GatewayProvider MapServiceClient(Func<Dictionary<string, Type>> maps);
     }
 }

@@ -22,10 +22,9 @@ namespace Ketchup.Gateway.Internal.Implementation
             MapClients = new Dictionary<string, Type>();
         }
 
-        public GatewayProvider MapServiceClient()
+        public GatewayProvider MapServiceClient(Func<Dictionary<string, Type>> maps)
         {
-            MapClients.Add("SayHello", typeof(RpcTest.RpcTestClient));
-
+            MapClients = maps?.Invoke();
             return this;
         }
 
