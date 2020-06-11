@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Ketchup.Profession.Domain.Implementation;
 using Ketchup.Profession.ORM.EntityFramworkCore.UntiOfWork;
-using Ketchup.Profession.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ketchup.Profession.ORM.EntityFramworkCore.Repository
+namespace Ketchup.Profession.ORM.EntityFramworkCore.Repository.Implementation
 {
-    public class EfCoreRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>, IGetAll<TEntity, TPrimaryKey>
+    public class EfCoreRepository<TEntity, TPrimaryKey> : IEfCoreRepository<TEntity, TPrimaryKey>
         where TEntity : EntityOfTPrimaryKey<TPrimaryKey>
     {
         private readonly IEfUnitOfWork _unitOfWork;
