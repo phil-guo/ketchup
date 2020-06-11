@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Ketchup.Core\Ketchup.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AutoMapper\" />
-  </ItemGroup>
-
 </Project>

@@ -66,6 +66,10 @@ namespace Ketchup.Core
             return builder;
         }
 
+        public static Type[] GetTypes()
+        {
+            return _referenceAssembly.SelectMany(i => i.ExportedTypes).ToArray();
+        }
         private static List<Assembly> GetAssemblies()
         {
             var referenceAssemblies = new List<Assembly>();
