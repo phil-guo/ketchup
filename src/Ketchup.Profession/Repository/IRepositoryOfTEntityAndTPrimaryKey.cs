@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Ketchup.Profession.Domain;
 
-namespace Ketchup.Profession.Repositoriy
+namespace Ketchup.Profession.Repository
 {
-    public interface IRepositoryOfTEntityAndTPrimaryKey<TEntity, in TPrimaryKey>
+    public interface IRepository<TEntity, in TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         TEntity Insert(TEntity entity);
