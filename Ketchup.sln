@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Caching", "src\Ketc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Redis.Test", "test\Ketchup.Redis.Test\Ketchup.Redis.Test.csproj", "{B9A6D5BA-39F4-4EF1-BC98-1338F0087594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Gateway", "src\Ketchup.Gateway\Ketchup.Gateway.csproj", "{50C840D2-D784-4CF5-8FE2-75E58A93BD21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Gateway", "src\Ketchup.Gateway\Ketchup.Gateway.csproj", "{50C840D2-D784-4CF5-8FE2-75E58A93BD21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Profession", "src\Ketchup.Profession\Ketchup.Profession.csproj", "{F133F7A6-400F-484C-9A33-D92001D585CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{50C840D2-D784-4CF5-8FE2-75E58A93BD21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50C840D2-D784-4CF5-8FE2-75E58A93BD21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50C840D2-D784-4CF5-8FE2-75E58A93BD21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F133F7A6-400F-484C-9A33-D92001D585CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F133F7A6-400F-484C-9A33-D92001D585CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F133F7A6-400F-484C-9A33-D92001D585CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F133F7A6-400F-484C-9A33-D92001D585CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 		{B9A6D5BA-39F4-4EF1-BC98-1338F0087594} = {3A437EEA-9CCF-48CA-9AE8-2E0E036E70BB}
 		{50C840D2-D784-4CF5-8FE2-75E58A93BD21} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
+		{F133F7A6-400F-484C-9A33-D92001D585CE} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D69DA7EE-D2A0-4387-B287-356AF9B3BC18}
