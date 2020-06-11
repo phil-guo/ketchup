@@ -10,10 +10,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ketchup.Core\Ketchup.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoMapper\" />
   </ItemGroup>
 
 </Project>
