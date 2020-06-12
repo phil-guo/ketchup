@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Ketchup.Profession.Application.DTO;
+using Ketchup.Profession.AutoMapper;
 using Ketchup.Profession.AutoMapper.ObjectMapper;
 using Ketchup.Profession.Domain;
 using Ketchup.Profession.ORM.EntityFramworkCore;
 using Ketchup.Profession.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ketchup.Profession.Application.Implementation
 {
-    public class CurdAppServiceOfTPrimaryKey<TEntity, TEntityDto, TSearch> :
+    public abstract class CurdAppServiceOfTPrimaryKey<TEntity, TEntityDto, TSearch> :
         CurdAppService<TEntity, int, TEntityDto, TEntityDto, TEntityDto>,
         ICurdAppServiceOfTPrimaryKey<TEntity, TEntityDto, TSearch>
         where TEntity : class, IEntity<int>
@@ -17,24 +21,51 @@ namespace Ketchup.Profession.Application.Implementation
     {
         private readonly IGetAll<TEntity, int> _getAll;
 
-        public CurdAppServiceOfTPrimaryKey(IRepository<TEntity, int> repository, IObjectMapper objectMapper) : base(
+        protected CurdAppServiceOfTPrimaryKey(IRepository<TEntity, int> repository,
+            IObjectMapper objectMapper,
+            IGetAll<TEntity, int> getAll) : base(
             repository, objectMapper)
         {
+            _getAll = getAll;
         }
 
-        public List<TEntityDto> PageSearch(TSearch search)
+        public virtual PageSearchDto<TEntityDto> PageSearch(TSearch search)
         {
-            throw new NotImplementedException();
+            var query = _getAll.GetAll().AsNoTracking();
+
+            if (SearchFilter(search) != null)
+                query = query.Where(SearchFilter(search));
+
+            query = OrderFilter() != null
+                ? query.OrderByDescending(OrderFilter())
+                : query.OrderByDescending(item => item.Id);
+
+            var total = query.Count();
+
+            var result = query.Skip(search.PageSize * (search.PageIndex - 1))
+            .Take(search.PageSize)
+            .ToList();
+
+            return new PageSearchDto<TEntityDto>()
+            {
+                EntityDtos = ConvertToEntities(result),
+                Total = total
+            };
         }
 
-        public bool BatchInsert(List<TEntityDto> dtos)
+        protected virtual Expression<Func<TEntity, bool>> SearchFilter(TSearch search)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        public bool BatchUpdate(List<TEntityDto> dtos)
+        protected virtual Expression<Func<TEntity, int>> OrderFilter()
         {
-            throw new NotImplementedException();
+            return null;
+        }
+
+        protected virtual List<TEntityDto> ConvertToEntities(List<TEntity> entities)
+        {
+            return entities.MapTo<List<TEntityDto>>();
         }
     }
 }
