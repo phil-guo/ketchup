@@ -72,5 +72,3 @@
          "IsHealthCheck": true
      }
 更多文档请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
-
-qq群：592407137
