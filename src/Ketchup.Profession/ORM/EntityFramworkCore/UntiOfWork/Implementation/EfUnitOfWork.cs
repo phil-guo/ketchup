@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ketchup.Profession.ORM.EntityFramworkCore.UntiOfWork.Implementation
 {
     public class EfUnitOfWork<TContext> : IEfUnitOfWork
-        where TContext : EfCoreContext
+        where TContext : DbContext, IEfCoreContext
     {
 
         public readonly TContext _defaultDbContext;
