@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>simple</Authors>
+    <Company>wltx</Company>
+    <Product>Ketchup.RabbitMQ</Product>
+    <PackageId>Ketchup.RabbitMQ</PackageId>
+    <Description>Ketchup</Description>
   </PropertyGroup>
 
   <ItemGroup>
