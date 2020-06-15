@@ -6,8 +6,8 @@
     <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
-    <Product>Ketchup.Consul</Product>
-    <PackageId>Ketchup.Consul</PackageId>
+    <Product>KetchupCore.Consul</Product>
+    <PackageId>KetchupCore.Consul</PackageId>
     <Description>Ketchup 注册中心组件</Description>
   </PropertyGroup>
 

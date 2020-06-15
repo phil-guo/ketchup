@@ -6,8 +6,8 @@
     <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
-    <Product>Ketchup.RabbitMQ</Product>
-    <PackageId>Ketchup.RabbitMQ</PackageId>
+    <Product>KetchupCore.RabbitMQ</Product>
+    <PackageId>KetchupCore.RabbitMQ</PackageId>
     <Description>Ketchup中消息队列组件</Description>
   </PropertyGroup>
 

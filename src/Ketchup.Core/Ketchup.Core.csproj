@@ -6,8 +6,8 @@
     <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
-    <Product>Ketchup.Core</Product>
-    <PackageId>Ketchup.Core</PackageId>
+    <Product>KetchupCore</Product>
+    <PackageId>KetchupCore</PackageId>
     <Description>Ketchup微服务框架，基于dotnet core 3.1</Description>
   </PropertyGroup>
 

@@ -6,8 +6,8 @@
     <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
-    <Product>Ketchup.Caching</Product>
-    <PackageId>Ketchup.Caching</PackageId>
+    <Product>KetchupCore.Caching</Product>
+    <PackageId>KetchupCore.Caching</PackageId>
     <Description>Ketchup 缓存组件</Description>
   </PropertyGroup>
 

@@ -6,8 +6,8 @@
     <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
-    <Product>Ketchup.Grpc</Product>
-    <PackageId>Ketchup.Grpc</PackageId>
+    <Product>KetchupCore.Grpc</Product>
+    <PackageId>KetchupCore.Grpc</PackageId>
     <Description>Ketchup Grpc组件</Description>
   </PropertyGroup>
 
