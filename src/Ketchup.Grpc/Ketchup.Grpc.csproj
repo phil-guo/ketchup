@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
-    <Company>wltx</Company>
+    <Company>simple</Company>
     <Product>Ketchup.Grpc</Product>
     <PackageId>Ketchup.Grpc</PackageId>
-    <Description>Ketchup</Description>
+    <Description>Ketchup Grpc组件</Description>
   </PropertyGroup>
 
   <ItemGroup>

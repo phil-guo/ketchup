@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-preview</Version>
     <Authors>simple</Authors>
-    <Company>wltx</Company>
+    <Company>simple</Company>
     <Product>Ketchup.Core</Product>
     <PackageId>Ketchup.Core</PackageId>
-    <Description>Ketchup</Description>
+    <Description>Ketchup微服务框架，基于dotnet core 3.1</Description>
   </PropertyGroup>
 
   <ItemGroup>
