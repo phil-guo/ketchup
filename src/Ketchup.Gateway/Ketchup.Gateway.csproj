@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <None Remove="Protos\hello.proto" />
+    <None Remove="Protos\permission.proto" />
     <None Remove="Protos\test.proto" />
   </ItemGroup>
 
@@ -25,9 +26,5 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\*.proto" GrpcServices="Client" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Internal\Filter\" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@ using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
 using Ketchup.Gateway.Internal;
 using Ketchup.Gateway.Internal.Implementation;
+using Ketchup.Permission;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
@@ -36,7 +37,9 @@ namespace Ketchup.Gateway
         {
             return new Dictionary<string, Type>()
             {
-                {"SayHello", typeof(RpcTest.RpcTestClient)}
+                //{"SayHello", typeof(RpcTest.RpcTestClient)},
+                {"menus.PageSerach", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.CreateOrEdit", typeof(RpcMenu.RpcMenuClient)}
             };
         }
     }

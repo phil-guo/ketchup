@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Google.Protobuf;
-using Google.Protobuf.Reflection;
 using Grpc.Core;
-using Grpc.Domain;
-using Ketchup.Core.Utilities;
 using Ketchup.Gateway.Internal;
+using Ketchup.Gateway.Internal.Filter;
 using Ketchup.Gateway.Internal.Implementation;
+using Ketchup.Gateway.Model;
 using Ketchup.Grpc.Internal.Client;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Ketchup.Gateway.Controllers
@@ -32,15 +26,16 @@ namespace Ketchup.Gateway.Controllers
             _gatewayProvider = gatewayProvider;
         }
 
-        [HttpPost("{server}/{service}")]
-        public async Task<object> ExecuteService(string server, string service, [FromBody] Dictionary<string, object> inputBody)
+        [HttpPost("{server}/{service}/{method}")]
+        [KetchupExceptionFilter]
+        public async Task<object> ExecuteService(string server, string service, string method, [FromBody] Dictionary<string, object> inputBody)
         {
-            _gatewayProvider.MapClients.TryGetValue(service, out var value);
+            _gatewayProvider.MapClients.TryGetValue($"{service}.{method}", out var value);
 
             var client = await _clientProvider.GetClientAsync(server, value);
 
             var descriptor =
-                _gatewayProvider.MethodDescriptors.FirstOrDefault(item => item.Name == service);
+                _gatewayProvider.MethodDescriptors.FirstOrDefault(item => item.Name == method);
 
             var methodModel = new GrpcGatewayMethod()
             {
@@ -48,16 +43,16 @@ namespace Ketchup.Gateway.Controllers
                 Request = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(inputBody), descriptor?.InputType.ClrType)
             };
 
-            var method = _gatewayProvider.MapClients[service].GetMethod(service,
+            var methodInvoke = _gatewayProvider.MapClients[$"{service}.{method}"].GetMethod(method,
                 new Type[] { methodModel.Type,
                     typeof(Metadata),
                     typeof(global::System.DateTime),
                     typeof(global::System.Threading.CancellationToken) });
 
-            var result = method?.Invoke(client,
+            var result = methodInvoke?.Invoke(client,
                 new object[] { methodModel.Request, null, null, default(global::System.Threading.CancellationToken) });
 
-            return result;
+            return new KetchupReponse(result);
         }
     }
 }

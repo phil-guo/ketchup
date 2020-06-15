@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.4</Version>
+    <Version>0.1.6</Version>
     <Authors>simple</Authors>
     <Company>wltx</Company>
     <Product>Ketchup.Profession</Product>
