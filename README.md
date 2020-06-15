@@ -1,3 +1,6 @@
+[![](https://img.shields.io/badge/.NET%20Core-3.1-brightgreen.svg?style=flat-square)](https://www.microsoft.com/net/download/core) 
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/simple-gr/ketchup/blob/master/LICENSE) 
+
 # ketchup -- 番茄酱
 ### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
 ### 网关：kong
