@@ -5,7 +5,10 @@ package Ketchup.Permission;
 service RpcMenu{
 	//创建或修改
 	rpc CreateOrEdit(MenuDto) returns (MenuDto);
+	//分页查询
 	rpc PageSerach(SearchMenu) returns(MenutList);
+	//根据角色获取菜单
+	rpc GetMenusByRole(MenusRoleRequest)returns(MenusRoleReponse);
 }
 
 message MenuDto{
@@ -30,14 +33,26 @@ message MenuDto{
 	//主键
 	int32 Id=7;
 }
-
 message MenutList {
 	repeated MenuDto Datas = 1;
 	int32 Total=2;
 }
-
 message SearchMenu{
 	int32 ParentId=1;
 	int32 PageIndex=2;
 	int32 PageMax=3;
+}
+message MenusRoleRequest{
+	int32 RoleId=1;
+}
+message MenusByRole{
+	int32 Id=1;
+	string Title=2;
+	string Icon=3;
+	string Path=4;
+	repeated MenusByRole Children=5;
+}
+
+message MenusRoleReponse{
+	repeated MenusByRole Datas=1;
 }
