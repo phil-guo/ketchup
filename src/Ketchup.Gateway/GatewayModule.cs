@@ -37,9 +37,10 @@ namespace Ketchup.Gateway
         {
             return new Dictionary<string, Type>()
             {
-                //{"SayHello", typeof(RpcTest.RpcTestClient)},
                 {"menus.PageSerach", typeof(RpcMenu.RpcMenuClient)},
-                {"menus.CreateOrEdit", typeof(RpcMenu.RpcMenuClient)}
+                {"menus.CreateOrEdit", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.GetMenusByRole", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.GetRoleMenus", typeof(RpcMenu.RpcMenuClient)}
             };
         }
     }

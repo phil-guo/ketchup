@@ -38,7 +38,7 @@ namespace Ketchup.Core.Kong.Implementation
                     var attribute = methodInfo.GetCustomAttribute<KongRouteAttribute>();
 
                     if (attribute == null)
-                        return;
+                        continue;
 
                     Task.Run(async () =>
                     {

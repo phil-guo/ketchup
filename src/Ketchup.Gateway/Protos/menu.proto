@@ -9,6 +9,8 @@ service RpcMenu{
 	rpc PageSerach(SearchMenu) returns(MenutList);
 	//根据角色获取菜单
 	rpc GetMenusByRole(MenusRoleRequest)returns(MenusRoleReponse);
+	//设置权限时获取菜单及其菜单的功能
+	rpc GetRoleMenus(MenusRoleRequest)returns(RoleMenuReponse);
 }
 
 message MenuDto{
@@ -52,7 +54,15 @@ message MenusByRole{
 	string Path=4;
 	repeated MenusByRole Children=5;
 }
-
 message MenusRoleReponse{
 	repeated MenusByRole Datas=1;
+}
+message RoleMenuReponse{
+	repeated string MenuIds=1;
+	repeated MenuModel List=2;
+}
+message MenuModel{
+	string Id=1;
+	string Lable=2;
+	repeated MenuModel Children=3;
 }
