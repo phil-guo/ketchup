@@ -126,7 +126,7 @@ namespace Ketchup.Profession.ORM.EntityFramworkCore.Repository.Implementation
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
         }
 
-        private DbSet<TEntity> GetSet()
+        protected DbSet<TEntity> GetSet()
         {
             return _unitOfWork.CreateSet<TEntity, TPrimaryKey>();
         }

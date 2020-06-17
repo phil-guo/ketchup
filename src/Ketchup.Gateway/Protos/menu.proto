@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-package Ketchup.Permission;
+package Ketchup.Menu;
 
 service RpcMenu{
 	//创建或修改
