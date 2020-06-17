@@ -129,5 +129,43 @@ namespace Ketchup.Gateway.Internal.Implementation
                 });
             }).Wait();
         }
+
+        public void SettingJwtAuth(KongClient client, AppConfig appConfig)
+        {
+            if (!appConfig.Gateway.EnableAuth)
+                return;
+
+            Task.Run(async () =>
+            {
+                Consumer consumer = new Consumer()
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = "ketchup",
+                    Custom_id = "ketchup",
+                    Tags = new string[] { "ketchup.zero" }
+                };
+                await client.Consumer.UpdateOrCreate(consumer);
+
+                var gatewayService = await client.Service.Get(appConfig.Gateway.Name);
+
+                var plugin = new Plugin()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "jwt",
+                    Route = null,
+                    Service = new Plugin.ServiceId() { Id = (Guid)gatewayService.Id },
+                    Consumer = null,
+                    Config = new PluginConfig
+                    {
+                        Hour = 500,
+                        Minute = 20
+                    },
+                    Run_on = "first",
+                    Protocols = new string[] { "http", "https" },
+                    Enabled = true,
+                };
+
+            }).Wait();
+        }
     }
 }
