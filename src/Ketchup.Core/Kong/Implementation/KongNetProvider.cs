@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Grpc.Core;
 using Ketchup.Core.Attributes;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Kong.Attribute;
@@ -13,7 +13,7 @@ namespace Ketchup.Core.Kong.Implementation
 {
     public class KongNetProvider : IKongNetProvider
     {
-        private KongClient _client;
+        private readonly KongClient _client;
 
         private readonly Type[] _types;
 
@@ -42,22 +42,34 @@ namespace Ketchup.Core.Kong.Implementation
 
                     Task.Run(async () =>
                     {
-                        var kongService = await _client.Service.Get("gateway");
-                        await _client.Route.UpdateOrCreate(new RouteInfo()
+                        try
                         {
-                            Id = Guid.NewGuid(),
-                            Name = attribute.Name.ToLower(),
-                            Hosts = attribute.Hosts,
-                            Methods = attribute.Methods,
-                            Protocols = attribute.Protocols,
-                            Https_redirect_status_code = attribute.Https_redirect_status_code,
-                            Paths = attribute.Paths,
-                            Tags = attribute.Tags,
-                            Service = new RouteInfo.ServiceId()
+                            if (_client == null)
+                                return;
+                            var kongService = await _client.Service.Get("gateway");
+                            if (kongService == null)
+                                return;
+
+                            await _client.Route.UpdateOrCreate(new RouteInfo()
                             {
-                                Id = (Guid)kongService.Id
-                            }
-                        });
+                                Id = Guid.NewGuid(),
+                                Name = attribute.Name.ToLower(),
+                                Hosts = attribute.Hosts,
+                                Methods = attribute.Methods,
+                                Protocols = attribute.Protocols,
+                                Https_redirect_status_code = attribute.Https_redirect_status_code,
+                                Paths = attribute.Paths,
+                                Tags = attribute.Tags,
+                                Service = new RouteInfo.ServiceId()
+                                {
+                                    Id = (Guid)kongService.Id
+                                }
+                            });
+                        }
+                        catch
+                        {
+                            throw new RpcException(new Status(StatusCode.Internal, "请创建kong的链接并且创建一个名为gateway的service"));
+                        }
                     }).Wait();
                 }
             }
