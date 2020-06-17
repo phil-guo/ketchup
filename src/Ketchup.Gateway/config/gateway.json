@@ -8,6 +8,7 @@
     "Port": 8090,
     "KongAddress": "192.168.190.114:8001",
     "Protocol": "http",
-    "Path": "/api" 
+    "Path": "/api",
+    "JwtAuth": "/auth/token" 
   }
 }

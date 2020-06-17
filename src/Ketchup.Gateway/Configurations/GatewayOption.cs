@@ -13,5 +13,6 @@ namespace Ketchup.Gateway.Configurations
         public string KongAddress { get; set; }
         public string Protocol { get; set; } = "http";
         public string Path { get; set; } = "/api";
+        public string JwtAuth { get; set; } = "/auth/token";
     }
 }

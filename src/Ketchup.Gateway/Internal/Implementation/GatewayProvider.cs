@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Google.Protobuf.Reflection;
-using Grpc.Domain;
 using Ketchup.Gateway.Configurations;
 using Kong;
 using Kong.Models;
@@ -12,6 +12,8 @@ namespace Ketchup.Gateway.Internal.Implementation
 {
     public class GatewayProvider : IGatewayProvider
     {
+        public const string KongAuthName = "ketchupAuth";
+
         public List<MethodDescriptor> MethodDescriptors { get; set; }
 
         public Dictionary<string, Type> MapClients { get; set; }
@@ -51,10 +53,8 @@ namespace Ketchup.Gateway.Internal.Implementation
             return this;
         }
 
-        public GatewayProvider SettingKongService()
+        public GatewayProvider SettingKongService(AppConfig appConfig)
         {
-            var appConfig = new AppConfig();
-
             if (string.IsNullOrEmpty(appConfig.Gateway.KongAddress))
                 return this;
 
@@ -77,7 +77,57 @@ namespace Ketchup.Gateway.Internal.Implementation
 
             client.Service?.UpdateOrCreate(service);
 
+            SettingAuthSerice(appConfig, client);
+
             return this;
+        }
+
+        private void SettingAuthSerice(AppConfig appConfig, KongClient client)
+        {
+            if (string.IsNullOrEmpty(appConfig.Gateway.JwtAuth))
+                return;
+
+            var authService = new ServiceInfo()
+            {
+                Name = KongAuthName,
+                Id = Guid.NewGuid(),
+                Port = appConfig.Gateway.Port,
+                Protocol = appConfig.Gateway.Protocol,
+                Path = "/",
+                Tags = new string[] { "auth" },
+                Host = appConfig.Gateway.Address,
+                Connect_timeout = 60000,
+                Read_timeout = 60000,
+                Write_timeout = 60000,
+            };
+            client.Service?.UpdateOrCreate(authService);
+
+            SettingAuthRoute(client, appConfig);
+        }
+
+        private void SettingAuthRoute(KongClient client, AppConfig appConfig)
+        {
+            Task.Run(async () =>
+            {
+                var kongService = await client.Service.Get(KongAuthName);
+                if (kongService == null)
+                    return;
+
+                await client.Route.UpdateOrCreate(new RouteInfo()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "auth",
+                    Methods = new[] { "POST" },
+                    Protocols = new[] { "http" },
+                    Https_redirect_status_code = 426,
+                    Paths = new[] { appConfig.Gateway.JwtAuth },
+                    Tags = new[] { "token" },
+                    Service = new RouteInfo.ServiceId()
+                    {
+                        Id = (Guid)kongService.Id
+                    }
+                });
+            }).Wait();
         }
     }
 }

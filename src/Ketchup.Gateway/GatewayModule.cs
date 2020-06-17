@@ -4,6 +4,7 @@ using Autofac;
 using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
+using Ketchup.Gateway.Configurations;
 using Ketchup.Gateway.Internal;
 using Ketchup.Gateway.Internal.Implementation;
 using Ketchup.Permission;
@@ -16,9 +17,11 @@ namespace Ketchup.Gateway
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
+            var appConfig = new AppConfig();
+
             ServiceLocator.GetService<IGatewayProvider>()
                 .InitGatewaySetting()
-                .SettingKongService()
+                .SettingKongService(appConfig)
                 .MapServiceClient(ClientMaps);
         }
 

@@ -8,13 +8,13 @@ using Ketchup.Gateway.Internal.Filter;
 using Ketchup.Gateway.Internal.Implementation;
 using Ketchup.Gateway.Model;
 using Ketchup.Grpc.Internal.Client;
+using Ketchup.Permission;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Ketchup.Gateway.Controllers
 {
     [ApiController]
-    [Route("api/")]
     public class ServicesController : Controller
     {
         private readonly IGrpcClientProvider _clientProvider;
@@ -26,7 +26,16 @@ namespace Ketchup.Gateway.Controllers
             _gatewayProvider = gatewayProvider;
         }
 
-        [HttpPost("{server}/{service}/{method}")]
+        [HttpPost("auth/token")]
+        [KetchupExceptionFilter]
+        public async Task<object> GetToken(TokenRequst request)
+        {
+            var client = await _clientProvider.FindGrpcClient<RpcSysUser.RpcSysUserClient>("zero");
+            var result = await client.TokenAsync(request);
+            return result;
+        }
+
+        [HttpPost("api/{server}/{service}/{method}")]
         [KetchupExceptionFilter]
         public async Task<object> ExecuteService(string server, string service, string method, [FromBody] Dictionary<string, object> inputBody)
         {
