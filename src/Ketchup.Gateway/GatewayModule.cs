@@ -42,19 +42,19 @@ namespace Ketchup.Gateway
                 {"menus.GetMenusSetRole", typeof(RpcMenu.RpcMenuClient)},
                 {"menus.RemoveMenu", typeof(RpcMenu.RpcMenuClient)},
 
-                {"menus.PageSerachOperate", typeof(RpcOperate.RpcOperateClient)},
-                {"menus.CreateOrEditOperate", typeof(RpcOperate.RpcOperateClient)},
-                {"menus.GetMenuOfOperate", typeof(RpcOperate.RpcOperateClient)},
-                {"menus.RemoveOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"operates.PageSerachOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"operates.CreateOrEditOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"operates.GetMenuOfOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"operates.RemoveOperate", typeof(RpcOperate.RpcOperateClient)},
 
                 {"sysRoles.PageSerachRole", typeof(RpcRole.RpcRoleClient)},
                 {"sysRoles.CreateOrEditRole", typeof(RpcRole.RpcRoleClient)},
                 {"sysRoles.RemoveRole", typeof(RpcRole.RpcRoleClient)},
                 {"sysRoles.SetRolePermission", typeof(RpcRole.RpcRoleClient)},
 
-                {"sysRoles.PageSerachSysUser", typeof(RpcSysUser.RpcSysUserClient)},
-                {"sysRoles.CreateOrEditSysUser", typeof(RpcSysUser.RpcSysUserClient)},
-                {"sysRoles.RemoveSysUser", typeof(RpcSysUser.RpcSysUserClient)},
+                {"sysUsers.PageSerachSysUser", typeof(RpcSysUser.RpcSysUserClient)},
+                {"sysUsers.CreateOrEditSysUser", typeof(RpcSysUser.RpcSysUserClient)},
+                {"sysUsers.RemoveSysUser", typeof(RpcSysUser.RpcSysUserClient)},
             };
         }
     }
