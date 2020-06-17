@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <None Remove="Protos\hello.proto" />
-    <None Remove="Protos\menu.proto" />
+    <None Remove="Protos\permission.proto" />
     <None Remove="Protos\test.proto" />
   </ItemGroup>
 

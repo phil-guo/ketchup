@@ -1,0 +1,183 @@
+﻿syntax = "proto3";
+
+package Ketchup.Permission;
+
+//菜单
+service RpcMenu{
+	//创建或修改
+	rpc CreateOrEditMenu(MenuDto) returns (MenuDto);
+	//分页查询
+	rpc PageSerachMenu(SearchMenu) returns(MenutList);
+	//根据角色获取菜单
+	rpc GetMenusByRole(MenusRoleRequest)returns(MenusRoleReponse);
+	//设置权限时获取菜单及其菜单的功能
+	rpc GetMenusSetRole(MenusRoleRequest)returns(RoleMenuReponse);
+	//删除
+	rpc RemoveMenu(RemoveRequest)returns(RemoveResponse);
+}
+
+message MenuDto{
+
+	//父级
+	int32 ParentId=1;
+	///菜单名称
+	string Name=2;
+
+	///菜单地址
+	string Url=3;
+
+	///层级
+	int32 Level=4;
+
+	///菜单权限(list<int /> json)
+	string Operates=5;
+
+	/// 菜单图标
+	string Icon=6;	
+
+	//主键
+	int32 Id=7;
+}
+message MenutList {
+	repeated MenuDto Datas = 1;
+	int32 Total=2;
+}
+message SearchMenu{
+	int32 ParentId=1;
+	int32 PageIndex=2;
+	int32 PageMax=3;
+}
+message MenusRoleRequest{
+	int32 RoleId=1;
+}
+message MenusByRole{
+	int32 Id=1;
+	string Title=2;
+	string Icon=3;
+	string Path=4;
+	repeated MenusByRole Children=5;
+}
+message MenusRoleReponse{
+	repeated MenusByRole Datas=1;
+}
+message RoleMenuReponse{
+	repeated string MenuIds=1;
+	repeated MenuModel List=2;
+}
+message MenuModel{
+	string Id=1;
+	string Lable=2;
+	repeated MenuModel Children=3;
+}
+
+
+//功能
+service RpcOperate{
+	//创建或修改
+	rpc CreateOrEditOperate(OperateDto) returns(OperateDto);
+	//分页查询
+	rpc PageSerachOperate(SearchOperate)returns(OperatesResponse);
+	//获取菜单下的功能
+	rpc GetMenuOfOperate(MenuOfOperateRequest)returns(MenuOfOperateReponse);
+	rpc RemoveOperate(RemoveRequest)returns(RemoveResponse);
+}
+
+message SearchOperate{
+	int32 PageIndex=1;
+	int32 PageMax=2;
+}
+message OperatesResponse{
+	repeated OperateDto Datas=1;
+	int32 Total=2;
+}
+message OperateDto{
+	int32 Id=1;
+	//名称
+	string Name=2;
+	//索引标识
+	int32 Unique=3;
+	string Remark=4;
+}
+message MenuOfOperateReponse{
+	repeated string Datas=1;
+}
+message MenuOfOperateRequest{
+	int32 RoleId=1;
+	int32 MenuId=2;
+}
+
+
+//系统用户
+service RpcSysUser{
+	//创建或修改
+	rpc CreateOrEditSysUser(SysUserDto) returns(SysUserDto);
+	//分页查询
+	rpc PageSerachSysUser(SearchSysUser)returns(SearchSysUserResponse);
+	rpc RemoveSysUser(RemoveRequest)returns(RemoveResponse);	
+}
+message SysUserDto{
+	int32 Id=1;
+	int32 RoleId=2;
+	string UserName=3;
+	string Password=4;
+}
+message SearchSysUser{
+	int32 PageIndex=1;
+	int32 PageMax=2;
+}
+message SearchSysUserResponse{
+	repeated SysUserDto Datas=1;
+	int32 Total=2;
+}
+message SetRoleDto{
+	int32 Id=1;
+	int32 RoleId=2;
+}
+//删除model
+message RemoveRequest{
+	int32 Id=1;
+}
+message RemoveResponse{
+	bool IsComplete=1;
+}
+
+//角色
+service RpcRole{
+	//创建或修改
+	rpc CreateOrEditRole(RoleDto) returns (RoleDto);
+	//分页查询
+	rpc PageSerachRole(SearchRole) returns(RoleList);	
+	rpc RemoveRole(RemoveRoleRequest)returns(RemoveRoleResponse);
+	//设置角色权限
+	rpc SetRolePermission(SetRolepermissionRequest)returns (SetRolePermissionResponse);
+}
+
+message  SetRolepermissionRequest{
+	int32 RoleId=1;
+	repeated string MenuIds=2;
+}
+message SetRolePermissionResponse{
+	bool IsComplete=1;
+}
+message RoleDto{
+	///角色名称
+	string Name=1;
+	///角色备注
+	string Remark=2;
+}
+message RoleList {
+	repeated RoleDto Datas = 1;
+	int32 Total=2;
+}
+message SearchRole{
+	string RoleName=1;
+	int32 PageIndex=2;
+	int32 PageMax=3;
+}
+//删除model
+message RemoveRoleRequest{
+	int32 Id=1;
+}
+message RemoveRoleResponse{
+	bool IsComplete=1;
+}

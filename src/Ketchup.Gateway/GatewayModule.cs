@@ -6,7 +6,7 @@ using Ketchup.Core.Modules;
 using Ketchup.Core.Utilities;
 using Ketchup.Gateway.Internal;
 using Ketchup.Gateway.Internal.Implementation;
-using Ketchup.Menu;
+using Ketchup.Permission;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
@@ -36,10 +36,25 @@ namespace Ketchup.Gateway
         {
             return new Dictionary<string, Type>()
             {
-                {"menus.PageSerach", typeof(RpcMenu.RpcMenuClient)},
-                {"menus.CreateOrEdit", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.PageSerachMenu", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.CreateOrEditMenu", typeof(RpcMenu.RpcMenuClient)},
                 {"menus.GetMenusByRole", typeof(RpcMenu.RpcMenuClient)},
-                {"menus.GetRoleMenus", typeof(RpcMenu.RpcMenuClient)}
+                {"menus.GetMenusSetRole", typeof(RpcMenu.RpcMenuClient)},
+                {"menus.RemoveMenu", typeof(RpcMenu.RpcMenuClient)},
+
+                {"menus.PageSerachOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"menus.CreateOrEditOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"menus.GetMenuOfOperate", typeof(RpcOperate.RpcOperateClient)},
+                {"menus.RemoveOperate", typeof(RpcOperate.RpcOperateClient)},
+
+                {"sysRoles.PageSerachRole", typeof(RpcRole.RpcRoleClient)},
+                {"sysRoles.CreateOrEditRole", typeof(RpcRole.RpcRoleClient)},
+                {"sysRoles.RemoveRole", typeof(RpcRole.RpcRoleClient)},
+                {"sysRoles.SetRolePermission", typeof(RpcRole.RpcRoleClient)},
+
+                {"sysRoles.PageSerachSysUser", typeof(RpcSysUser.RpcSysUserClient)},
+                {"sysRoles.CreateOrEditSysUser", typeof(RpcSysUser.RpcSysUserClient)},
+                {"sysRoles.RemoveSysUser", typeof(RpcSysUser.RpcSysUserClient)},
             };
         }
     }
