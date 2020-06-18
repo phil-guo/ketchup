@@ -31,11 +31,23 @@ namespace Kong.Models
         {
             public Guid Id { get; set; }
         }
-        public PluginConfig Config { get; set; }
-        public string Run_on { get; set; }
+        public JwtPluginConfig Config { get; set; }
         public string[] Protocols { get; set; }
         public bool Enabled { get; set; }
         public string[] Tags { get; set; }
+    }
+
+    public class JwtPluginConfig
+    {
+        public string[] uri_param_names { get; set; }
+        public string[] cookie_names { get; set; }
+        public string[] header_names { get; set; } = new[] { "Authorization" };
+        public string claims_to_verify { get; set; }
+        public string key_claim_name { get; set; } = "iss";
+        public bool secret_is_base64 { get; set; }
+        public string anonymous { get; set; }
+        public bool run_on_preflight { get; set; } = true;
+        public int maximum_expiration { get; set; }
     }
 
     public class PluginConfig

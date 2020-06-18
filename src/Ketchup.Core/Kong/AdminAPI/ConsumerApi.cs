@@ -2,6 +2,7 @@
 using Kong.Models;
 using System;
 using System.Threading.Tasks;
+using Ketchup.Core.Kong.Models;
 
 namespace Kong.AdminAPI
 {
@@ -116,6 +117,12 @@ namespace Kong.AdminAPI
             var path = string.Format("{0}/{1}/{2}", RESTfulPath.PLUGINS, id, RESTfulPath.CONSUMERS);
             var result = await RequestGet<Consumer>(path);
             return result;
+        }
+
+        public async Task CreateJwtCredential(Guid? consumerId, ConsumerJwt jwt)
+        {
+            var path = $"{RESTfulPath.CONSUMERS}/{consumerId}/jwt";
+            await RequestPost(path, jwt);
         }
     }
 }

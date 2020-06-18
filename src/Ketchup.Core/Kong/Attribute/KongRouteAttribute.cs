@@ -2,6 +2,7 @@
 {
     public class KongRouteAttribute : System.Attribute
     {
+        public string GatewayName { get; set; } = "gateway";
         public string Name { get; set; }
         public string[] Hosts { get; set; }
         public string[] Methods { get; set; } = new[] { "POST" };

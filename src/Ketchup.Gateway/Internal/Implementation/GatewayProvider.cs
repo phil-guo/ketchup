@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Google.Protobuf.Reflection;
+using Ketchup.Core.Kong.Models;
 using Ketchup.Gateway.Configurations;
 using Kong;
 using Kong.Models;
@@ -103,6 +104,8 @@ namespace Ketchup.Gateway.Internal.Implementation
             client.Service?.UpdateOrCreate(authService);
 
             SettingAuthRoute(client, appConfig);
+
+            SettingConsumer(client, appConfig);
         }
 
         private void SettingAuthRoute(KongClient client, AppConfig appConfig)
@@ -130,7 +133,7 @@ namespace Ketchup.Gateway.Internal.Implementation
             }).Wait();
         }
 
-        public void SettingJwtAuth(KongClient client, AppConfig appConfig)
+        public void SettingConsumer(KongClient client, AppConfig appConfig)
         {
             if (!appConfig.Gateway.EnableAuth)
                 return;
@@ -145,26 +148,6 @@ namespace Ketchup.Gateway.Internal.Implementation
                     Tags = new string[] { "ketchup.zero" }
                 };
                 await client.Consumer.UpdateOrCreate(consumer);
-
-                var gatewayService = await client.Service.Get(appConfig.Gateway.Name);
-
-                var plugin = new Plugin()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "jwt",
-                    Route = null,
-                    Service = new Plugin.ServiceId() { Id = (Guid)gatewayService.Id },
-                    Consumer = null,
-                    Config = new PluginConfig
-                    {
-                        Hour = 500,
-                        Minute = 20
-                    },
-                    Run_on = "first",
-                    Protocols = new string[] { "http", "https" },
-                    Enabled = true,
-                };
-
             }).Wait();
         }
     }

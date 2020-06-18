@@ -46,7 +46,7 @@ namespace Ketchup.Core.Kong.Implementation
                         {
                             if (_client == null)
                                 return;
-                            var kongService = await _client.Service.Get("gateway");
+                            var kongService = await _client.Service.Get(attribute.GatewayName);
                             if (kongService == null)
                                 return;
 
