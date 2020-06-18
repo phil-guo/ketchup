@@ -10,9 +10,14 @@ namespace Ketchup.Gateway.Internal.Filter
     {
         public void OnException(ExceptionContext context)
         {
+            if (context.Exception is RpcException exception)
+                context.Result = new JsonResult(new KetchupReponse(null)
+                { Code = exception.Status.StatusCode, Msg = exception.Status.Detail });
+
             if (context.Exception.InnerException is RpcException rpcException)
                 context.Result = new JsonResult(new KetchupReponse(null)
-                    {Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail});
+                { Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail });
+
         }
     }
 }

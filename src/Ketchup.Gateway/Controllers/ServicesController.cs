@@ -30,9 +30,9 @@ namespace Ketchup.Gateway.Controllers
         [KetchupExceptionFilter]
         public async Task<object> GetToken(TokenRequst request)
         {
-            var client = await _clientProvider.FindGrpcClient<RpcSysUser.RpcSysUserClient>("zero");
+            var client = await _clientProvider.FindGrpcClient<Auth.AuthClient>("zero");
             var result = await client.TokenAsync(request);
-            return result;
+            return new KetchupReponse(result);
         }
 
         [HttpPost("api/{server}/{service}/{method}")]

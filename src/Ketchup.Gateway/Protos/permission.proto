@@ -114,15 +114,8 @@ service RpcSysUser{
 	//分页查询
 	rpc PageSerachSysUser(SearchSysUser)returns(SearchSysUserResponse);
 	rpc RemoveSysUser(RemoveRequest)returns(RemoveResponse);
-	rpc Token(TokenRequst)returns(TokenResponse);
 }
-message TokenRequst{
-	string Name=1;
-	string Password=2;
-}
-message TokenResponse{
-	string Access_Token=1;
-}
+
 message SysUserDto{
 	int32 Id=1;
 	int32 RoleId=2;
@@ -182,3 +175,21 @@ message SearchRole{
 	int32 PageIndex=2;
 	int32 PageMax=3;
 }
+
+//授权
+service Auth{
+	rpc Token(TokenRequst)returns(TokenResponse);	
+}
+
+message TokenRequst{
+	string Name=1;
+	string Password=2;
+}
+message TokenResponse{
+	string Access_Token=1;
+	int32 Expired=2;
+	int32 UserId=3;
+	int32 RoleId=4;
+	string UserName=5;
+}
+
