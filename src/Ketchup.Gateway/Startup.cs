@@ -22,14 +22,23 @@ namespace Ketchup.Gateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option =>
+            {
+                option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+            });
             services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
+
         }
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             // Add things to the service collection that are only for the
             // development environment.
+            services.AddCors(option =>
+            {
+                option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+            });
             services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
         }
@@ -59,7 +68,7 @@ namespace Ketchup.Gateway
             }
 
             app.UseRouting();
-
+            app.UseCors("cors");
             app.UseKetchup();
         }
 
@@ -74,7 +83,7 @@ namespace Ketchup.Gateway
             }
 
             app.UseRouting();
-
+            app.UseCors("cors");
             app.UseKetchup();
         }
     }

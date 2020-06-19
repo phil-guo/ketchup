@@ -27,7 +27,7 @@ namespace Ketchup.Gateway
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
         {
-            endpointRoute.MapControllers();
+            endpointRoute.MapControllers().RequireCors("cors"); ;
         }
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)

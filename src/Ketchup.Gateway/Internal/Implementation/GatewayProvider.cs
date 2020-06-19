@@ -120,7 +120,7 @@ namespace Ketchup.Gateway.Internal.Implementation
                 {
                     Id = Guid.NewGuid(),
                     Name = "auth",
-                    Methods = new[] { "POST" },
+                    Methods = new[] { "POST", "OPTIONS" },
                     Protocols = new[] { "http" },
                     Https_redirect_status_code = 426,
                     Paths = new[] { appConfig.Gateway.JwtAuth },
