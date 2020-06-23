@@ -5,7 +5,7 @@ package Ketchup.Permission;
 //菜单
 service RpcMenu{
 	//创建或修改
-	rpc CreateOrEditMenu(CreateOrEditMenuRequest) returns (MenuDto);
+	rpc CreateOrEditMenu(MenuDto) returns (MenuDto);
 	//分页查询
 	rpc PageSerachMenu(SearchMenu) returns(MenutList);
 	//根据角色获取菜单
@@ -14,28 +14,6 @@ service RpcMenu{
 	rpc GetMenusSetRole(MenusRoleRequest)returns(RoleMenuReponse);
 	//删除
 	rpc RemoveMenu(RemoveRequest)returns(RemoveResponse);
-}
-
-message CreateOrEditMenuRequest{
-	//父级
-	int32 ParentId=1;
-	///菜单名称
-	string Name=2;
-
-	///菜单地址
-	string Url=3;
-
-	///层级
-	int32 Level=4;
-
-	///菜单权限(list<int /> json)
-	string Operates=5;
-
-	/// 菜单图标
-	string Icon=6;	
-
-	//主键
-	int32 Id=7;
 }
 
 message MenuDto{
@@ -59,12 +37,6 @@ message MenuDto{
 
 	//主键
 	int32 Id=7;
-
-	repeated OperateModel OperateModels=8;
-}
-message OperateModel{
-	int32 Id=1;
-	string Name=2;
 }
 message MenutList {
 	repeated MenuDto Datas = 1;
@@ -113,7 +85,6 @@ service RpcOperate{
 message SearchOperate{
 	int32 PageIndex=1;
 	int32 PageMax=2;
-	string Name=3;
 }
 message OperatesResponse{
 	repeated OperateDto Datas=1;
@@ -150,7 +121,6 @@ message SysUserDto{
 	int32 RoleId=2;
 	string UserName=3;
 	string Password=4;
-	string RoleName=5;
 }
 message SearchSysUser{
 	int32 PageIndex=1;
@@ -191,7 +161,6 @@ message SetRolePermissionResponse{
 	bool IsComplete=1;
 }
 message RoleDto{
-	int32 Id=3;
 	///角色名称
 	string Name=1;
 	///角色备注
