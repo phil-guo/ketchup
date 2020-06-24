@@ -50,10 +50,10 @@ namespace Ketchup.Gateway
                 {"operates.GetMenuOfOperate", typeof(RpcOperate.RpcOperateClient)},
                 {"operates.RemoveOperate", typeof(RpcOperate.RpcOperateClient)},
 
-                {"sysRoles.PageSerachRole", typeof(RpcRole.RpcRoleClient)},
-                {"sysRoles.CreateOrEditRole", typeof(RpcRole.RpcRoleClient)},
-                {"sysRoles.RemoveRole", typeof(RpcRole.RpcRoleClient)},
-                {"sysRoles.SetRolePermission", typeof(RpcRole.RpcRoleClient)},
+                {"roles.PageSerachRole", typeof(RpcRole.RpcRoleClient)},
+                {"roles.CreateOrEditRole", typeof(RpcRole.RpcRoleClient)},
+                {"roles.RemoveRole", typeof(RpcRole.RpcRoleClient)},
+                {"roles.SetRolePermission", typeof(RpcRole.RpcRoleClient)},
 
                 {"sysUsers.PageSerachSysUser", typeof(RpcSysUser.RpcSysUserClient)},
                 {"sysUsers.CreateOrEditSysUser", typeof(RpcSysUser.RpcSysUserClient)},
