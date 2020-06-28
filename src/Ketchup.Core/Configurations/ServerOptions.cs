@@ -14,5 +14,10 @@
         public bool EnableHttp { get; set; } = true;
 
         public string KongAddress { get; set; }
+
+        /// <summary>
+        /// 权重
+        /// </summary>
+        public int Weight { get; set; }
     }
 }

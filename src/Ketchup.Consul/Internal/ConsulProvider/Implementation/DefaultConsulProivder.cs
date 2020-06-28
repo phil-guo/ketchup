@@ -59,7 +59,8 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                 Name = config.Name,
                 Address = config.Ip,
                 Port = config.Port,
-                Tags = new[] { $"urlprefix-/{config.Ip}:{config.Port}" }
+                Tags = new[] { $"urlprefix-/{config.Ip}:{config.Port}" },
+                Meta = new Dictionary<string, string>() { { SelectorType.RandomWeight.ToString(), config.Weight.ToString() } }
             };
 
 
@@ -100,7 +101,8 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                 ipAddressModels.Add(new IpAddressModel()
                 {
                     Ip = service.Service.Address,
-                    Port = service.Service.Port
+                    Port = service.Service.Port,
+                    Meta = service.Service.Meta
                 });
             });
 

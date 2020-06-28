@@ -55,6 +55,8 @@ namespace Ketchup.Consul
                 .Named<IConsulAddressSelector>(SelectorType.Random.ToString()).SingleInstance();
             builder.ContainerBuilder.RegisterType<PollingAddressSelector>()
                 .Named<IConsulAddressSelector>(SelectorType.Polling.ToString()).SingleInstance();
+            builder.ContainerBuilder.RegisterType<RandomWeightAddressSelector>()
+                .Named<IConsulAddressSelector>(SelectorType.RandomWeight.ToString()).SingleInstance();
             return this;
         }
 

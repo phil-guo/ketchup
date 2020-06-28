@@ -26,6 +26,7 @@ namespace Ketchup.Gateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfig = new Configurations.AppConfig();
             services.AddCors(option =>
             {
                 option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
@@ -41,9 +42,9 @@ namespace Ketchup.Gateway
                         ValidateLifetime = true,//是否验证失效时间
                         ClockSkew = TimeSpan.FromSeconds(7200),
                         ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                        ValidAudience = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Audience
-                        ValidIssuer = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Issuer，这两项和前面签发jwt的设置一致
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ktbN7JdBBUIVm4GIy68EYnc6WQ7Zy2h8"))//拿到SecurityKey
+                        ValidAudience = appConfig.Gateway.Key,//Audience
+                        ValidIssuer = appConfig.Gateway.Key,//Issuer，这两项和前面签发jwt的设置一致
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appConfig.Gateway.Secret))//拿到SecurityKey
                     };
                 });
 
@@ -56,6 +57,7 @@ namespace Ketchup.Gateway
         {
             // Add things to the service collection that are only for the
             // development environment.
+            var appConfig = new Configurations.AppConfig();
             services.AddCors(option =>
             {
                 option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
@@ -67,13 +69,13 @@ namespace Ketchup.Gateway
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,//是否验证Issuer
-                        ValidateAudience = true,//是否验证Audience
+                        ValidateAudience = false,//是否验证Audience
                         ValidateLifetime = true,//是否验证失效时间
                         ClockSkew = TimeSpan.FromSeconds(7200),
                         ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                        ValidAudience = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Audience
-                        ValidIssuer = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Issuer，这两项和前面签发jwt的设置一致
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ktbN7JdBBUIVm4GIy68EYnc6WQ7Zy2h8"))//拿到SecurityKey
+                        ValidAudience = appConfig.Gateway.Key,//Audience
+                        ValidIssuer = appConfig.Gateway.Key,//Issuer，这两项和前面签发jwt的设置一致
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appConfig.Gateway.Secret))//拿到SecurityKey
                     };
                 });
 

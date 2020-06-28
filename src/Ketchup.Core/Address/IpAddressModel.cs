@@ -11,6 +11,8 @@ namespace Ketchup.Core.Address
 
         public int Port { get; set; }
 
+        public IDictionary<string,string> Meta { get; set; }
+
         public override EndPoint CreateEndPoint()
         {
             return new IPEndPoint(IPAddress.Parse(Ip), Port);
