@@ -15,16 +15,18 @@
     "Name": "sample",
     "Ip": "192.168.3.11",
     "Port": "5003",
-    "EnableHttp": true,//是否开启http
+    "EnableHttp": true, //是否开启http
     "Security": {
       "Whitelist": "*", //白名单
       "BlackList": "" //黑名单
     },
-    "KongAddress": "192.168.190.114:8001"//网关kong 地址
+    "KongAddress": "192.168.190.114:8001", //网关kong 地址
+    //"Weight": 5 //权重  --当负载策略为RandomWeight时设置权重值
   },
   "Consul": {
     "ConnectionString": "192.168.180.55:8500",
-    "IsHealthCheck": true
+    "IsHealthCheck": true,
+    //"Strategy": "RandomWeight" //随机权重。默认随机算法
   },
   "RabbitMQ": {
     "Host": "192.168.190.4",
