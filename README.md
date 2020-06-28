@@ -6,7 +6,7 @@
 ### 网关：兼容 kong
 ### rpc：grpc支持远程调用，
 ### 注册中心：consul，
-### 负载均衡算法：轮询、随机。
+### 负载均衡算法：轮询、随机、加权随机算法。
 ### 缓存：redis、memory，
 ### 消息中间件：rabbitmq
 ![image](https://github.com/simple-gr/ketchup/blob/master/images/design.jpg)
