@@ -209,16 +209,14 @@ message SearchRole{
 
 //授权
 service Auth{
-	rpc Token(TokenRequst)returns(TokenResponse);	
+	rpc Login(TokenRequst)returns(TokenResponse);	
 }
 
 message TokenRequst{
 	string Name=1;
 	string Password=2;
 }
-message TokenResponse{
-	string Access_Token=1;
-	int32 Expired=2;
+message TokenResponse{	
 	int32 UserId=3;
 	int32 RoleId=4;
 	string UserName=5;

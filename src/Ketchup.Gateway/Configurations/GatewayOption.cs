@@ -19,5 +19,9 @@ namespace Ketchup.Gateway.Configurations
         /// 开启kong jwt授权
         /// </summary>
         public bool EnableAuth { get; set; } = false;
+
+        public string Key { get; set; }
+        public string Secret { get; set; }
+        public int AuthExpired { get; set; }
     }
 }

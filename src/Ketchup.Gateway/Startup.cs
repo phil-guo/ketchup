@@ -1,13 +1,17 @@
+using System;
+using System.Text;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Ketchup.Core;
 using Ketchup.Core.Configurations;
 using Ketchup.Core.Utilities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Ketchup.Gateway
 {
@@ -26,6 +30,23 @@ namespace Ketchup.Gateway
             {
                 option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,//是否验证Issuer
+                        ValidateAudience = false,//是否验证Audience
+                        ValidateLifetime = true,//是否验证失效时间
+                        ClockSkew = TimeSpan.FromSeconds(7200),
+                        ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                        ValidAudience = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Audience
+                        ValidIssuer = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Issuer，这两项和前面签发jwt的设置一致
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ktbN7JdBBUIVm4GIy68EYnc6WQ7Zy2h8"))//拿到SecurityKey
+                    };
+                });
+
             services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
 
@@ -39,6 +60,23 @@ namespace Ketchup.Gateway
             {
                 option.AddPolicy("cors", build => { build.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,//是否验证Issuer
+                        ValidateAudience = true,//是否验证Audience
+                        ValidateLifetime = true,//是否验证失效时间
+                        ClockSkew = TimeSpan.FromSeconds(7200),
+                        ValidateIssuerSigningKey = true,//是否验证SecurityKey
+                        ValidAudience = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Audience
+                        ValidIssuer = "LSyir1XvVA7fJmNjI2Dzxj9sj4JDsakk",//Issuer，这两项和前面签发jwt的设置一致
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ktbN7JdBBUIVm4GIy68EYnc6WQ7Zy2h8"))//拿到SecurityKey
+                    };
+                });
+
             services.AddControllers().AddNewtonsoftJson();
             services.AddGrpc();
         }
@@ -69,6 +107,8 @@ namespace Ketchup.Gateway
 
             app.UseRouting();
             app.UseCors("cors");
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseKetchup();
         }
 
@@ -84,6 +124,8 @@ namespace Ketchup.Gateway
 
             app.UseRouting();
             app.UseCors("cors");
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseKetchup();
         }
     }
