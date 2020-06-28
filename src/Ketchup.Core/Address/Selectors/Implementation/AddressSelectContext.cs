@@ -8,11 +8,6 @@ namespace Ketchup.Core.Address.Selectors.Implementation
     {
         public string Name { get; set; }
 
-        ///// <summary>
-        ///// 服务描述符。
-        ///// </summary>
-        //public ServiceDescriptor Descriptor { get; set; }
-
         /// <summary>
         /// 哈希参数
         /// </summary>
