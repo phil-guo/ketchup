@@ -21,7 +21,7 @@ namespace Ketchup.Gateway
 
             ServiceLocator.GetService<IGatewayProvider>()
                 .InitGatewaySetting()
-                .SettingKongService(appConfig)
+                //.SettingKongService(appConfig)
                 .MapServiceClient(ClientMaps);
         }
 
