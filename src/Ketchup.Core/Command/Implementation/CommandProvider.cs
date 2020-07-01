@@ -146,7 +146,11 @@ namespace Ketchup.Core.Command.Implementation
         private Type GetServiceEntry(string serviceName)
         {
             var name = serviceName.Split("/")[1];
-            return _types.FirstOrDefault(item => item.GetTypeInfo().GetCustomAttribute<ServiceAttribute>().Name == name);
+            return _types.FirstOrDefault(item =>
+            {
+                var typeInfo = item.GetTypeInfo().GetCustomAttribute<ServiceAttribute>();
+                return $"{typeInfo.Package}.{typeInfo.Name}" == name;
+            });
         }
     }
 }

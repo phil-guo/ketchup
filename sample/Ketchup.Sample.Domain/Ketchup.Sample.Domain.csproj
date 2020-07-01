@@ -25,4 +25,9 @@
   <ItemGroup>
     <None Remove="Protos\test.proto" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Update="Protos\hello.proto" GrpcServices="Both" />
+    <Protobuf Update="Protos\test.proto" GrpcServices="Both" />
+  </ItemGroup>
 </Project>

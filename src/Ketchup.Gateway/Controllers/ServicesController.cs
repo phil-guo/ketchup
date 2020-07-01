@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Ketchup.Consul.Internal.ConsulProvider;
 using Ketchup.Gateway.Configurations;
 using Ketchup.Gateway.Internal;
 using Ketchup.Gateway.Internal.Filter;
@@ -25,11 +26,13 @@ namespace Ketchup.Gateway.Controllers
     {
         private readonly IGrpcClientProvider _clientProvider;
         private readonly IGatewayProvider _gatewayProvider;
+        private readonly IServiceRouteProvider _routeProvider;
 
-        public ServicesController(IGrpcClientProvider clientProvider, IGatewayProvider gatewayProvider)
+        public ServicesController(IGrpcClientProvider clientProvider, IGatewayProvider gatewayProvider, IServiceRouteProvider routeProvider)
         {
             this._clientProvider = clientProvider;
             _gatewayProvider = gatewayProvider;
+            _routeProvider = routeProvider;
         }
 
         [HttpPost("auth/token")]
@@ -69,9 +72,9 @@ namespace Ketchup.Gateway.Controllers
         [Authorize]
         public async Task<object> ExecuteService(string server, string service, string method, [FromBody] Dictionary<string, object> inputBody)
         {
-            _gatewayProvider.MapClients.TryGetValue($"{service}.{method}", out var value);
+            var clientType = await GetClientType($"{service}.{method}");
 
-            var client = await _clientProvider.GetClientAsync(server, value);
+            var client = await _clientProvider.GetClientAsync(server, clientType);
 
             var descriptor =
                 _gatewayProvider.MethodDescriptors.FirstOrDefault(item => item.Name == method);
@@ -82,16 +85,29 @@ namespace Ketchup.Gateway.Controllers
                 Request = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(inputBody), descriptor?.InputType.ClrType)
             };
 
-            var methodInvoke = _gatewayProvider.MapClients[$"{service}.{method}"].GetMethod(method,
+            var methodInvoke = clientType.GetMethod(method,
                 new Type[] { methodModel.Type,
                     typeof(Metadata),
                     typeof(global::System.DateTime),
                     typeof(global::System.Threading.CancellationToken) });
 
+
             var result = methodInvoke?.Invoke(client,
                 new object[] { methodModel.Request, null, null, default(global::System.Threading.CancellationToken) });
 
             return new KetchupReponse(result);
+        }
+
+        private async Task<Type> GetClientType(string key)
+        {
+            _gatewayProvider.MapClients.TryGetValue(key, out var value);
+            if (value != null)
+                return value;
+
+            var clientType = Type.GetType(await _routeProvider.GetCustumerServerRoute(key));
+            _gatewayProvider.MapClients.TryAdd(key, clientType);
+
+            return clientType;
         }
     }
 }

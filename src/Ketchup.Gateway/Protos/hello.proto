@@ -1,9 +1,11 @@
 ﻿syntax = "proto3";
 
-package Grpc.Test;
+package grpc.domain;
 
-service simpleTest{
-	rpc Test(HelloRequest) returns (HelloReponse);
+service RpcTest{
+	rpc SayHello(HelloRequest) returns (HelloReponse);
+
+	rpc SayHelloEvent(HelloRequest) returns(HelloReponse);
 }
 
 message HelloReponse{

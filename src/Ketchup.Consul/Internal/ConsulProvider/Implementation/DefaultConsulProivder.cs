@@ -31,7 +31,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         {
             _consulClientProvider = consulClientProvider;
 
-
             var timeSpan = TimeSpan.FromSeconds(10);
 
             _timer = new Timer(async item => { await Check(); }, null, timeSpan, timeSpan);

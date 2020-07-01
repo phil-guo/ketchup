@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\hello.proto" />
     <None Remove="Protos\permission.proto" />
   </ItemGroup>
 
@@ -25,5 +26,9 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\*.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Update="Protos\hello.proto" GrpcServices="Both" />
   </ItemGroup>
 </Project>

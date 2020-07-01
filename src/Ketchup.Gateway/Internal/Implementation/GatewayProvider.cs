@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,19 +18,19 @@ namespace Ketchup.Gateway.Internal.Implementation
 
         public List<MethodDescriptor> MethodDescriptors { get; set; }
 
-        public Dictionary<string, Type> MapClients { get; set; }
+        public ConcurrentDictionary<string, Type> MapClients { get; set; }
 
         public GatewayProvider()
         {
             MethodDescriptors = new List<MethodDescriptor>();
-            MapClients = new Dictionary<string, Type>();
+            MapClients = new ConcurrentDictionary<string, Type>();
         }
 
-        public GatewayProvider MapServiceClient(Func<Dictionary<string, Type>> maps)
-        {
-            MapClients = maps?.Invoke();
-            return this;
-        }
+        //public GatewayProvider MapServiceClient(Func<ConcurrentDictionary<string, Type>> maps)
+        //{
+        //    MapClients = maps?.Invoke();
+        //    return this;
+        //}
 
         public GatewayProvider InitGatewaySetting()
         {

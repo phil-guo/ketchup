@@ -35,7 +35,7 @@ namespace Ketchup.Sample.Server
                         .ConfigureKestrel(options =>
                         {
                             var config = AppConfig.ServerOptions;
-                            options.Listen(new IPEndPoint(IPAddress.Parse(config.Ip), config.Port),
+                            options.Listen(new IPEndPoint(IPAddress.Any, config.Port),
                                 listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
                         })
                         .UseStartup<Startup>();

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Ketchup.Sample.Domain.Services
 {
-    [Service(Name = "grpc.domain.RpcTest")]
+    [Service(Name = nameof(RpcTest), TypeClientName = nameof(RpcTest.RpcTestClient), Package = "Grpc.Domain")]
     public class HelloService : RpcTest.RpcTestBase
     {
         private readonly ICacheProvider _cache;
@@ -22,7 +22,8 @@ namespace Ketchup.Sample.Domain.Services
         }
 
         //[HystrixCommand(MethodName = nameof(SayHello), ExcuteTimeoutInMilliseconds = 3000)]
-        [KongRoute(Name = nameof(SayHello), Paths = new[] { "/sample/SayHello" })]
+        //[KongRoute(Name = nameof(SayHello), Paths = new[] { "/sample/SayHello" })]
+        [ServiceRoute(MethodName = nameof(SayHello), Name = "tests")]
         public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
 
@@ -39,13 +40,14 @@ namespace Ketchup.Sample.Domain.Services
         }
 
         //[HystrixCommand(MethodName = nameof(SayHelloEvent), Timeout = 2000)]
+        [ServiceRoute(MethodName = nameof(SayHelloEvent), Name = "tests")]
         public override Task<HelloReponse> SayHelloEvent(HelloRequest request, ServerCallContext context)
         {
-            ServiceLocator.GetService<IEventBus>().Publish(new UserEvent()
-            {
-                Name = "simple",
-                Job = "it"
-            });
+            //ServiceLocator.GetService<IEventBus>().Publish(new UserEvent()
+            //{
+            //    Name = "simple",
+            //    Job = "it"
+            //});
             return Task.FromResult(new HelloReponse());
         }
     }
