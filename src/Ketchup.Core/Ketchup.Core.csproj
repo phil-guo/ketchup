@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.1-preview</Version>
+    <Version>0.1.1-preview1</Version>
     <Authors>simple</Authors>
     <Company>simple</Company>
     <Product>KetchupCore</Product>
     <PackageId>KetchupCore</PackageId>
-    <Description>Ketchup微服务框架，基于dotnet core 3.1</Description>
+    <Description>Ketchup 是一个微服务框架，基于dotnet core 3.1，集成注册中心，消息队列，分布式缓存，网关，服务治理于一体的微服务框架</Description>
   </PropertyGroup>
 
   <ItemGroup>
