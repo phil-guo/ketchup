@@ -25,7 +25,7 @@
   },
   "Consul": {
     "ConnectionString": "192.168.180.55:8500",
-    "IsHealthCheck": true,
+    "IsHealthCheck": true
     //"Strategy": "RandomWeight" //随机权重。默认随机算法
   },
   "RabbitMQ": {

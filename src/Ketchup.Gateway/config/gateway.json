@@ -4,7 +4,7 @@
     "IsHealthCheck": true
   },
   "Gateway": {
-    //"Address": "192.168.3.11",
+    //"Address": "192.168.3.11"（弃用）,
     "Port": 8090,
     "KongAddress": "192.168.190.114:8001", //针对kong的admin api 地址
     "Protocol": "http", //针对kong的 Protocol

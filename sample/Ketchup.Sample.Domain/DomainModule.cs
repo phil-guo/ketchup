@@ -11,7 +11,7 @@ namespace Ketchup.Sample.Domain
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
-            builder.GetInstances<IKongNetProvider>().AddKongSetting();
+            //builder.GetInstances<IKongNetProvider>().AddKongSetting();
         }
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
