@@ -10,6 +10,10 @@
 ### 缓存：redis、memory，
 ### 消息中间件：rabbitmq
 ![image](https://github.com/simple-gr/ketchup/blob/master/images/design.jpg)
+### 文档： [WiKi](https://github.com/simple-gr/ketchup/wiki).
+
+### 附一个 RBAC 的服务设计实现 地址： [zero](https://github.com/simple-gr/ketchup.zero).
+
 ## 如何运行起来
 ## Program中
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -74,4 +78,4 @@
          "ConnectionString": "127.0.0.1:8500",
          "IsHealthCheck": true
      }
-更多文档请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
+
