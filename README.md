@@ -2,6 +2,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/simple-gr/ketchup/blob/master/LICENSE) 
 
 # ketchup -- 番茄酱
+### 文档： [WiKi](https://github.com/simple-gr/ketchup/wiki).
 ### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
 ### 网关：兼容 kong
 ### rpc：grpc支持远程调用，
@@ -9,7 +10,9 @@
 ### 负载均衡算法：轮询、随机、加权随机算法。
 ### 缓存：redis、memory，
 ### 消息中间件：rabbitmq
+### 附一个 RBAC 的服务设计实现 地址： [zero](https://github.com/simple-gr/ketchup.zero).
 ![image](https://github.com/simple-gr/ketchup/blob/master/images/design.jpg)
+
 ## 如何运行起来
 ## Program中
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -27,7 +30,7 @@
                         {
                             var config = AppConfig.ServerOptions;
                             //使用http2协议
-                            options.Listen(new IPEndPoint(IPAddress.Parse(config.Ip), config.Port),
+                            options.Listen(new IPEndPoint(IPAddress.Any, config.Port),
                                 listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
                         })
                         .UseStartup<Startup>();
@@ -43,7 +46,7 @@
           public void ConfigureServices(IServiceCollection services)
           {
             // Add things to the service collection.
-            services.AddGrpc();
+             services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommandIntercept>());
           }
 ### 添加autofa 注册服务
           public void ConfigureContainer(ContainerBuilder builder)
@@ -63,7 +66,12 @@
     "Server": {
        "Name": "sample",//服务名称
        "Ip": "127.0.0.1",//服务ip
-       "Port": "5003"//服务端口
+       "Port": "5003",//服务端口
+       "EnableHttp": true, //是否开启http
+       "Security": {
+          "Whitelist": "*", //白名单
+          "BlackList": "" //黑名单
+       }
      }
     "Consul": {
       "ConnectionString": "127.0.0.1:8500",//consul 的链接地址
@@ -74,4 +82,4 @@
          "ConnectionString": "127.0.0.1:8500",
          "IsHealthCheck": true
      }
-更多文档请转移到 [WiKi](https://github.com/simple-gr/ketchup/wiki).
+
