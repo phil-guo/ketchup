@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSRedisCore" Version="3.6.2" />
+    <PackageReference Include="CSRedisCore" Version="3.6.5" />
   </ItemGroup>
 
 </Project>

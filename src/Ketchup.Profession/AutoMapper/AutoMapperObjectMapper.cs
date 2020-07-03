@@ -5,14 +5,21 @@ namespace Ketchup.Profession.AutoMapper
 {
     public class AutoMapperObjectMapper : ObjectMapper.IObjectMapper
     {
+        private readonly IMapper _mapper;
+
+        public AutoMapperObjectMapper(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         public TDestination Map<TDestination>(object source)
         {
-            return Mapper.Map<TDestination>(source);
+            return _mapper.Map<TDestination>(source);
         }
 
         public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
         {
-            return Mapper.Map(source, destination);
+            return _mapper.Map(source, destination);
         }
     }
 }

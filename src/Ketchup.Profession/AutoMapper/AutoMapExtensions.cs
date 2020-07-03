@@ -9,11 +9,12 @@ namespace Ketchup.Profession.AutoMapper
         /// 在调用此方法之前，必须存在对象之间的映射。
         /// </summary>
         /// <typeparam name="TDestination"></typeparam>
+        /// <param name="mapper"></param>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static TDestination MapTo<TDestination>(this object source)
+        public static TDestination MapTo<TDestination>(this IMapper mapper, object source)
         {
-            return Mapper.Map<TDestination>(source);
+            return mapper.Map<TDestination>(source);
         }
 
         /// <summary>
@@ -22,12 +23,13 @@ namespace Ketchup.Profession.AutoMapper
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <typeparam name="TDestination"></typeparam>
+        /// <param name="mapper"></param>
         /// <param name="source"></param>
         /// <param name="destination"></param>
         /// <returns></returns>
-        public static TDestination MapTo<TSource, TDestination>(this TSource source, TDestination destination)
+        public static TDestination MapTo<TSource, TDestination>(this IMapper mapper, TSource source, TDestination destination)
         {
-            return Mapper.Map(source, destination);
+            return mapper.Map(source, destination);
         }
     }
 }

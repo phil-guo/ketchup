@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper;
 using Ketchup.Profession.Application.DTO;
 using Ketchup.Profession.AutoMapper;
-using Ketchup.Profession.AutoMapper.ObjectMapper;
 using Ketchup.Profession.Domain;
 using Ketchup.Profession.ORM.EntityFramworkCore;
 using Ketchup.Profession.Repository;
 using Microsoft.EntityFrameworkCore;
+using IObjectMapper = Ketchup.Profession.AutoMapper.ObjectMapper.IObjectMapper;
 
 namespace Ketchup.Profession.Application.Implementation
 {
@@ -20,13 +21,15 @@ namespace Ketchup.Profession.Application.Implementation
         where TSearch : PageDto
     {
         private readonly IGetAll<TEntity, int> _getAll;
+        private readonly IMapper _mapper;
 
         protected CurdAppServiceOfTPrimaryKey(IRepository<TEntity, int> repository,
             IObjectMapper objectMapper,
-            IGetAll<TEntity, int> getAll) : base(
+            IGetAll<TEntity, int> getAll, IMapper mapper) : base(
             repository, objectMapper)
         {
             _getAll = getAll;
+            _mapper = mapper;
         }
 
         public virtual PageSearchDto<TEntityDto> PageSearch(TSearch search)
@@ -65,7 +68,7 @@ namespace Ketchup.Profession.Application.Implementation
 
         protected virtual List<TEntityDto> ConvertToEntities(List<TEntity> entities)
         {
-            return entities.MapTo<List<TEntityDto>>();
+            return _mapper.MapTo<List<TEntityDto>>(entities);
         }
     }
 }

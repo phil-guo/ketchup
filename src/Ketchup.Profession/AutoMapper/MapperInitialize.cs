@@ -22,7 +22,7 @@ namespace Ketchup.Profession.AutoMapper
                     return;
                 }
 
-                Mapper.Initialize(FindAndAutoMapTypes);
+                //Mapper.Initialize(FindAndAutoMapTypes);
 
                 _createdMappingsBefore = true;
             }
