@@ -66,7 +66,12 @@
     "Server": {
        "Name": "sample",//服务名称
        "Ip": "127.0.0.1",//服务ip
-       "Port": "5003"//服务端口
+       "Port": "5003",//服务端口
+       "EnableHttp": true, //是否开启http
+       "Security": {
+          "Whitelist": "*", //白名单
+          "BlackList": "" //黑名单
+       }
      }
     "Consul": {
       "ConnectionString": "127.0.0.1:8500",//consul 的链接地址
