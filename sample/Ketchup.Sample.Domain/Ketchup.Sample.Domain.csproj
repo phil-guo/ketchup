@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ketchup.Caching\Ketchup.Caching.csproj" />
     <ProjectReference Include="..\..\src\Ketchup.Consul\Ketchup.Consul.csproj" />
     <ProjectReference Include="..\..\src\Ketchup.Core\Ketchup.Core.csproj" />
     <ProjectReference Include="..\..\src\Ketchup.Grpc\Ketchup.Grpc.csproj" />
