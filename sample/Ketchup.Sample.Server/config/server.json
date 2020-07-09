@@ -14,7 +14,7 @@
   "Server": {
     "Name": "sample", //服务名称
     "Ip": "192.168.3.11", //服务地址
-    "Port": "5003", //服务端口
+    "Port": "5005", //服务端口
     "EnableHttp": true, //是否开启http
     "Security": {
       "Whitelist": "*", //白名单

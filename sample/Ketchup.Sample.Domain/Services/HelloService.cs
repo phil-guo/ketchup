@@ -19,19 +19,19 @@ namespace Ketchup.Sample.Domain.Services
         //[HystrixCommand(MethodName = nameof(SayHello), ExcuteTimeoutInMilliseconds = 3000)]
         //[KongRoute(Name = nameof(SayHello), Paths = new[] { "/sample/SayHello" })]
         [ServiceRoute(MethodName = nameof(SayHello), Name = "tests")]
-        public override async Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
+        public override  Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
 
             //throw new Exception("报错了");
             //Thread.Sleep(1500);
             //var result = await _cache.GetAsync<string>("a");
 
-            return new HelloReponse()
+            return Task.FromResult(new HelloReponse()
             {
                 Code = 1,
                 Msg = "hello simple",
                 Result = JsonConvert.SerializeObject(request)
-            };
+            });
         }
 
         //[HystrixCommand(MethodName = nameof(SayHelloEvent), Timeout = 2000)]
