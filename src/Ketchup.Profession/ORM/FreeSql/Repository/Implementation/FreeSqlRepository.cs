@@ -25,9 +25,8 @@ namespace Ketchup.Profession.ORM.FreeSql.Repository.Implementation
         {
             try
             {
-                var repos = GetAll().GetRepository<TEntity>();
-                repos.Attach(entity);
-                return repos.Update(entity) > 0 ? entity : null;
+                var repos = GetAll().Update<TEntity>().SetSource(entity).ExecuteAffrows();
+                return repos > 0 ? entity : null;
             }
             catch (Exception e)
             {
