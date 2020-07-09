@@ -27,8 +27,9 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
         public AppConfig AppConfig { get; set; }
 
-        public DefaultConsulProivder(IConsulClientProvider consulClientProvider)
+        public DefaultConsulProivder(IConsulClientProvider consulClientProvider, AppConfig appConfig)
         {
+            AppConfig = appConfig;
             _consulClientProvider = consulClientProvider;
 
             var timeSpan = TimeSpan.FromSeconds(10);

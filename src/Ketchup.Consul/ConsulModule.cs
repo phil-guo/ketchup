@@ -29,8 +29,12 @@ namespace Ketchup.Consul
             var appConfig = new AppConfig();
 
             UseConsulAddressSelector(builder)
-                .UseCounlClientProvider(builder, appConfig)
-                .UseConsul(builder, appConfig);
+                .UseCounlClientProvider(builder, appConfig);
+            //.UseConsul(builder, appConfig);
+
+            builder.ContainerBuilder.RegisterType<DefaultConsulProivder>().As<IConsulProvider>()
+                .WithParameter(new TypedParameter(typeof(AppConfig), appConfig))
+                .SingleInstance();
 
             builder.ContainerBuilder.RegisterType<ServiceRouteProvider>().As<IServiceRouteProvider>()
                 .WithParameter(new TypedParameter(typeof(Type[]), ContainerBuilderExtensions.GetTypes()))
@@ -43,16 +47,16 @@ namespace Ketchup.Consul
         }
 
 
-        public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
-        {
-            UseConul(builder, provider =>
-                new DefaultConsulProivder(
-                    provider.GetRequiredService<IConsulClientProvider>())
-                {
-                    AppConfig = appConfig
-                });
-            return this;
-        }
+        //public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
+        //{
+        //    UseConul(builder, provider =>
+        //        new DefaultConsulProivder(
+        //            provider.GetRequiredService<IConsulClientProvider>())
+        //        {
+        //            AppConfig = appConfig
+        //        });
+        //    return this;
+        //}
 
         public ConsulModule UseConsulAddressSelector(ContainerBuilderWrapper builder)
         {
@@ -82,11 +86,11 @@ namespace Ketchup.Consul
             return builder;
         }
 
-        public ContainerBuilderWrapper UseConul(ContainerBuilderWrapper builder,
-            Func<IServiceProvider, IConsulProvider> factory)
-        {
-            builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
-            return builder;
-        }
+        //public ContainerBuilderWrapper UseConul(ContainerBuilderWrapper builder,
+        //    Func<IServiceProvider, IConsulProvider> factory)
+        //{
+        //    builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
+        //    return builder;
+        //}
     }
 }
