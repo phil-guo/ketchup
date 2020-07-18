@@ -5,7 +5,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider
 {
     public interface IConsulProvider
     {
-        Task RegiserConsulAgent();
+        Task RegisterConsulAgent();
 
         ValueTask<IpAddressModel> FindServiceEntry(string serverName);
     }

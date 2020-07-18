@@ -8,7 +8,7 @@ namespace Ketchup.RabbitMQ.Internal
 {
     public class RabbitMqSubscriptionAdapt : ISubscriptionAdapt
     {
-        private IEnumerable<IEventHandler> _handlers;
+        private readonly IEnumerable<IEventHandler> _handlers;
         private readonly IConsumeConfigurator _consumeConfigurator;
 
         public RabbitMqSubscriptionAdapt(IEnumerable<IEventHandler> handlers, IConsumeConfigurator consumeConfigurator)

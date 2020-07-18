@@ -57,7 +57,7 @@ namespace Ketchup.Gateway.Controllers
                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.Gateway.Secret)), SecurityAlgorithms.HmacSha256)
                );
 
-            return new KetchupReponse(new
+            return new KetchupResponse(new
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 UserId = user.UserId,
@@ -95,7 +95,7 @@ namespace Ketchup.Gateway.Controllers
             var result = methodInvoke?.Invoke(client,
                 new object[] { methodModel.Request, null, null, default(global::System.Threading.CancellationToken) });
 
-            return new KetchupReponse(result);
+            return new KetchupResponse(result);
         }
 
         private async Task<Type> GetClientType(string key)
@@ -104,7 +104,7 @@ namespace Ketchup.Gateway.Controllers
             if (value != null)
                 return value;
 
-            var clientType = Type.GetType(await _routeProvider.GetCustumerServerRoute(key));
+            var clientType = Type.GetType(await _routeProvider.GetCustomerServerRoute(key));
             _gatewayProvider.MapClients.TryAdd(key, clientType);
 
             return clientType;

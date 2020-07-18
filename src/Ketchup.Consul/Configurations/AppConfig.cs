@@ -9,7 +9,7 @@ namespace Ketchup.Consul.Configurations
         /// <summary>
         /// ip地址模型
         /// </summary>
-        public IpAddressModel Addresse { get; set; }
+        public IpAddressModel Address { get; set; }
 
         /// <summary>
         /// consul配置模型
@@ -23,7 +23,7 @@ namespace Ketchup.Consul.Configurations
             if (string.IsNullOrEmpty(Consul.ConnectionString))
                 return;
 
-            Addresse = ConvertToIpAddressModel(Consul.ConnectionString);
+            Address = ConvertToIpAddressModel(Consul.ConnectionString);
         }
 
         protected ConsulOption GetConsulAppConfig()

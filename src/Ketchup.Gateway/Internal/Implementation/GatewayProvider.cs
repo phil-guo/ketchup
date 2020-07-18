@@ -25,13 +25,6 @@ namespace Ketchup.Gateway.Internal.Implementation
             MethodDescriptors = new List<MethodDescriptor>();
             MapClients = new ConcurrentDictionary<string, Type>();
         }
-
-        //public GatewayProvider MapServiceClient(Func<ConcurrentDictionary<string, Type>> maps)
-        //{
-        //    MapClients = maps?.Invoke();
-        //    return this;
-        //}
-
         public GatewayProvider InitGatewaySetting()
         {
             var assembly = Assembly.GetExecutingAssembly();

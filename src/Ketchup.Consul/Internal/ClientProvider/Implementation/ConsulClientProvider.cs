@@ -15,8 +15,8 @@ namespace Ketchup.Consul.Internal.ClientProvider.Implementation
         {
             ConsulClient result = null;
 
-            result = _consulClient.GetOrAdd($"{AppConfig.Addresse.Ip}:{AppConfig.Addresse.Port}", new ConsulClient(
-                config => { config.Address = new Uri($"http://{AppConfig.Addresse.Ip}:{AppConfig.Addresse?.Port}"); },
+            result = _consulClient.GetOrAdd($"{AppConfig.Address.Ip}:{AppConfig.Address.Port}", new ConsulClient(
+                config => { config.Address = new Uri($"http://{AppConfig.Address.Ip}:{AppConfig.Address?.Port}"); },
                 null, h =>
                 {
                     h.UseProxy = false;
