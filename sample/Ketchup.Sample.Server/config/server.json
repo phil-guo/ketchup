@@ -34,8 +34,8 @@
     "Host": "192.168.190.4",
     "UserName": "admin",
     "Password": "qwe123QWE",
-    "RetryCount": 3,
-    "FailCount": 1
+    "RetryCount": 3, //重试次数
+    "FailCount": 1//失败次数
   },
   //使用redis先安装Ketchup.Caching库（选置）
   "Redis": {
