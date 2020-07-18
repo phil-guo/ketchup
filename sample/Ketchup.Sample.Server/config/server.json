@@ -13,7 +13,7 @@
   },
   "Server": {
     "Name": "sample", //服务名称
-    "Ip": "192.168.3.11", //服务地址
+    "Ip": "127.0.0.1", //服务地址
     "Port": "5005", //服务端口
     "EnableHttp": true, //是否开启http
     "Security": {
@@ -25,11 +25,11 @@
   },
   //注册中心配置
   "Consul": {
-    "ConnectionString": "192.168.180.55:8500", //注册中心地址
+    "ConnectionString": "127.0.0.1:8500", //注册中心地址
     "IsHealthCheck": true //是否进行健康检查
-    //"Strategy": "RandomWeight" //随机权重。默认随机算法
+    //"Strategy": "RandomWeight" //随机权重。默认随机算法（同一个服务>=2时负载算法才生效）  Random：随机  Polling：轮询  RandomWeight：随机权重
   },
-  //使用 RabbitMQ 先安装Ketchup.RabbitMQ库
+  //使用 RabbitMQ 先安装Ketchup.RabbitMQ库（选置）
   "RabbitMQ": {
     "Host": "192.168.190.4",
     "UserName": "admin",
@@ -37,7 +37,7 @@
     "RetryCount": 3,
     "FailCount": 1
   },
-  //使用redis先安装Ketchup.Caching库
+  //使用redis先安装Ketchup.Caching库（选置）
   "Redis": {
     "IpAddress": "192.168.180.55",
     "Password": "qwe123QWE"
