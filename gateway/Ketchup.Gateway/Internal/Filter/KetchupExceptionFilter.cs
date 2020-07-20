@@ -16,7 +16,7 @@ namespace Ketchup.Gateway.Internal.Filter
 
             if (context.Exception.InnerException is RpcException rpcException)
                 context.Result = new JsonResult(new KetchupResponse(null)
-                { Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail });
+                { Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail }); 
 
         }
     }
