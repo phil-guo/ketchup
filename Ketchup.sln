@@ -31,9 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Caching", "src\Ketc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Redis.Test", "test\Ketchup.Redis.Test\Ketchup.Redis.Test.csproj", "{B9A6D5BA-39F4-4EF1-BC98-1338F0087594}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Gateway", "src\Ketchup.Gateway\Ketchup.Gateway.csproj", "{50C840D2-D784-4CF5-8FE2-75E58A93BD21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Gateway", "gateway\Ketchup.Gateway\Ketchup.Gateway.csproj", "{50C840D2-D784-4CF5-8FE2-75E58A93BD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ketchup.Profession", "src\Ketchup.Profession\Ketchup.Profession.csproj", "{F133F7A6-400F-484C-9A33-D92001D585CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ketchup.Profession", "src\Ketchup.Profession\Ketchup.Profession.csproj", "{F133F7A6-400F-484C-9A33-D92001D585CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{7C910C27-4CED-4C34-ACBB-81EA0EB2D673}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,7 +111,7 @@ Global
 		{E5254741-0606-4643-B694-95C88F7B74D9} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 		{0AC5B33A-BAA2-43BD-AF02-DB213603D3D3} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 		{B9A6D5BA-39F4-4EF1-BC98-1338F0087594} = {3A437EEA-9CCF-48CA-9AE8-2E0E036E70BB}
-		{50C840D2-D784-4CF5-8FE2-75E58A93BD21} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
+		{50C840D2-D784-4CF5-8FE2-75E58A93BD21} = {7C910C27-4CED-4C34-ACBB-81EA0EB2D673}
 		{F133F7A6-400F-484C-9A33-D92001D585CE} = {5B3C3304-C18A-4C2A-BFE5-BCCCFCBF91D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

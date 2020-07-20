@@ -19,13 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ketchup.Consul\Ketchup.Consul.csproj" />
-    <ProjectReference Include="..\Ketchup.Core\Ketchup.Core.csproj" />
-    <ProjectReference Include="..\Ketchup.Grpc\Ketchup.Grpc.csproj" />
+    <Protobuf Include="Protos\*.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\*.proto" GrpcServices="Client" />
+    <ProjectReference Include="..\..\src\Ketchup.Consul\Ketchup.Consul.csproj" />
+    <ProjectReference Include="..\..\src\Ketchup.Core\Ketchup.Core.csproj" />
+    <ProjectReference Include="..\..\src\Ketchup.Grpc\Ketchup.Grpc.csproj" />
   </ItemGroup>
 
   <ItemGroup>
