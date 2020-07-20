@@ -19,5 +19,10 @@ namespace Ketchup.Core.Configurations
                 return section.Exists() ? section.Get<ServerOptions>() : new ServerOptions();
             }
         }
+
+        public ServerOptions GetServerOption()
+        {
+            return ServerOptions;
+        }
     }
 }

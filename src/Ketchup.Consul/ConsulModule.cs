@@ -12,7 +12,6 @@ using Ketchup.Core;
 using Ketchup.Core.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Ketchup.Consul
 {
@@ -20,8 +19,8 @@ namespace Ketchup.Consul
     {
         public override void Initialize(KetchupPlatformContainer builder)
         {
-            builder.GetInstances<IConsulProvider>().RegiserConsulAgent();
-            builder.GetInstances<IServiceRouteProvider>().AddCustumerServerRoute().Wait();
+            builder.GetInstances<IConsulProvider>().RegisterConsulAgent();
+            builder.GetInstances<IServiceRouteProvider>().AddCustomerServerRoute().Wait();
         }
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)
@@ -29,10 +28,9 @@ namespace Ketchup.Consul
             var appConfig = new AppConfig();
 
             UseConsulAddressSelector(builder)
-                .UseCounlClientProvider(builder, appConfig);
-            //.UseConsul(builder, appConfig);
+                .UseConsulClientProvider(builder, appConfig);
 
-            builder.ContainerBuilder.RegisterType<DefaultConsulProivder>().As<IConsulProvider>()
+            builder.ContainerBuilder.RegisterType<DefaultConsulProvider>().As<IConsulProvider>()
                 .WithParameter(new TypedParameter(typeof(AppConfig), appConfig))
                 .SingleInstance();
 
@@ -46,18 +44,6 @@ namespace Ketchup.Consul
             endpointRoute.MapGrpcService<DefaultHealthCheckService>();
         }
 
-
-        //public ConsulModule UseConsul(ContainerBuilderWrapper builder, AppConfig appConfig)
-        //{
-        //    UseConul(builder, provider =>
-        //        new DefaultConsulProivder(
-        //            provider.GetRequiredService<IConsulClientProvider>())
-        //        {
-        //            AppConfig = appConfig
-        //        });
-        //    return this;
-        //}
-
         public ConsulModule UseConsulAddressSelector(ContainerBuilderWrapper builder)
         {
             builder.ContainerBuilder.RegisterType<ConsulRandomAddressSelector>()
@@ -69,9 +55,9 @@ namespace Ketchup.Consul
             return this;
         }
 
-        public ConsulModule UseCounlClientProvider(ContainerBuilderWrapper builder, Ketchup.Consul.Configurations.AppConfig appConfig)
+        public ConsulModule UseConsulClientProvider(ContainerBuilderWrapper builder, Ketchup.Consul.Configurations.AppConfig appConfig)
         {
-            UseCounlClientProvider(builder, provider =>
+            UseConsulClientProvider(builder, provider =>
                 new ConsulClientProvider
                 {
                     AppConfig = appConfig
@@ -79,18 +65,11 @@ namespace Ketchup.Consul
             return this;
         }
 
-        public ContainerBuilderWrapper UseCounlClientProvider(ContainerBuilderWrapper builder,
+        public ContainerBuilderWrapper UseConsulClientProvider(ContainerBuilderWrapper builder,
             Func<IServiceProvider, IConsulClientProvider> factory)
         {
             builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
             return builder;
         }
-
-        //public ContainerBuilderWrapper UseConul(ContainerBuilderWrapper builder,
-        //    Func<IServiceProvider, IConsulProvider> factory)
-        //{
-        //    builder.ContainerBuilder.RegisterAdapter(factory).InstancePerLifetimeScope();
-        //    return builder;
-        //}
     }
 }

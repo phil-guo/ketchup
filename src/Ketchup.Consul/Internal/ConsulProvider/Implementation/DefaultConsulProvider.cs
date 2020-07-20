@@ -16,7 +16,7 @@ using AppConfig = Ketchup.Consul.Configurations.AppConfig;
 
 namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 {
-    public class DefaultConsulProivder : IConsulProvider, IDisposable
+    public class DefaultConsulProvider : IConsulProvider, IDisposable
     {
         private readonly IConsulClientProvider _consulClientProvider;
         private readonly ConcurrentDictionary<string, ServiceEntry[]> _dictionary = new ConcurrentDictionary<string, ServiceEntry[]>();
@@ -27,7 +27,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
         public AppConfig AppConfig { get; set; }
 
-        public DefaultConsulProivder(IConsulClientProvider consulClientProvider, AppConfig appConfig)
+        public DefaultConsulProvider(IConsulClientProvider consulClientProvider, AppConfig appConfig)
         {
             AppConfig = appConfig;
             _consulClientProvider = consulClientProvider;
@@ -45,7 +45,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             }
         }
 
-        public async Task RegiserConsulAgent()
+        public async Task RegisterConsulAgent()
         {
             var consulClient = _consulClientProvider.GetConsulClient();
             var config = Core.Configurations.AppConfig.ServerOptions;

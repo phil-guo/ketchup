@@ -25,7 +25,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             }).Distinct().ToArray();
         }
 
-        public async Task AddCustumerServerRoute()
+        public async Task AddCustomerServerRoute()
         {
             var consulClient = _consulClientProvider.GetConsulClient();
             foreach (var service in _types)
@@ -52,7 +52,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             }
         }
 
-        public async Task<string> GetCustumerServerRoute(string key)
+        public async Task<string> GetCustomerServerRoute(string key)
         {
             var consulClient = _consulClientProvider.GetConsulClient();
             var result = await consulClient.KV.Get(key);

@@ -33,10 +33,6 @@ namespace Ketchup.Consul.Test
                         Port = 8500
                     }
                 },
-                //Descriptor = new ServiceDescriptor()
-                //{
-                //    Id = Guid.NewGuid().ToString("N"),
-                //}
             });
 
             Assert.NotNull(result);

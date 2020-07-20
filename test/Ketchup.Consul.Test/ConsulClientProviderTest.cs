@@ -1,4 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Ketchup.Consul.Configurations;
+using Ketchup.Consul.Internal.ClientProvider.Implementation;
+using Ketchup.Consul.Internal.Selector;
+using Ketchup.Core.Address;
+using Ketchup.Core.Address.Selectors.Implementation;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
 
 namespace Ketchup.Consul.Test
@@ -6,8 +14,29 @@ namespace Ketchup.Consul.Test
     public class ConsulClientProviderTest
     {
         [Fact]
-        public async Task GetClientProvider_Test()
+        public void GetConsulClient_Test()
         {
+            var clientProvider = new ConsulClientProvider
+            {
+                AppConfig = new AppConfig()
+                {
+                    Address = new IpAddressModel { Ip = "127.0.0.1", Port = 8500 },
+                    Consul = new ConsulOption() { ConnectionString = "127.0.0.1:8500" }
+                }
+            };
+
+
+            var one = clientProvider.GetConsulClient();
+
+            Assert.NotNull(one);
+
+            //todo 获取1000次
+            for (int i = 0; i < 1000; i++)
+            {
+                var two = clientProvider.GetConsulClient();
+                Assert.NotNull(two);
+            }
+
             //var healthCheckMoq = new Mock<IHealthCheckService>();
             //healthCheckMoq.Setup(x => x.IsHealth(It.IsAny<IpAddressModel>()))
             //    .Returns(() => new ValueTask<bool>(true));
@@ -19,31 +48,6 @@ namespace Ketchup.Consul.Test
             //        Ip = "127.0.0.1",
             //        Port = 8500
             //    }));
-
-
-            //var clientProvider = new ConsulClientProvider(healthCheckMoq.Object,
-            //    addressSelectorMoq.Object, new Mock<ILogger<ConsulClientProvider>>().Object);
-
-            //clientProvider.AppConfig = new AppConfig()
-            //{
-            //    Addresses = new List<IpAddressModel>()
-            //    {
-            //        new IpAddressModel()
-            //        {
-            //            Ip = "127.0.0.1",
-            //            Port = 8500
-            //        }
-            //    },
-
-            //    Consul = new ConsulOption()
-            //    {
-            //        ConnectionString = "127.0.0.1:8500"
-            //    }
-            //};
-
-            //var result = await clientProvider.GetClient();
-
-            //Assert.NotNull(result);
         }
     }
 }
