@@ -15,6 +15,9 @@ message HelloReponse{
 }
 
 message HelloRequest {
+	
+	// 名称
 	string name = 1;
+	//年龄
 	int32 Age = 2;
 }

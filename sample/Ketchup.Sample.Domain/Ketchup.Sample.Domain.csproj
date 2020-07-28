@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>\Ketchup.Sample.Domain.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Grpc.Tools" Version="2.27.0">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="DomainModule.cs~RF3e23ee0d.TMP" />
     <None Remove="Protos\test.proto" />
   </ItemGroup>
 

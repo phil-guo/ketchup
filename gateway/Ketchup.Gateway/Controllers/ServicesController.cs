@@ -69,9 +69,10 @@ namespace Ketchup.Gateway.Controllers
 
         [HttpPost("api/{server}/{service}/{method}")]
         [KetchupExceptionFilter]
-        [Authorize]
+        //[Authorize]
         public async Task<object> ExecuteService(string server, string service, string method, [FromBody] Dictionary<string, object> inputBody)
         {
+            method = method.Substring(0, 1).ToUpper() + method.Substring(1);
             var clientType = await GetClientType($"{service}.{method}");
 
             var client = await _clientProvider.GetClientAsync(server, clientType);
