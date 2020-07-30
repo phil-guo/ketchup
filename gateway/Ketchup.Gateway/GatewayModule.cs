@@ -15,7 +15,7 @@ namespace Ketchup.Gateway
         public override void Initialize(KetchupPlatformContainer builder)
         {
             var appConfig = new AppConfig();
-            ServiceLocator.GetService<IGatewayProvider>().InitGatewaySetting();
+            ServiceLocator.GetService<IGatewayProvider>().InitGatewaySetting().SettingKongService(appConfig);
         }
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)

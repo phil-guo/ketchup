@@ -79,6 +79,9 @@ namespace Ketchup.Gateway.Internal.Implementation
 
         private void SettingAuthSerice(AppConfig appConfig, KongClient client)
         {
+            if (!appConfig.Gateway.EnableAuth)
+                return;
+
             if (string.IsNullOrEmpty(appConfig.Gateway.JwtAuth))
                 return;
 
