@@ -3,7 +3,7 @@
 
 # ketchup -- 番茄酱
 ### 文档： [WiKi](https://github.com/simple-gr/ketchup/wiki).
-### ketchup 是一个基于dotnet core的微服务开发框架。 让概念变成实践，让实践变得简单。
+### ketchup 是一个基于dotnet core的微服务框架。
 ### 网关：兼容 kong
 ### rpc：grpc支持远程调用，
 ### 注册中心：consul，
