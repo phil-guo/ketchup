@@ -48,7 +48,7 @@
             // Add things to the service collection.
              services.AddGrpc(grpc => grpc.Interceptors.Add<HystrixCommandIntercept>());
           }
-### 添加autofa 注册服务
+### 添加autofac 注册服务
           public void ConfigureContainer(ContainerBuilder builder)
           {
             // Add things to the Autofac ContainerBuilder.
