@@ -1,0 +1,998 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ketchup.Gateway</name>
+    </assembly>
+    <members>
+        <member name="P:Ketchup.Gateway.Configurations.GatewayOption.EnableAuth">
+            <summary>
+            开启kong jwt授权
+            </summary>
+        </member>
+        <member name="T:Ketchup.Permission.PermissionReflection">
+            <summary>Holder for reflection information generated from Protos/permission.proto</summary>
+        </member>
+        <member name="P:Ketchup.Permission.PermissionReflection.Descriptor">
+            <summary>File descriptor for Protos/permission.proto</summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.ParentIdFieldNumber">
+            <summary>Field number for the "ParentId" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.ParentId">
+             <summary>
+            父级
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.Name">
+             <summary>
+            菜单名称
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.UrlFieldNumber">
+            <summary>Field number for the "Url" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.Url">
+             <summary>
+            菜单地址
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.LevelFieldNumber">
+            <summary>Field number for the "Level" field.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Ketchup.Permission.CreateOrEditMenuRequest.Level" -->
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.OperatesFieldNumber">
+            <summary>Field number for the "Operates" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.Operates">
+             <summary>
+            菜单权限(list&lt;int /> json)
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.IconFieldNumber">
+            <summary>Field number for the "Icon" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.Icon">
+            <summary>
+            菜单图标
+            </summary>
+        </member>
+        <member name="F:Ketchup.Permission.CreateOrEditMenuRequest.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.CreateOrEditMenuRequest.Id">
+             <summary>
+            主键
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.ParentIdFieldNumber">
+            <summary>Field number for the "ParentId" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.ParentId">
+             <summary>
+            父级
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Name">
+             <summary>
+            菜单名称
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.UrlFieldNumber">
+            <summary>Field number for the "Url" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Url">
+             <summary>
+            菜单地址
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.LevelFieldNumber">
+            <summary>Field number for the "Level" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Level">
+             <summary>
+            层级
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.OperatesFieldNumber">
+            <summary>Field number for the "Operates" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Operates">
+             <summary>
+            菜单权限(list&lt;int /> json)
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.IconFieldNumber">
+            <summary>Field number for the "Icon" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Icon">
+            <summary>
+            菜单图标
+            </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.MenuDto.Id">
+             <summary>
+            主键
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuDto.OperateModelsFieldNumber">
+            <summary>Field number for the "OperateModels" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateModel.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateModel.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenutList.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenutList.TotalFieldNumber">
+            <summary>Field number for the "Total" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchMenu.ParentIdFieldNumber">
+            <summary>Field number for the "ParentId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchMenu.PageIndexFieldNumber">
+            <summary>Field number for the "PageIndex" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchMenu.PageMaxFieldNumber">
+            <summary>Field number for the "PageMax" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusRoleRequest.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusByRole.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusByRole.TitleFieldNumber">
+            <summary>Field number for the "Title" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusByRole.IconFieldNumber">
+            <summary>Field number for the "Icon" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusByRole.PathFieldNumber">
+            <summary>Field number for the "Path" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusByRole.ChildrenFieldNumber">
+            <summary>Field number for the "Children" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenusRoleReponse.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RoleMenuReponse.MenuIdsFieldNumber">
+            <summary>Field number for the "MenuIds" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RoleMenuReponse.ListFieldNumber">
+            <summary>Field number for the "List" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuModel.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuModel.LableFieldNumber">
+            <summary>Field number for the "Lable" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuModel.ChildrenFieldNumber">
+            <summary>Field number for the "Children" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchOperate.PageIndexFieldNumber">
+            <summary>Field number for the "PageIndex" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchOperate.PageMaxFieldNumber">
+            <summary>Field number for the "PageMax" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchOperate.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperatesResponse.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperatesResponse.TotalFieldNumber">
+            <summary>Field number for the "Total" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateDto.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateDto.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.OperateDto.Name">
+             <summary>
+            名称
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateDto.UniqueFieldNumber">
+            <summary>Field number for the "Unique" field.</summary>
+        </member>
+        <member name="P:Ketchup.Permission.OperateDto.Unique">
+             <summary>
+            索引标识
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.OperateDto.RemarkFieldNumber">
+            <summary>Field number for the "Remark" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuOfOperateReponse.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuOfOperateRequest.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.MenuOfOperateRequest.MenuIdFieldNumber">
+            <summary>Field number for the "MenuId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SysUserDto.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SysUserDto.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SysUserDto.UserNameFieldNumber">
+            <summary>Field number for the "UserName" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SysUserDto.PasswordFieldNumber">
+            <summary>Field number for the "Password" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SysUserDto.RoleNameFieldNumber">
+            <summary>Field number for the "RoleName" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchSysUser.PageIndexFieldNumber">
+            <summary>Field number for the "PageIndex" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchSysUser.PageMaxFieldNumber">
+            <summary>Field number for the "PageMax" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchSysUserResponse.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchSysUserResponse.TotalFieldNumber">
+            <summary>Field number for the "Total" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SetRoleDto.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SetRoleDto.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RemoveRequest">
+             <summary>
+            删除model
+             </summary>
+        </member>
+        <member name="F:Ketchup.Permission.RemoveRequest.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RemoveResponse.IsCompleteFieldNumber">
+            <summary>Field number for the "IsComplete" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SetRolepermissionRequest.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SetRolepermissionRequest.MenuIdsFieldNumber">
+            <summary>Field number for the "MenuIds" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SetRolePermissionResponse.IsCompleteFieldNumber">
+            <summary>Field number for the "IsComplete" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RoleDto.IdFieldNumber">
+            <summary>Field number for the "Id" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RoleDto.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Ketchup.Permission.RoleDto.Name" -->
+        <member name="F:Ketchup.Permission.RoleDto.RemarkFieldNumber">
+            <summary>Field number for the "Remark" field.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Ketchup.Permission.RoleDto.Remark" -->
+        <member name="F:Ketchup.Permission.RoleList.DatasFieldNumber">
+            <summary>Field number for the "Datas" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.RoleList.TotalFieldNumber">
+            <summary>Field number for the "Total" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchRole.RoleNameFieldNumber">
+            <summary>Field number for the "RoleName" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchRole.PageIndexFieldNumber">
+            <summary>Field number for the "PageIndex" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.SearchRole.PageMaxFieldNumber">
+            <summary>Field number for the "PageMax" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.TokenRequst.NameFieldNumber">
+            <summary>Field number for the "Name" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.TokenRequst.PasswordFieldNumber">
+            <summary>Field number for the "Password" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.TokenResponse.UserIdFieldNumber">
+            <summary>Field number for the "UserId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.TokenResponse.RoleIdFieldNumber">
+            <summary>Field number for the "RoleId" field.</summary>
+        </member>
+        <member name="F:Ketchup.Permission.TokenResponse.UserNameFieldNumber">
+            <summary>Field number for the "UserName" field.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcMenu">
+             <summary>
+            菜单
+             </summary>
+        </member>
+        <member name="P:Ketchup.Permission.RpcMenu.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcMenu.RpcMenuClient">
+            <summary>Client for RpcMenu</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for RpcMenu</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for RpcMenu that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.CreateOrEditMenu(Ketchup.Permission.CreateOrEditMenuRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.CreateOrEditMenu(Ketchup.Permission.CreateOrEditMenuRequest,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.CreateOrEditMenuAsync(Ketchup.Permission.CreateOrEditMenuRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.CreateOrEditMenuAsync(Ketchup.Permission.CreateOrEditMenuRequest,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.PageSerachMenu(Ketchup.Permission.SearchMenu,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.PageSerachMenu(Ketchup.Permission.SearchMenu,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.PageSerachMenuAsync(Ketchup.Permission.SearchMenu,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.PageSerachMenuAsync(Ketchup.Permission.SearchMenu,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusByRole(Ketchup.Permission.MenusRoleRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            根据角色获取菜单
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusByRole(Ketchup.Permission.MenusRoleRequest,Grpc.Core.CallOptions)">
+             <summary>
+            根据角色获取菜单
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusByRoleAsync(Ketchup.Permission.MenusRoleRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            根据角色获取菜单
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusByRoleAsync(Ketchup.Permission.MenusRoleRequest,Grpc.Core.CallOptions)">
+             <summary>
+            根据角色获取菜单
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusSetRole(Ketchup.Permission.MenusRoleRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            设置权限时获取菜单及其菜单的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusSetRole(Ketchup.Permission.MenusRoleRequest,Grpc.Core.CallOptions)">
+             <summary>
+            设置权限时获取菜单及其菜单的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusSetRoleAsync(Ketchup.Permission.MenusRoleRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            设置权限时获取菜单及其菜单的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.GetMenusSetRoleAsync(Ketchup.Permission.MenusRoleRequest,Grpc.Core.CallOptions)">
+             <summary>
+            设置权限时获取菜单及其菜单的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.RemoveMenu(Ketchup.Permission.RemoveRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            删除
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.RemoveMenu(Ketchup.Permission.RemoveRequest,Grpc.Core.CallOptions)">
+             <summary>
+            删除
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.RemoveMenuAsync(Ketchup.Permission.RemoveRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            删除
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.RemoveMenuAsync(Ketchup.Permission.RemoveRequest,Grpc.Core.CallOptions)">
+             <summary>
+            删除
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcMenu.RpcMenuClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcOperate">
+             <summary>
+            功能
+             </summary>
+        </member>
+        <member name="P:Ketchup.Permission.RpcOperate.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcOperate.RpcOperateClient">
+            <summary>Client for RpcOperate</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for RpcOperate</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for RpcOperate that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.CreateOrEditOperate(Ketchup.Permission.OperateDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.CreateOrEditOperate(Ketchup.Permission.OperateDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.CreateOrEditOperateAsync(Ketchup.Permission.OperateDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.CreateOrEditOperateAsync(Ketchup.Permission.OperateDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.PageSerachOperate(Ketchup.Permission.SearchOperate,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.PageSerachOperate(Ketchup.Permission.SearchOperate,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.PageSerachOperateAsync(Ketchup.Permission.SearchOperate,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.PageSerachOperateAsync(Ketchup.Permission.SearchOperate,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.GetMenuOfOperate(Ketchup.Permission.MenuOfOperateRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            获取菜单下的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.GetMenuOfOperate(Ketchup.Permission.MenuOfOperateRequest,Grpc.Core.CallOptions)">
+             <summary>
+            获取菜单下的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.GetMenuOfOperateAsync(Ketchup.Permission.MenuOfOperateRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            获取菜单下的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.GetMenuOfOperateAsync(Ketchup.Permission.MenuOfOperateRequest,Grpc.Core.CallOptions)">
+             <summary>
+            获取菜单下的功能
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcOperate.RpcOperateClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcSysUser">
+             <summary>
+            系统用户
+             </summary>
+        </member>
+        <member name="P:Ketchup.Permission.RpcSysUser.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcSysUser.RpcSysUserClient">
+            <summary>Client for RpcSysUser</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for RpcSysUser</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for RpcSysUser that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.CreateOrEditSysUser(Ketchup.Permission.SysUserDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.CreateOrEditSysUser(Ketchup.Permission.SysUserDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.CreateOrEditSysUserAsync(Ketchup.Permission.SysUserDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.CreateOrEditSysUserAsync(Ketchup.Permission.SysUserDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.PageSerachSysUser(Ketchup.Permission.SearchSysUser,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.PageSerachSysUser(Ketchup.Permission.SearchSysUser,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.PageSerachSysUserAsync(Ketchup.Permission.SearchSysUser,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.PageSerachSysUserAsync(Ketchup.Permission.SearchSysUser,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcSysUser.RpcSysUserClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcRole">
+             <summary>
+            角色
+             </summary>
+        </member>
+        <member name="P:Ketchup.Permission.RpcRole.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Ketchup.Permission.RpcRole.RpcRoleClient">
+            <summary>Client for RpcRole</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for RpcRole</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for RpcRole that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.CreateOrEditRole(Ketchup.Permission.RoleDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.CreateOrEditRole(Ketchup.Permission.RoleDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.CreateOrEditRoleAsync(Ketchup.Permission.RoleDto,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.CreateOrEditRoleAsync(Ketchup.Permission.RoleDto,Grpc.Core.CallOptions)">
+             <summary>
+            创建或修改
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.PageSerachRole(Ketchup.Permission.SearchRole,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.PageSerachRole(Ketchup.Permission.SearchRole,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.PageSerachRoleAsync(Ketchup.Permission.SearchRole,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.PageSerachRoleAsync(Ketchup.Permission.SearchRole,Grpc.Core.CallOptions)">
+             <summary>
+            分页查询
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.SetRolePermission(Ketchup.Permission.SetRolepermissionRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            设置角色权限
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.SetRolePermission(Ketchup.Permission.SetRolepermissionRequest,Grpc.Core.CallOptions)">
+             <summary>
+            设置角色权限
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.SetRolePermissionAsync(Ketchup.Permission.SetRolepermissionRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+             <summary>
+            设置角色权限
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+             <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+             <param name="cancellationToken">An optional token for canceling the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.SetRolePermissionAsync(Ketchup.Permission.SetRolepermissionRequest,Grpc.Core.CallOptions)">
+             <summary>
+            设置角色权限
+             </summary>
+             <param name="request">The request to send to the server.</param>
+             <param name="options">The options for the call.</param>
+             <returns>The call object.</returns>
+        </member>
+        <member name="M:Ketchup.Permission.RpcRole.RpcRoleClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="T:Ketchup.Permission.Auth">
+             <summary>
+            授权
+             </summary>
+        </member>
+        <member name="P:Ketchup.Permission.Auth.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Ketchup.Permission.Auth.AuthClient">
+            <summary>Client for Auth</summary>
+        </member>
+        <member name="M:Ketchup.Permission.Auth.AuthClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for Auth</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.Auth.AuthClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for Auth that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Ketchup.Permission.Auth.AuthClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Ketchup.Permission.Auth.AuthClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Ketchup.Permission.Auth.AuthClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="T:Grpc.Domain.HelloReflection">
+            <summary>Holder for reflection information generated from Protos/hello.proto</summary>
+        </member>
+        <member name="P:Grpc.Domain.HelloReflection.Descriptor">
+            <summary>File descriptor for Protos/hello.proto</summary>
+        </member>
+        <member name="F:Grpc.Domain.HelloReponse.ResultFieldNumber">
+            <summary>Field number for the "Result" field.</summary>
+        </member>
+        <member name="F:Grpc.Domain.HelloReponse.CodeFieldNumber">
+            <summary>Field number for the "Code" field.</summary>
+        </member>
+        <member name="F:Grpc.Domain.HelloReponse.MsgFieldNumber">
+            <summary>Field number for the "Msg" field.</summary>
+        </member>
+        <member name="F:Grpc.Domain.HelloRequest.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:Grpc.Domain.HelloRequest.AgeFieldNumber">
+            <summary>Field number for the "Age" field.</summary>
+        </member>
+        <member name="P:Grpc.Domain.RpcTest.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:Grpc.Domain.RpcTest.RpcTestBase">
+            <summary>Base class for server-side implementations of RpcTest</summary>
+        </member>
+        <member name="T:Grpc.Domain.RpcTest.RpcTestClient">
+            <summary>Client for RpcTest</summary>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.RpcTestClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for RpcTest</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.RpcTestClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for RpcTest that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.RpcTestClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.RpcTestClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.RpcTestClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.BindService(Grpc.Domain.RpcTest.RpcTestBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:Grpc.Domain.RpcTest.BindService(Grpc.Core.ServiceBinderBase,Grpc.Domain.RpcTest.RpcTestBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+    </members>
+</doc>

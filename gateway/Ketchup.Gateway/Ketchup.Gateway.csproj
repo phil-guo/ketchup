@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Ketchup.Gateway.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591;1570;1587</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Protos\hello.proto" />
     <None Remove="Protos\permission.proto" />

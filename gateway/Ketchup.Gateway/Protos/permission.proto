@@ -19,19 +19,19 @@ service RpcMenu{
 message CreateOrEditMenuRequest{
 	//父级
 	int32 ParentId=1;
-	///菜单名称
+	//菜单名称
 	string Name=2;
 
-	///菜单地址
+	//菜单地址
 	string Url=3;
 
 	///层级
 	int32 Level=4;
 
-	///菜单权限(list<int /> json)
+	//菜单权限(list<int /> json)
 	string Operates=5;
 
-	/// 菜单图标
+	// 菜单图标
 	string Icon=6;	
 
 	//主键
@@ -42,19 +42,19 @@ message MenuDto{
 
 	//父级
 	int32 ParentId=1;
-	///菜单名称
+	//菜单名称
 	string Name=2;
 
-	///菜单地址
+	//菜单地址
 	string Url=3;
 
-	///层级
+	//层级
 	int32 Level=4;
 
-	///菜单权限(list<int /> json)
+	//菜单权限(list<int /> json)
 	string Operates=5;
 
-	/// 菜单图标
+	// 菜单图标
 	string Icon=6;	
 
 	//主键
