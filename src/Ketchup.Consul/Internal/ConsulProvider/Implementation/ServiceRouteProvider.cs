@@ -43,7 +43,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                     if (string.IsNullOrEmpty(attribute.Name) || string.IsNullOrEmpty(attribute.MethodName))
                         continue;
 
-                    var ketValuePair = new KVPair($"{attribute?.Name}.{attribute?.MethodName}")
+                    var ketValuePair = new KVPair($"serviceRoutes/{attribute?.Name}.{attribute?.MethodName}")
                     {
                         Value = Encoding.UTF8.GetBytes($"{serviceAttribute?.Package}.{serviceAttribute.Name}+{serviceAttribute?.TypeClientName}")
                     };
@@ -55,7 +55,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         public async Task<string> GetCustomerServerRoute(string key)
         {
             var consulClient = _consulClientProvider.GetConsulClient();
-            var result = await consulClient.KV.Get(key);
+            var result = await consulClient.KV.Get($"serviceRoutes/{key}");
             return Encoding.UTF8.GetString(result.Response.Value);
         }
     }
