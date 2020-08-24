@@ -14,9 +14,15 @@ namespace Ketchup.Gateway.Internal.Filter
                 context.Result = new JsonResult(new KetchupResponse(null)
                 { Code = exception.Status.StatusCode, Msg = exception.Status.Detail });
 
-            if (context.Exception.InnerException is RpcException rpcException)
+            else if (context.Exception.InnerException is RpcException rpcException)
                 context.Result = new JsonResult(new KetchupResponse(null)
-                { Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail }); 
+                { Code = rpcException.Status.StatusCode, Msg = rpcException.Status.Detail });
+
+            else
+            {
+                context.Result = new JsonResult(new KetchupResponse(null)
+                { Code = StatusCode.Unknown, Msg = context.Exception.Message });
+            }
 
         }
     }

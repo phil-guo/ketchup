@@ -34,6 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="config\gateway.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Update="Protos\hello.proto" GrpcServices="Both" />
   </ItemGroup>
 </Project>

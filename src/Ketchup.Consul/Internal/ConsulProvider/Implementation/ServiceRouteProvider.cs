@@ -56,7 +56,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         {
             var consulClient = _consulClientProvider.GetConsulClient();
             var result = await consulClient.KV.Get($"serviceRoutes/{key}");
-            return Encoding.UTF8.GetString(result.Response.Value);
+            return Encoding.UTF8.GetString(result.Response?.Value);
         }
     }
 }
