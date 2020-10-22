@@ -4,11 +4,6 @@
         <name>Ketchup.Gateway</name>
     </assembly>
     <members>
-        <member name="P:Ketchup.Gateway.Configurations.GatewayOption.EnableAuth">
-            <summary>
-            开启kong jwt授权
-            </summary>
-        </member>
         <member name="T:Ketchup.Permission.PermissionReflection">
             <summary>Holder for reflection information generated from Protos/permission.proto</summary>
         </member>
