@@ -55,7 +55,8 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         public async Task<string> GetCustomerServerRoute(string key)
         {
             var consulClient = _consulClientProvider.GetConsulClient();
-            var result = await consulClient.KV.Get($"serviceRoutes/{key}");
+            //var result = await consulClient.KV.Get($"serviceRoutes/{key}");
+            var result = await consulClient.KV.Get($"{key}");
             return Encoding.UTF8.GetString(result.Response?.Value);
         }
     }
