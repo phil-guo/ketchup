@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ketchup.Consul.Internal.ConsulProvider;
+using Ketchup.Gateway.Internal.Filter;
+using Ketchup.Gateway.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +14,18 @@ namespace Ketchup.Gateway.Controllers
     [Authorize]
     public class ServersController : Controller
     {
-        private readonly IServiceRouteProvider _routeProvider;
+        private readonly IServerProvider _server;
 
-        public ServersController(IServiceRouteProvider routeProvider)
+        public ServersController(IServerProvider server)
         {
-            _routeProvider = routeProvider;
+            _server = server;
         }
 
-        public void GetServices()
+        [HttpPost("api/getAllServer")]
+        [KetchupExceptionFilter]
+        public async Task<object> GetAllServer()
         {
-
+            return new KetchupResponse(await _server.GetAllServer());
         }
     }
 }
