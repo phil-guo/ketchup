@@ -43,7 +43,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                     if (string.IsNullOrEmpty(attribute.Name) || string.IsNullOrEmpty(attribute.MethodName))
                         continue;
 
-                    var ketValuePair = new KVPair($"serviceRoutes/{attribute?.Name}.{attribute?.MethodName}")
+                    var ketValuePair = new KVPair($"serviceRoutes/{attribute?.Name}/{attribute?.MethodName}")
                     {
                         Value = Encoding.UTF8.GetBytes($"{serviceAttribute?.Package}.{serviceAttribute.Name}+{serviceAttribute?.TypeClientName}")
                     };
