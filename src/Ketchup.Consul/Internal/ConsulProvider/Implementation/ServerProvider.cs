@@ -8,7 +8,7 @@ using Ketchup.Consul.Internal.ConsulProvider.Model;
 
 namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 {
-    public class ServerProvider
+    public class ServerProvider: IServerProvider
     {
         private readonly IConsulClientProvider _client;
 
