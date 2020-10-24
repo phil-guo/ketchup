@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Ketchup.Consul.Internal.ConsulProvider;
 using Ketchup.Gateway.Internal.Filter;
 using Ketchup.Gateway.Model;
@@ -21,7 +18,7 @@ namespace Ketchup.Gateway.Controllers
             _server = server;
         }
 
-        [HttpPost("api/getAllServer")]
+        [HttpPost("api/servers/getAllServer")]
         [KetchupExceptionFilter]
         public async Task<object> GetAllServer()
         {
