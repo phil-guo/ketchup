@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Ketchup.Consul.Internal.ClientProvider;
+using Ketchup.Consul.Internal.ConsulProvider.Model;
 using Ketchup.Core.Attributes;
 using Ketchup.Core.Utilities;
 using NConsul;
 
 namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 {
-    public class ServiceRouteProvider : IServiceRouteProvider
+    public class ServiceRouterProvider : IServiceRouteProvider
     {
         private readonly IConsulClientProvider _consulClientProvider;
         private readonly Type[] _types;
 
-        public ServiceRouteProvider(Type[] types)
+        public ServiceRouterProvider(Type[] types, IConsulClientProvider consulClientProvider)
         {
-            _consulClientProvider = ServiceLocator.GetService<IConsulClientProvider>();
+            _consulClientProvider = consulClientProvider;
+            //_consulClientProvider = ServiceLocator.GetService<IConsulClientProvider>();
             _types = _types = types.Where(type =>
             {
                 var typeInfo = type.GetTypeInfo();
@@ -58,5 +61,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             var result = await consulClient.KV.Get($"serviceRoutes/{key}");
             return Encoding.UTF8.GetString(result.Response?.Value);
         }
+
+        
     }
 }

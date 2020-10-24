@@ -34,9 +34,11 @@ namespace Ketchup.Consul
                 .WithParameter(new TypedParameter(typeof(AppConfig), appConfig))
                 .SingleInstance();
 
-            builder.ContainerBuilder.RegisterType<ServiceRouteProvider>().As<IServiceRouteProvider>()
+            builder.ContainerBuilder.RegisterType<ServiceRouterProvider>().As<IServiceRouteProvider>()
                 .WithParameter(new TypedParameter(typeof(Type[]), ContainerBuilderExtensions.GetTypes()))
                 .SingleInstance();
+
+            builder.ContainerBuilder.RegisterType<ServerProvider>().As<IServerProvider>().InstancePerDependency();
         }
 
         public override void MapGrpcService(IEndpointRouteBuilder endpointRoute)
