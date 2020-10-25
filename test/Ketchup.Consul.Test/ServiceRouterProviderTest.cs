@@ -23,32 +23,6 @@ namespace Ketchup.Consul.Test
             _outputHelper = outputHelper;
         }
 
-        [Fact(DisplayName = "获取所有的服务节点")]
-        public async Task GetAllServerRouter_Test()
-        {
-            var consulClientProviderMock = new Mock<IConsulClientProvider>();
-
-            consulClientProviderMock
-                .Setup(x => x.GetConsulClient())
-                .Returns(() => new ConsulClient(
-                    config => { config.Address = new Uri("http://127.0.0.1:8500"); },
-                    null, h =>
-                    {
-                        h.UseProxy = false;
-                        h.Proxy = null;
-                    }));
-
-            using var mock = AutoMock.GetLoose(cfg =>
-            {
-                cfg.RegisterMock(consulClientProviderMock);
-            });
-
-            var serviceRouter = mock.Create<ServerProvider>();
-            var one = await serviceRouter.GetAllServer();
-
-            _outputHelper.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(one));
-
-            Assert.Equal(1,one.Count);
-        }
+        
     }
 }

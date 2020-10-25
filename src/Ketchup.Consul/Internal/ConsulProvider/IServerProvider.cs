@@ -9,5 +9,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider
     public interface IServerProvider
     {
         Task<List<ServerModel>> GetAllServer();
+        Task<List<ServerRouterModel>> GetAllServerEntry(string server, string service);
     }
 }

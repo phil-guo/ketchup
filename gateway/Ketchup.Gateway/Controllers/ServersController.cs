@@ -18,11 +18,18 @@ namespace Ketchup.Gateway.Controllers
             _server = server;
         }
 
-        [HttpPost("api/servers/getAllServer")]
+        [HttpGet("api/servers/getAllServer")]
         [KetchupExceptionFilter]
         public async Task<object> GetAllServer()
         {
             return new KetchupResponse(await _server.GetAllServer());
+        }
+
+        [HttpGet("api/servers/getAllServerEntry")]
+        [KetchupExceptionFilter]
+        public async Task<object> GetAllServerEntry(string server, string service)
+        {
+            return new KetchupResponse(await _server.GetAllServerEntry(server, service));
         }
     }
 }
