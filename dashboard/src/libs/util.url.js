@@ -34,7 +34,9 @@ const requestUrl = {
 
 
   //server
-  getAllServer: globalSetting.host + "/api/servers/getAllServer"
+  getAllServer: globalSetting.host + "/api/servers/getAllServer",
+  getAllServerEntry: globalSetting.host + "/api/servers/getAllServerEntry"
+
 
 };
 

@@ -86,7 +86,7 @@ namespace Ketchup.Gateway.Controllers
         private async Task<object> ExecuteService(string server, string service, string method, [FromBody] Dictionary<string, object> inputBody)
         {
             method = method.Substring(0, 1).ToUpper() + method.Substring(1);
-            var clientType = await GetClientType($"{service}/{method}");
+            var clientType = await GetClientType($"{server}/{service}/{method}");
 
             var client = await _clientProvider.GetClientAsync(server, clientType);
 

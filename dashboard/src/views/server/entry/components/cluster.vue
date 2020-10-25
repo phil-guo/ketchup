@@ -18,12 +18,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <el-table :data="clusterData">
-      <el-table-column prop="key" label="key"> </el-table-column>
-      <el-table-column prop="ip" label="ip"> </el-table-column>
-      <el-table-column prop="port" label="端口"> </el-table-column>
-    </el-table> -->
   </div>
 </template>
 
@@ -67,6 +61,7 @@ export default {
 }
 .tableBody div {
   width: 33.3%;
+  margin-right: 30px;
 }
 .tableContent .tableBody:last-child {
   border: none;

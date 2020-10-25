@@ -25,6 +25,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             var models = new List<ServerRouterModel>();
 
             var entries = await consul.KV.List($"{ENTRY_PREFIX}/{server}/{service}");
+
             entries.Response.ToList().ForEach(item =>
             {
                 var value = Encoding.UTF8.GetString(item.Value);
@@ -44,13 +45,14 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
         {
             var consulClient = _client.GetConsulClient();
             var servers = (await consulClient.Agent.Services()).Response;
-
             var models = new List<ServerModel>();
 
             foreach (var server in servers)
             {
+                var kvPair = await consulClient.KV.List($"{ENTRY_PREFIX}/{server.Value.Service}");
                 if (!models.Exists(item => item.Name == server.Value.Service))
-                    models.Add(new ServerModel()
+                {
+                    var model = new ServerModel()
                     {
                         Name = server.Value.Service,
                         Cluster = new List<ServerClusterModel>()
@@ -61,9 +63,17 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                                 Port = server.Value.Port.ToString(),
                                 Key = server.Key,
                             }
-                        }
+                        },
+                    };
+                    kvPair.Response.ToList().ForEach(item =>
+                    {
+                        var service = item.Key.Split('/')[2];
+                        if (!model.Services.Contains(service))
+                            model.Services.Add(service);
                     });
 
+                    models.Add(model);
+                }
                 else
                 {
                     var model = models.FirstOrDefault(item => item.Name == server.Value.Service);
@@ -72,6 +82,13 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
                         Ip = server.Value.Address,
                         Port = server.Value.Port.ToString(),
                         Key = server.Key
+                    });
+
+                    kvPair.Response.ToList().ForEach(item =>
+                    {
+                        var service = item.Key.Split('/')[2];
+                        if (!model.Services.Contains(service))
+                            model.Services.Add(service);
                     });
                 }
             }

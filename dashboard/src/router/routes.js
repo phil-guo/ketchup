@@ -67,6 +67,15 @@ const frameIn = [
         },
         component: _import('server/entry')
       },
+      {
+        path: '/serverEntry',
+        name: 'serverEntry',
+        meta: {
+          title: '服务',
+          auth: true
+        },
+        component: _import('server/entry/serverEntry')
+      },
       // 系统 前端日志
       {
         path: 'log',

@@ -1,29 +1,25 @@
 <template>
   <d2-container>
-    <d2-crud
-      ref="d2Crud"
-      :columns="columns"
-      :data="data"
-      @d2-data-change="handleDataChange"
-      selection-row
-    >
-      <ZeroComponent
+    <d2-crud ref="d2Crud" :columns="columns" :data="data">
+      <!-- <ZeroComponent
         slot="header"
         style="margin-bottom: 5px"
         @zero-look="entryLook"
-      />
+      /> -->
     </d2-crud>
   </d2-container>
 </template>
 
 <script>
 import ZeroComponent from "@/views/permissions/zero.component/index.vue";
-import cluster from "@/views/server/entry/components/cluster";
+import Cluster from "@/views/server/entry/components/cluster";
+import Services from "@/views/server/entry/components/services";
 import util from "@/libs/util.js";
 export default {
   components: {
     ZeroComponent,
-    cluster,
+    Cluster,
+    Services,
   },
   data() {
     return {
@@ -37,7 +33,15 @@ export default {
           title: "集群条目",
           key: "cluster",
           component: {
-            name: cluster,
+            name: Cluster,
+          },
+        },
+        {
+          title: "服务",
+          key: "services",
+          width: "300",
+          component: {
+            name: Services,
           },
         },
       ],
@@ -50,19 +54,14 @@ export default {
   methods: {
     getData() {
       let vm = this;
-      util.http.post(util.requestUrl.getAllServer, {}, vm, function (response) {
+      util.http.get(util.requestUrl.getAllServer, vm, function (response) {
         vm.data = response;
       });
     },
     entryLook() {},
-    handleDataChange({ index, row }) {
-      console.log(index);
-      console.log(row);
-    },
   },
 };
 </script>
 
 <style scoped>
-
 </style>

@@ -9,5 +9,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Model
         public string Name { get; set; }
 
         public List<ServerClusterModel> Cluster { get; set; } = new List<ServerClusterModel>();
+        public List<string> Services { get; set; } = new List<string>();
     }
 }

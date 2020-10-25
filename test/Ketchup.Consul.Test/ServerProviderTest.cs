@@ -43,7 +43,7 @@ namespace Ketchup.Consul.Test
             });
 
             var serviceRouter = mock.Create<ServerProvider>();
-            var one = await serviceRouter.GetAllServerEntry("sample", "tests");
+            var one = await serviceRouter.GetAllServerEntry("zero", "");
             _outputHelper.WriteLine(JsonConvert.SerializeObject(one));
         }
 
