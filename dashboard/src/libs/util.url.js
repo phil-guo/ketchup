@@ -30,7 +30,12 @@ const requestUrl = {
   pageSearchRole: globalSetting.host + "/api/zero/roles/PageSerachRole",
   removeRole: globalSetting.host + "/api/zero/roles/RemoveRole",
   createOrEditRole: globalSetting.host + "/api/zero/roles/CreateOrEditRole",
-  setRolePermission: globalSetting.host + "/api/zero/roles/SetRolePermission"
+  setRolePermission: globalSetting.host + "/api/zero/roles/SetRolePermission",
+
+
+  //server
+  getAllServer: globalSetting.host + "/api/servers/getAllServer"
+
 };
 
 export default requestUrl;

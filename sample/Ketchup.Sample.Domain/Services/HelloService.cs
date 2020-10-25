@@ -18,7 +18,7 @@ namespace Ketchup.Sample.Domain.Services
 
         //[HystrixCommand(MethodName = nameof(SayHello), ExcuteTimeoutInMilliseconds = 3000)]
         //[KongRoute(Name = nameof(SayHello), Paths = new[] { "/sample/SayHello" })]
-        [ServiceRoute(MethodName = nameof(SayHello), Name = "tests")]
+        [ServiceRouter(MethodName = nameof(SayHello), Name = "tests")]
         public override  Task<HelloReponse> SayHello(HelloRequest request, ServerCallContext context)
         {
 
@@ -35,7 +35,7 @@ namespace Ketchup.Sample.Domain.Services
         }
 
         //[HystrixCommand(MethodName = nameof(SayHelloEvent), Timeout = 2000)]
-        [ServiceRoute(MethodName = nameof(SayHelloEvent), Name = "tests")]
+        [ServiceRouter(MethodName = nameof(SayHelloEvent), Name = "tests")]
         public override Task<HelloReponse> SayHelloEvent(HelloRequest request, ServerCallContext context)
         {
             //ServiceLocator.GetService<IEventBus>().Publish(new UserEvent()

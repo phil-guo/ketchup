@@ -7,7 +7,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider
 {
     public interface IServiceRouteProvider
     {
-        Task AddCustomerServerRoute();
-        Task<string> GetCustomerServerRoute(string key);
+        Task AddCustomerServerRouter();
+        Task<string> GetCustomerServerRouter(string key);
     }
 }

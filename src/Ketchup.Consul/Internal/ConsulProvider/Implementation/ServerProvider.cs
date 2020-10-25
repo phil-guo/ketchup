@@ -17,6 +17,12 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
             _client = client;
         }
 
+        public void GetAllServerEntry(string server)
+        {
+
+        }
+
+
         public async Task<List<ServerModel>> GetAllServer()
         {
             var consulClient = _client.GetConsulClient();

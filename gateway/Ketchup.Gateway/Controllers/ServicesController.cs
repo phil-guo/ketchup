@@ -118,7 +118,7 @@ namespace Ketchup.Gateway.Controllers
             if (value != null)
                 return value;
 
-            var clientType = Type.GetType(await _routeProvider.GetCustomerServerRoute(key));
+            var clientType = Type.GetType(await _routeProvider.GetCustomerServerRouter(key));
             _gatewayProvider.MapClients.TryAdd(key, clientType);
 
             return clientType;

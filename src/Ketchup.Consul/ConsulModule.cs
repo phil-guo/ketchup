@@ -20,7 +20,7 @@ namespace Ketchup.Consul
         public override void Initialize(KetchupPlatformContainer builder)
         {
             builder.GetInstances<IConsulProvider>().RegisterConsulAgent();
-            builder.GetInstances<IServiceRouteProvider>().AddCustomerServerRoute().Wait();
+            builder.GetInstances<IServiceRouteProvider>().AddCustomerServerRouter().Wait();
         }
 
         protected override void RegisterModule(ContainerBuilderWrapper builder)

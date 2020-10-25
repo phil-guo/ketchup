@@ -58,6 +58,15 @@ const frameIn = [
         },
         component: _import('permissions/role')
       },
+      {
+        path: '/entry',
+        name: 'entry',
+        meta: {
+          title: '服务条目',
+          auth: true
+        },
+        component: _import('server/entry')
+      },
       // 系统 前端日志
       {
         path: 'log',
