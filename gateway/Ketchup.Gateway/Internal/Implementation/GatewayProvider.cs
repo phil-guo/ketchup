@@ -42,14 +42,6 @@ namespace Ketchup.Gateway.Internal.Implementation
                 {
                     foreach (var methodDescriptor in fileDescriptorService.Methods)
                     {
-                        var tt = methodDescriptor.InputType.ClrType.GetProperties();
-
-
-                        //foreach (var descriptor in tt)
-                        //{ iii
-                        //    var a=descriptor.InputType.ClrType.
-                        //}
-
                         MethodDescriptors.Add(methodDescriptor);
                     }
                 }

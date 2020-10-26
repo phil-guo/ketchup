@@ -48,6 +48,7 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Implementation
 
                     var model = new ServerRouterModel()
                     {
+                        FullName = $"{serviceAttribute.Package}.{serviceAttribute.Name}.{attribute.MethodName}",
                         Description = attribute.Description,
                         ServiceName = attribute.Name,
                         ClientType = $"{serviceAttribute?.Package}.{serviceAttribute.Name}+{serviceAttribute?.TypeClientName}"

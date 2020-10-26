@@ -11,5 +11,6 @@ namespace Ketchup.Consul.Internal.ConsulProvider.Model
         public string Description { get; set; }
         public string Parameter { get; set; }
         public string ClientType { get; set; }
+        public string FullName { get; set; }
     }
 }
