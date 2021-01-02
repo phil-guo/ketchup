@@ -1,8 +1,9 @@
 ﻿syntax = "proto3";
 
-package grpc.domain;
+package Grpc.Domain;
 
 service RpcTest{
+	//测试方法
 	rpc SayHello(HelloRequest) returns (HelloReponse);
 
 	rpc SayHelloEvent(HelloRequest) returns(HelloReponse);
@@ -15,6 +16,18 @@ message HelloReponse{
 }
 
 message HelloRequest {
+	
+	// 名称
 	string name = 1;
+	//年龄
 	int32 Age = 2;
+
+	repeated RequestModel RequestModels =3;
+}
+
+message RequestModel{
+	//域
+	string Domain=1;
+	//编码
+	string Code=2;
 }

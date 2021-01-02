@@ -8,6 +8,7 @@ namespace Ketchup.Gateway.Internal
 {
     public interface IGatewayProvider
     {
+        List<MessageDescriptor> MessageDescriptors { get; set; }
         List<MethodDescriptor> MethodDescriptors { get; set; }
         ConcurrentDictionary<string, Type> MapClients { get; set; }
         GatewayProvider InitGatewaySetting();

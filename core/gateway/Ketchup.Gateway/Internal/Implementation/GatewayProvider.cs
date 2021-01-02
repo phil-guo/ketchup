@@ -20,10 +20,13 @@ namespace Ketchup.Gateway.Internal.Implementation
 
         public ConcurrentDictionary<string, Type> MapClients { get; set; }
 
+        public List<MessageDescriptor> MessageDescriptors { get; set; }
+
         public GatewayProvider()
         {
             MethodDescriptors = new List<MethodDescriptor>();
             MapClients = new ConcurrentDictionary<string, Type>();
+            MessageDescriptors = new List<MessageDescriptor>();
         }
         public GatewayProvider InitGatewaySetting()
         {
@@ -36,8 +39,15 @@ namespace Ketchup.Gateway.Internal.Implementation
                 var property = type.GetProperties(BindingFlags.Static | BindingFlags.Public)
                     .FirstOrDefault(t => t.Name == "Descriptor");
 
+                (property.GetValue(null) as FileDescriptor).MessageTypes.ToList().ForEach(
+                   message =>
+                   {
+                       MessageDescriptors.Add(message);
+                   });
+
                 foreach (var fileDescriptorService in (property.GetValue(null) as FileDescriptor).Services)
                 {
+                    //MethodDescriptors = fileDescriptorService.Methods.ToList();
                     foreach (var methodDescriptor in fileDescriptorService.Methods)
                     {
                         MethodDescriptors.Add(methodDescriptor);

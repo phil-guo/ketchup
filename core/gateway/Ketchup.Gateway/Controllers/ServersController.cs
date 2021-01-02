@@ -45,10 +45,10 @@ namespace Ketchup.Gateway.Controllers
                 if (entry == null)
                     continue;
 
-                var dictionary = new Dictionary<string, Dictionary<string, string>>
+                var dictionary = new Dictionary<string, Dictionary<string, object>>
                 {
-                    {"Request", new Dictionary<string, string>()},
-                    {"Response", new Dictionary<string, string>()}
+                    {"request", new Dictionary<string, object>()},
+                    {"response", new Dictionary<string, object>()}
                 };
 
 
@@ -59,10 +59,37 @@ namespace Ketchup.Gateway.Controllers
 
                     var nodeSummary = FindXmlDocNode(nodes, $"P:{entry.InputType.FullName}.{property.Name}");
 
-                    dictionary["Request"].Add(property.Name?.Substring(0, 1).ToLower() + property.Name?.Substring(1),
-                        property.PropertyType.ToString().Contains("Google.Protobuf.Collections.RepeatedField")
-                            ? $"List<> //{nodeSummary}"
-                            : $"{property.PropertyType.ToString()} //{nodeSummary}");
+                    if (property.PropertyType.ToString().Contains("Google.Protobuf.Collections.RepeatedField"))
+                    {
+                        var model = _gatewayProvider.MessageDescriptors.FirstOrDefault(item =>
+                            item.FullName == property.PropertyType?.GetGenericArguments().FirstOrDefault()?.FullName);
+                        if (model == null)
+                            return;
+
+                        var dic = new Dictionary<string, object>();
+
+                        model.ClrType.GetProperties().ToList().ForEach(propertyInfo =>
+                        {
+                            if (propertyInfo.Name == "Descriptor" || propertyInfo.Name == "Parser")
+                                return;
+
+                            var childSummary = FindXmlDocNode(nodes, $"P:{model.FullName}.{propertyInfo.Name}");
+
+                            dic.Add(propertyInfo.Name?.Substring(0, 1).ToLower() + propertyInfo.Name?.Substring(1),
+                                $"{propertyInfo.PropertyType.ToString()} //{childSummary}");
+                        });
+
+                        dictionary["request"].Add(model.Name?.Substring(0, 1).ToLower() + model.Name?.Substring(1),
+                            new List<Dictionary<string, object>>()
+                            {
+                                dic
+                            });
+                    }
+                    else
+                    {
+                        dictionary["request"].Add(property.Name?.Substring(0, 1).ToLower() + property.Name?.Substring(1),
+                           $"{property.PropertyType.ToString()} //{nodeSummary}");
+                    }
                 });
 
                 entry.OutputType.ClrType.GetProperties().ToList().ForEach(property =>
@@ -72,10 +99,38 @@ namespace Ketchup.Gateway.Controllers
 
                     var nodeSummary = FindXmlDocNode(nodes, $"P:{entry.InputType.FullName}.{property.Name}");
 
-                    dictionary["Response"].Add(property.Name?.Substring(0, 1).ToLower() + property.Name?.Substring(1),
-                        property.PropertyType.ToString().Contains("Google.Protobuf.Collections.RepeatedField")
-                            ? $"List<> //{nodeSummary}"
-                            : $"{property.PropertyType.ToString()} //{nodeSummary}");
+                    if (property.PropertyType.ToString().Contains("Google.Protobuf.Collections.RepeatedField"))
+                    {
+                        var model = _gatewayProvider.MessageDescriptors.FirstOrDefault(item =>
+                            item.FullName == property.PropertyType?.GetGenericArguments().FirstOrDefault()?.FullName);
+                        if (model == null)
+                            return;
+
+                        var dic = new Dictionary<string, object>();
+
+                        model.ClrType.GetProperties().ToList().ForEach(propertyInfo =>
+                        {
+                            if (propertyInfo.Name == "Descriptor" || propertyInfo.Name == "Parser")
+                                return;
+
+                            var childSummary = FindXmlDocNode(nodes, $"P:{model.FullName}.{propertyInfo.Name}");
+
+
+                            dic.Add(propertyInfo.Name?.Substring(0, 1).ToLower() + propertyInfo.Name?.Substring(1),
+                                $"{propertyInfo.PropertyType.ToString()} //{childSummary}");
+                        });
+
+                        dictionary["response"].Add(model.Name?.Substring(0, 1).ToLower() + model.Name?.Substring(1),
+                            new List<Dictionary<string, object>>()
+                            {
+                                dic
+                            });
+                    }
+                    else
+                    {
+                        dictionary["response"].Add(property.Name?.Substring(0, 1).ToLower() + property.Name?.Substring(1),
+                            $"{property.PropertyType.ToString()} //{nodeSummary}");
+                    }
                 });
 
 
